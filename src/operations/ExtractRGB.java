@@ -5,24 +5,25 @@ import ImageModel.ImageProcessingModel;
 
 
 public class ExtractRGB implements ImageOperationController {
-  private final String[] commandList;
+  private final String[] instruction;
 
 
   public ExtractRGB(String input) {
-    this.commandList = input.split(" ");
+    this.instruction = input.split(" ");
 
   }
 
   @Override
-  public void performOperation(ImageProcessingModel model) {
+  public void performOperation(ImageProcessingModel imageProcessingModel) {
     try {
-      if (commandList.length != 5) {
+      if (instruction.length != 5) {
         throw new IllegalArgumentException("Incorrect command!! Please enter valid command");
       }
-      model.splitImage(commandList[1], commandList);
-      System.out.println(commandList[1] + " has been split to three red, green, blue " +
-              "greyscale components!");
-      System.out.println("You can proceed to next commands, save another or quit!");
+      imageProcessingModel.imageSplitter(instruction[1], instruction);
+      String component = instruction[1];
+      String printResult = "The input " + component + " has been separated into individual red, green, and blue grayscale components.";
+      System.out.println(printResult);
+
     } catch (Exception e) {
       System.out.println(e);
     }

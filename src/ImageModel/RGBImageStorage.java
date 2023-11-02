@@ -17,15 +17,15 @@ public class RGBImageStorage {
     this.computedCommands = new HashMap<>();
   }
 
-  public void addImage(String imageName, RGB[][] inputImage) {
+  public void storeImage(String imageName, RGB[][] inputImage) {
     this.computedCommands.put(imageName, inputImage);
   }
 
-  public RGB[][] fetchImage(String imageName) {
+  public RGB[][] retrieveImage(String imageName) {
     return computedCommands.get(imageName);
   }
 
-  public boolean search(String imageName) {
+  public boolean findImage(String imageName) {
     return computedCommands.containsKey(imageName);
   }
 }

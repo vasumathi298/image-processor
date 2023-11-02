@@ -16,59 +16,63 @@ import ImageModel.RGB;
  */
 public class BPMFormat implements ImageFormatController {
 
+  @Override
+  public void save(String filePath, RGB[][] saveThisImage) throws Exception {
+    int w,h;
+    File savedImage = new File(filePath);
+    w= saveThisImage[0].length;
+    h= saveThisImage.length;
+    BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+    for (int k = 0; k < w; k++) {
+      for (int l = 0; l< h; l++) {
+        int r = saveThisImage[k][l].getPixel(0);
+        int g = saveThisImage[k][l].getPixel(1);
+        int b = saveThisImage[k][l].getPixel(2);
+        int pixels = (r << 16) | b | (g << 8);
+        newImage.setRGB(l, k, pixels);
+      }
+    }
+    try {
+      ImageIO.write(newImage, "bmp", savedImage);
+    } catch (Exception e) {
+      throw new Exception(e);
+    }
+  }
 
   @Override
-  public RGB[][] load(String filePath, String storeFileName) throws FileNotFoundException {
-    File file = new File(filePath);
-    if (!file.exists()) {
-      throw new FileNotFoundException("File not found!");
+  public RGB[][] load(String path, String name) throws Exception {
+    File fileToLoad = new File(path);
+    if (!path.toLowerCase().endsWith(".bmp")) {
+      throw new IllegalArgumentException("Input Only BPM files.");
     }
-    if (!filePath.toLowerCase().endsWith(".bmp")) {
-      throw new IllegalArgumentException("Not a valid file. Only BMP files are supported");
+    if (!fileToLoad.exists()) {
+      throw new FileNotFoundException("File is not present in the Directory.");
     }
-    RGB[][] newImage;
+
+    RGB[][] loadingBMPImage;
+    int w, h;
     try {
-      BufferedImage image = ImageIO.read(new File(filePath));
-      int width = image.getWidth();
-      int height = image.getHeight();
-      newImage = new RGB[height][width];
-      for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-          int rgb = image.getRGB(j, i);
+      BufferedImage readImage = ImageIO.read(new File(path));
+      w= readImage.getWidth();
+      h= readImage.getHeight();
+      loadingBMPImage = new RGB[h][w];
+      for (int k = 0; k < h; k++) {
+        for (int l = 0; l < w; l++) {
+          int pixels = readImage.getRGB(l, k);
 
-          int red = (rgb >> 16) & 0xFF;
-          int green = (rgb >> 8) & 0xFF;
-          int blue = rgb & 0xFF;
+          int r = (pixels >> 16) & 0xFF;
+          int b = pixels & 0xFF;
+          int g = (pixels >> 8) & 0xFF;
 
-          newImage[i][j] = new RGB(red, green, blue);
+          loadingBMPImage[k][l] = new RGB(r, g, b);
         }
       }
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    } catch (Exception e) {
+      throw new Exception(e);
     }
-    return newImage;
+    return loadingBMPImage;
   }
 
 
-  @Override
-  public void save(String filePath, RGB[][] image) {
-    int width = image[0].length;
-    int height = image.length;
-    BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        int red = image[y][x].getPixel(0);
-        int green = image[y][x].getPixel(1);
-        int blue = image[y][x].getPixel(2);
-        int rgb = (red << 16) | (green << 8) | blue;
-        img.setRGB(x, y, rgb);
-      }
-    }
-    File output = new File(filePath);
-    try {
-      ImageIO.write(img, "bmp", output);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
+
 }

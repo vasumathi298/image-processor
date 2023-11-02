@@ -18,66 +18,62 @@ import ImageModel.RGB;
 public class PNGFormat implements ImageFormatController {
 
 
+  @Override
+  public void save(String path, RGB[][] saveThisImage) throws Exception {
+    int w,h;
+    File savedImage = new File(path);
+    w= saveThisImage[0].length;
+    h = saveThisImage.length;
+    BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+    for (int k = 0; k < h; k++) {
+      for (int l = 0; l < w; l++) {
+        int r = saveThisImage[k][l].getPixel(0);
+        int g = saveThisImage[k][l].getPixel(1);
+        int b = saveThisImage[k][l].getPixel(2);
+        int argb = (r << 16) | (g << 8) | b;
+        newImage.setRGB(l, k, argb);
+      }
+    }
+    try {
+      ImageIO.write(newImage, "png", savedImage);
+    } catch (Exception e) {
+      throw new Exception(e);
+    }
+  }
 
   @Override
-  public RGB[][] load(String filePath, String storeFileName) throws FileNotFoundException {
-    File file = new File(filePath);
-    if (!file.exists()) {
-      throw new FileNotFoundException("File not found!");
+  public RGB[][] load(String path, String name) throws Exception {
+    File fileToLoad = new File(path);
+    if (!path.toLowerCase().endsWith(".png")) {
+      throw new IllegalArgumentException("Input Only PNG files");
     }
-    if (!filePath.toLowerCase().endsWith(".png")) {
-      throw new IllegalArgumentException("Not a valid file. Only PNG, PPM, BMP, " +
-              "JPEG files are supported");
+
+    if (!fileToLoad.exists()) {
+      throw new FileNotFoundException("File is not present in the Directory.");
     }
-    RGB[][] image;
+
+    RGB[][] loadingPNGImage;
+    int w,h;
     try {
-      BufferedImage img = ImageIO.read(new File(filePath));
-      int width = img.getWidth();
-      int height = img.getHeight();
-      image = new RGB[height][width];
-      //int maxPixelValue = (1 << img.getColorModel().getPixelSize()) - 1;
-      for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-          int rgb = img.getRGB(j, i);
-          //          int alpha = (rgb >> 24) & 0xff;
-          int r = (rgb >> 16) & 0xFF;
-          int g = (rgb >> 8) & 0xFF;
-          int b = rgb & 0xFF;
-          image[i][j] = new RGB(r, g, b);
+      BufferedImage img = ImageIO.read(new File(path));
+      w = img.getWidth();
+      h = img.getHeight();
+      loadingPNGImage = new RGB[h][w];
+      for (int k = 0; k < h; k++) {
+        for (int l = 0; l < w; l++) {
+          int pixels = img.getRGB(l, k);
+          int r =  0xFF  & (pixels >> 16);
+          int g = 0xFF & (pixels >> 8);
+          int b =  0xFF & pixels ;
+          loadingPNGImage[k][l] = new RGB(r, g, b);
         }
       }
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    } catch (Exception e) {
+      throw new Exception(e);
     }
-    return image;
+    return loadingPNGImage;
   }
 
-  /**
-   * A method to save an image into a particular format.
-   *
-   * @param filePath the path where the file should be saved.
-   * @param image    the key of the image in Hashmap to save.
-   */
-  @Override
-  public void save(String filePath, RGB[][] image) {
-    int width = image[0].length;
-    int height = image.length;
-    BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        int red = image[y][x].getPixel(0);
-        int green = image[y][x].getPixel(1);
-        int blue = image[y][x].getPixel(2);
-        int argb = (red << 16) | (green << 8) | blue;
-        newImage.setRGB(x, y, argb);
-      }
-    }
-    File output = new File(filePath);
-    try {
-      ImageIO.write(newImage, "png", output);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
+
 
 }

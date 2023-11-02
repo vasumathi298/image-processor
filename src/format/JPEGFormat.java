@@ -16,62 +16,65 @@ import ImageModel.RGB;
  */
 public class JPEGFormat implements ImageFormatController {
 
+  @Override
+  public void save(String path, RGB[][] saveThisImage) throws Exception {
+    int w,h;
+    File savedImage = new File(path);
+    w= saveThisImage[0].length;
+    h = saveThisImage.length;
+    BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+    for (int k = 0; k < h; k++) {
+      for (int l = 0; l < w; l++) {
+        int r = saveThisImage[k][l].getPixel(0);
+        int g = saveThisImage[k][l].getPixel(1);
+        int b = saveThisImage[k][l].getPixel(2);
+        int pixels = (r << 16) | b  | (g << 8);
+        newImage.setRGB(l, k, pixels);
+      }
+    }
+    try {
+      ImageIO.write(newImage, "jpg", savedImage); //JPG or JPEG both are the same format.
+    } catch (Exception e) {
+      throw new Exception(e);
+    }
+  }
 
   @Override
-  public RGB[][] load(String filePath, String storeFileName) throws FileNotFoundException {
-    File file = new File(filePath);
-    if (!file.exists()) {
-      throw new FileNotFoundException("File not found!");
+  public RGB[][] load(String path, String name) throws Exception {
+    File fileToLoad = new File(path);
+    if (!fileToLoad.exists()) {
+      throw new FileNotFoundException("File is not present in the Directory.");
     }
 
-    RGB[][] image;
-    if ((filePath.toLowerCase().endsWith(".jpeg")) || (filePath.toLowerCase().endsWith(".jpg"))) {
+    RGB[][] loadingJPEGImage;
+    int w, h;
+    if ((path.toLowerCase().endsWith(".jpeg")) || (path.toLowerCase().endsWith(".jpg"))) {
       try {
-        BufferedImage img = ImageIO.read(new File(filePath));
-        int width = img.getWidth();
-        int height = img.getHeight();
+        BufferedImage img = ImageIO.read(new File(path));
+        w = img.getWidth();
+        h = img.getHeight();
         //int maxPixelValue = (1 << img.getColorModel().getPixelSize()) - 1;
-        image = new RGB[height][width];
-        for (int i = 0; i < height; i++) {
-          for (int j = 0; j < width; j++) {
-            int rgb = img.getRGB(j, i);
-            int r = (rgb >> 16) & 0xFF;
-            int g = (rgb >> 8) & 0xFF;
-            int b = rgb & 0xFF;
+        loadingJPEGImage = new RGB[h][w];
+        for (int k = 0; k < h; k++) {
+          for (int l = 0; l < w; l++) {
+            int pixels = img.getRGB(l, k);
+            int r =  0xFF & (pixels >> 16);
+            int b = 0xFF & pixels;
+            int g = 0xFF & (pixels >> 8);
 
-            image[i][j] = new RGB(r, g, b);
+            loadingJPEGImage[k][l] = new RGB(r, g, b);
           }
         }
-      } catch (IOException e) {
-        throw new RuntimeException(e);
+      } catch (Exception e) {
+        throw new Exception(e);
       }
     } else {
-      throw new IllegalArgumentException("Not a valid file. Only JPEG or JPG files are supported");
+      throw new IllegalArgumentException("Input Only JPEG/JPG files.");
     }
 
-    return image;
+    return loadingJPEGImage;
   }
 
 
-  @Override
-  public void save(String filePath, RGB[][] image) {
-    int width = image[0].length;
-    int height = image.length;
-    BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        int red = image[i][j].getPixel(0);
-        int green = image[i][j].getPixel(1);
-        int blue = image[i][j].getPixel(2);
-        int rgb = (red << 16) | (green << 8) | blue;
-        newImage.setRGB(j, i, rgb);
-      }
-    }
-    File output = new File(filePath);
-    try {
-      ImageIO.write(newImage, "jpg", output); //JPG or JPEG both are the same format.
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
+
 }

@@ -9,8 +9,9 @@ import java.util.Scanner;
 public interface ImageProcessingController {
 
 
-  void commandExecution(Scanner input) throws FileNotFoundException;
+  void imageOperationSelector() throws Exception;
+
+  void operationProcessor(Scanner operation) throws Exception;
 
 
-  void inputSelection() throws FileNotFoundException;
 }

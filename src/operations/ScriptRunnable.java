@@ -18,49 +18,47 @@ import ImageModel.ImageProcessingModel;
  * This is run script class which runs the text file.
  */
 public class ScriptRunnable implements ImageOperationController {
-  private final String[] commandList;
-  private final List<String> runCommands;
+  private final String[] instruction;
+  private final List<String> instructionsToRun;
 
 
   public ScriptRunnable(String input) {
-    this.commandList = input.split(" ");
-    this.runCommands = new ArrayList<>();
-    processScript();
+    this.instruction = input.split(" ");
+    this.instructionsToRun = new ArrayList<>();
+    runScriptInstrcutions();
   }
 
   @Override
-  public void performOperation(ImageProcessingModel model) throws FileNotFoundException {
-    for (String runCommand : this.runCommands) {
+  public void performOperation(ImageProcessingModel imageProcessingModel) throws Exception {
+    for (String runCommand : this.instructionsToRun) {
       ImageProcessingController controller = new ImageProcessingControllerImpl(null,
-               model);
+               imageProcessingModel);
       Scanner sc = new Scanner(runCommand);
-      controller.commandExecution(sc);
+      controller.operationProcessor(sc);
     }
 
   }
 
-  /**
-   * This is processes all the inputs received from text file.
-   */
-  private void processScript() {
+  private void runScriptInstrcutions() {
     try {
-      File file = new File(commandList[1]);
+      File file = new File(instruction[1]);
       if (!file.exists()) {
         throw new FileNotFoundException("File Not Found!");
       }
-      if (commandList.length != 2) {
-        throw new IllegalArgumentException("Incorrect command!! Please enter valid command");
-      }
-      if (!commandList[1].endsWith(".txt")) {
+      if (!instruction[1].endsWith(".txt")) {
         throw new IllegalArgumentException("Only .txt scripts are accepted!");
       }
+      if (instruction.length != 2) {
+        throw new IllegalArgumentException("Enter a valid command");
+      }
+
       BufferedReader br = new BufferedReader(new FileReader(file));
 
       String line = br.readLine();
       while (line != null) {
         if (!line.isBlank()) {
           if (line.charAt(0) != '#' && !line.trim().isEmpty()) {
-            this.runCommands.add(line);
+            this.instructionsToRun.add(line);
           }
         }
         line = br.readLine();

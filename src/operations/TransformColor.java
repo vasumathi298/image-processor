@@ -7,23 +7,22 @@ import ImageModel.ImageProcessingModel;
 
 
 public class TransformColor implements ImageOperationController {
-  private final String[] commandList;
+  private final String[] instructions;
 
   public TransformColor(String input) {
-    this.commandList = input.split(" ");
+    this.instructions = input.split(" ");
 
   }
 
   @Override
-  public void performOperation(ImageProcessingModel model) {
+  public void performOperation(ImageProcessingModel imageProcessingModel) {
     try {
-      if (Objects.equals(commandList[1], "sepia")) {
-        if (commandList.length != 4) {
-          throw new IllegalArgumentException("Incorrect command!! Please enter valid command");
+      if (Objects.equals(instructions[1], "sepia")) {
+        if (instructions.length != 4) {
+          throw new IllegalArgumentException("Enter valid command");
         }
-        model.createSepiaTone(commandList[2], commandList[3]);
-        System.out.println("Sepia tone for " + commandList[2] + " has been generated!");
-        System.out.println("You can proceed to next commands, save, or quit!");
+        imageProcessingModel.constructSepia(instructions[2], instructions[3]);
+        System.out.println("Sepia tone for " + instructions[2] + " has been generated!");
       } else {
         throw new IllegalArgumentException("Invalid command");
       }

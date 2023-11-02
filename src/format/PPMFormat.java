@@ -10,8 +10,7 @@ import java.util.Scanner;
 import ImageController.ImageFormatController;
 import ImageModel.RGB;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
@@ -21,22 +20,47 @@ import java.io.PrintWriter;
 public class PPMFormat implements ImageFormatController {
 
   @Override
-  public RGB[][] load(String filePath, String storeFileName) throws FileNotFoundException {
-    File file = new File(filePath);
+  public void save(String path, RGB[][] saveThisImage) {
+    try {
+      PrintWriter imageWriter = new PrintWriter(new FileOutputStream(path));
+      imageWriter.println("P3");
+      imageWriter.println(saveThisImage[0].length + " " + saveThisImage.length);
+      imageWriter.println("255");
+
+      int w,h;
+      w=saveThisImage.length;
+      h= saveThisImage[0].length;
+      for (int k = 0; k < w; k++) {
+        for (int l = 0;  l < h ; l ++) {
+          imageWriter.println(saveThisImage[k][l].getPixel(0));
+          imageWriter.println(saveThisImage[k][l].getPixel(1));
+          imageWriter.println(saveThisImage[k][l].getPixel(2));
+        }
+        imageWriter.println();
+      }
+      imageWriter.close();
+
+    } catch (FileNotFoundException e) {
+      System.out.println("File is not present in the Directory.");
+    }
+  }
+  @Override
+  public RGB[][] load(String path, String name) throws FileNotFoundException {
+    File file = new File(path);
+    RGB[][] loadedImage;
+    if (!path.toLowerCase().endsWith(".ppm")) {
+      throw new IllegalArgumentException("Input only PPM files");
+    }
     if (!file.exists()) {
-      throw new FileNotFoundException("File not found!");
+      throw new FileNotFoundException("File is not present in the Directory.");
     }
-    if (!filePath.toLowerCase().endsWith(".ppm")) {
-      throw new IllegalArgumentException("Not a valid file. Only PNG, PPM, BMP, " +
-              "JPEG files are supported");
-    }
-    RGB[][] pixelData = readPPM(filePath);
-    return pixelData;
+
+    loadedImage= readPPM(path);
+    return loadedImage;
   }
 
   public static RGB[][] readPPM(String filename) {
     Scanner sc;
-    List<RGB[][]> rgbValues = new ArrayList<>();
     try {
       sc = new Scanner(new FileInputStream(filename));
     } catch (FileNotFoundException e) {
@@ -45,7 +69,6 @@ public class PPMFormat implements ImageFormatController {
       return null;
     }
     StringBuilder builder = new StringBuilder();
-    //read the file line by line, and populate a string. This will throw away any comment lines
     while (sc.hasNextLine()) {
       String s = sc.nextLine();
       if (s.length() > 0 && s.charAt(0) != '#') {
@@ -53,14 +76,13 @@ public class PPMFormat implements ImageFormatController {
       }
     }
 
-    //now set up the scanner to read from the string we just built
     sc = new Scanner(builder.toString());
 
     String token;
 
     token = sc.next();
     if (!token.equals("P3")) {
-      throw new RuntimeException("Invalid PPM file: plain RAW file should begin with P3");
+      throw new RuntimeException("Invalid PPM file");
     }
     int width = sc.nextInt();
     System.out.println("Width of image: " + width);
@@ -86,36 +108,6 @@ public class PPMFormat implements ImageFormatController {
     return pixels;
   }
 
-  /**
-   * A method to save an image into PPM format.
-   *
-   * @param filePath the path where the file should be saved.
-   */
-  @Override
-  public void save(String filePath, RGB[][] image) {
-    try {
-      //      Pixel[][] image = storage.fetchImage(searchImageKey);
-      PrintWriter writer = new PrintWriter(new FileOutputStream(filePath));
-      // Write ppm header information
-      writer.println("P3");
-      writer.println(image[0].length + " " + image.length);
-      writer.println("255");
-
-      // Write pixel data
-      for (int i = 0; i < image.length; i++) {
-        for (int j = 0; j < image[0].length; j++) {
-          writer.println(image[i][j].getPixel(0));
-          writer.println(image[i][j].getPixel(1));
-          writer.println(image[i][j].getPixel(2));
-        }
-        writer.println();
-      }
-
-      writer.close();
-    } catch (FileNotFoundException e) {
-      System.out.println("File not found.");
-    }
-  }
 
 
 }

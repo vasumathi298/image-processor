@@ -7,55 +7,58 @@ import java.io.FileNotFoundException;
 public interface ImageProcessingModel {
 
 
-  void imageLoader(RGB[][] image, String storeFileName) throws FileNotFoundException;
+  void imageLoader(RGB[][] img, String name) throws FileNotFoundException;
 
 
-  void createRedGray(String searchImageKey, String storeKey);
+  void constructRedGreyScale(String img, String storage);
 
 
-  void createGreenGray(String searchImageKey, String storeKey);
-
-  void createBlueGray(String searchImageKey, String storeKey);
+  void constructBlueGreyScale(String img, String storage);
 
 
-  void valueGrayScale(String searchImageKey, String storeKey);
+  void constructGreenGreyScale(String img, String storage);
 
 
-  void lumaGrayScale(String searchImageKey, String storeKey);
+  void greyScaleLuma(String img, String storage);
 
 
-  void intensityGrayScale(String searchImageKey, String storeKey);
-
-
-  void flipVertically(String searchImageKey, String storeKey);
-
-
-  void flipHorizontally(String searchImageKey, String storeKey);
-
-
-  void imageBrightenDarken(String searchImageKey, String storeKey, int value);
-
-
-  void createSepiaTone(String searchImageKey, String storeKey);
+  void greyScaleValue(String img, String storage);
 
 
 
-
-  void createBlur(String searchImageKey, String storeKey);
-
-
-  void sharpenImage(String searchImageKey, String storeKey);
+  void greyScaleIntensity(String img, String storage);
 
 
-  void splitImage(String searchImageKey, String[] storeKeys);
+  void verticalImageFlip(String img, String storage);
 
 
-  void combineImage(String[] searchImageKeys, String storeKey);
+  void horizontalImageFlip(String img, String storage);
 
 
-  RGB[][] getImage(String searchImageKey);
+  void brightenOrDarkenImage(String img, String storage, int incOrDecVal);
 
 
-  RGB[][] saveFile(String filePath, String searchImageKey);
+  void sharpenImage(String img, String storage);
+
+
+  void constructSepia(String img, String storage);
+
+
+
+  void blurImage(String img, String storage);
+
+
+
+  RGB[][] saveFile(String path, String img);
+
+  void imageSplitter(String img, String[] storage);
+
+
+  void imageMerger(String[] img, String storage);
+
+
+  RGB[][] retrieveImage(String img);
+
+
 
 }

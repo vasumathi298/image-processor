@@ -14,62 +14,62 @@ import ImageModel.ImageProcessingModel;
 
 
 public class ImageProcessingControllerImpl implements ImageProcessingController {
-  private final InputStream input;
-  private final ImageProcessingModel model;
+  private final InputStream inputImageStream;
+  private final ImageProcessingModel imageModel;
   private final Map<String, Function<Scanner, ImageOperationController>> knownCommands = new HashMap<>();
-  private List<String> runCommands;
+  private List<String> operations;
 
 
   public ImageProcessingControllerImpl(InputStream input,
                                        ImageProcessingModel model) {
-    this.input = input;
-    this.model = model;
-    this.runCommands = new ArrayList<>();
-    storeCommands();
+    this.inputImageStream = input;
+    this.operations = new ArrayList<>();
+    this.imageModel = model;
+    loadOperations();
   }
 
 
-  private void storeCommands() {
+  private void loadOperations() {
     for (ImageOperationMapper command : ImageOperationMapper.values()) {
       knownCommands.put(command.getCommand(), s -> command.createController(s.nextLine()));
     }
   }
 
   @Override
-  public void inputSelection() throws FileNotFoundException {
-    Scanner input = new Scanner(this.input);
-    if (this.runCommands.size() > 0) {
-      for (String commands : this.runCommands) {
-        input = new Scanner(commands);
-        commandExecution(input);
+  public void imageOperationSelector() throws Exception {
+    Scanner userIO = null;
+    userIO = new Scanner(this.inputImageStream);
+    if (this.operations.size() > 0) {
+      for (String ops : this.operations) {
+        userIO = new Scanner(ops);
+        operationProcessor(userIO);
       }
-      this.runCommands = new ArrayList<>();
+      this.operations = new ArrayList<>();
     } else {
-      commandExecution(input);
+      operationProcessor(userIO);
     }
 
   }
 
   @Override
-  public void commandExecution(Scanner input) throws FileNotFoundException {
-    while (input.hasNext()) {
-      ImageOperationController control;
-      String inputCommand = input.next();
-      String command = inputCommand.split(" ")[0];
+  public void operationProcessor(Scanner userIO) throws Exception {
+    do {
+      ImageOperationController operationController;
+      String userInputCommand = userIO.next();
+      String command = userInputCommand.split(" ")[0];
       if (command.equalsIgnoreCase("quit")
               || command.equalsIgnoreCase("exit")) {
-        return;
+        break; // Exit the loop
       }
-      Function<Scanner, ImageOperationController> cmd =
+      Function<Scanner, ImageOperationController> commandLine =
               this.knownCommands.getOrDefault(command, null);
-      if (cmd == null) {
+      if (commandLine == null) {
         throw new IllegalArgumentException("Invalid");
       } else {
-        control = cmd.apply(input);
-        control.performOperation(this.model);
+        operationController = commandLine.apply(userIO);
+        operationController.performOperation(this.imageModel);
       }
-    }
+    } while (userIO.hasNext());
   }
-
 
 }

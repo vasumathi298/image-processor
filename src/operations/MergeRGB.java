@@ -5,23 +5,22 @@ import ImageModel.ImageProcessingModel;
 
 
 public class MergeRGB implements ImageOperationController {
-  private final String[] commandList;
+  private final String[] instruction;
 
 
   public MergeRGB(String input) {
-    this.commandList = input.split(" ");
+    this.instruction = input.split(" ");
   }
 
   @Override
-  public void performOperation(ImageProcessingModel model) {
+  public void performOperation(ImageProcessingModel imageProcessingModel) {
     try {
-      if (commandList.length != 5) {
-        throw new IllegalArgumentException("Incorrect command!! Please enter valid command");
+      if (instruction.length != 5) {
+        throw new IllegalArgumentException("Enter valid command");
       }
-      model.combineImage(commandList, commandList[4]);
-      System.out.println(commandList[1] + " " + commandList[2] + " " + commandList[2] +
+      imageProcessingModel.imageMerger(instruction, instruction[4]);
+      System.out.println(instruction[1] + " " + instruction[2] + " " + instruction[2] +
               " has been combined!");
-      System.out.println("You can proceed to next commands, save another or quit!");
     } catch (Exception e) {
       System.out.println(e);
     }
