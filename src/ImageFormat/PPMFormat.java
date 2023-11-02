@@ -13,8 +13,18 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 
+/**
+ * The PPMFormat class implements the ImageFormatController interface
+ * for saving and loading images in PPM format.
+ */
 public class PPMFormat implements ImageFormatController {
 
+  /**
+   * Saves the specified image data in PPM format to the given file path.
+   *
+   * @param path          The path where the image should be saved.
+   * @param saveThisImage The RGB pixel data to be saved.
+   */
   @Override
   public void save(String path, RGB[][] saveThisImage) {
     try {
@@ -41,6 +51,15 @@ public class PPMFormat implements ImageFormatController {
     }
   }
 
+  /**
+   * Loads an image from the given file path in PPM format.
+   *
+   * @param path          The path to the PPM image file.
+   * @param name          A name associated with the image.
+   * @return              A 2D array of RGB pixels representing the loaded image.
+   * @throws FileNotFoundException If the specified file is not found.
+   */
+
   @Override
   public RGB[][] load(String path, String name) throws FileNotFoundException {
     File file = new File(path);
@@ -55,6 +74,13 @@ public class PPMFormat implements ImageFormatController {
     loadedImage = readPPM(path);
     return loadedImage;
   }
+
+  /**
+   * Reads a PPM file and converts it into a 2D array of RGB pixels.
+   *
+   * @param filename The name of the PPM file to read.
+   * @return A 2D array of RGB pixels representing the image.
+   */
 
   public static RGB[][] readPPM(String filename) {
     Scanner sc;

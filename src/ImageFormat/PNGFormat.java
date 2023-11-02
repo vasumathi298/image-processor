@@ -9,14 +9,19 @@ import javax.imageio.ImageIO;
 import ImageController.ImageFormatController;
 import ImageModel.RGB;
 
-
 /**
- * This is PNG class.
+ * The PNGFormat class implements the ImageFormatController interface
+ * for saving and loading images in PNG format.
  */
-
 public class PNGFormat implements ImageFormatController {
 
-
+  /**
+   * Saves the specified image data in PNG format to the given file path.
+   *
+   * @param path          The path where the image should be saved.
+   * @param saveThisImage The RGB pixel data to be saved.
+   * @throws Exception    If an error occurs during saving.
+   */
   @Override
   public void save(String path, RGB[][] saveThisImage) throws Exception {
     int w, h;
@@ -40,6 +45,14 @@ public class PNGFormat implements ImageFormatController {
     }
   }
 
+  /**
+   * Loads an image from the given file path in PNG format.
+   *
+   * @param path          The path to the PNG image file.
+   * @param name          A name associated with the image.
+   * @return              A 2D array of RGB pixels representing the loaded image.
+   * @throws Exception    If an error occurs during loading.
+   */
   @Override
   public RGB[][] load(String path, String name) throws Exception {
     File fileToLoad = new File(path);
@@ -72,6 +85,4 @@ public class PNGFormat implements ImageFormatController {
     }
     return loadingPNGImage;
   }
-
-
 }

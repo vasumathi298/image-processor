@@ -3,16 +3,30 @@ package ImageOperations;
 import ImageController.ImageOperationController;
 import ImageModel.ImageProcessingModel;
 
+/**
+ * The `GreyScale` class implements the `ImageOperationController` interface and provides operations
+ * to generate various grayscale components of an image based on the given instructions.
+ */
 
 public class GreyScale implements ImageOperationController {
   private final String[] instruction;
 
 
+  /**
+   * Constructs a `GreyScale` object by parsing the input instructions.
+   *
+   * @param input The input string containing operation instructions.
+   */
   public GreyScale(String input) {
     this.instruction = input.split(" ");
 
   }
 
+  /**
+   * Performs the grayscale operation based on the type of component specified in the instructions.
+   *
+   * @param imageProcessingModel The image processing model responsible for applying the operation.
+   */
   @Override
   public void performOperation(ImageProcessingModel imageProcessingModel) {
     if (instruction.length != 4) {

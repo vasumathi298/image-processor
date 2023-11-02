@@ -4,6 +4,12 @@ package ImageModel;
 import java.io.FileNotFoundException;
 
 
+/**
+ * The `ImageProcessingModelImpl` class provides implementations
+ * for various image processing operations.
+ * It loads, transforms, and saves images while
+ * utilizing an `RGBImageStorage` to manage image data.
+ */
 public class ImageProcessingModelImpl implements ImageProcessingModel {
 
   private final RGBImageStorage rgbImageStore;
@@ -11,6 +17,10 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
   private int imageHeight;
 
 
+  /**
+   * Constructs an `ImageProcessingModelImpl` and initializes an
+   * `RGBImageStorage` instance for managing images.
+   */
   public ImageProcessingModelImpl() {
     this.rgbImageStore = new RGBImageStorage();
   }

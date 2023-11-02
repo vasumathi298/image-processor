@@ -7,6 +7,10 @@ import ImageFormat.JPEGFormat;
 import ImageFormat.PNGFormat;
 import ImageFormat.PPMFormat;
 
+/**
+ * The ImageFormatMapper enum maps file extensions to the corresponding ImageFormatController.
+ * It allows creating controller instances based on the image format name.
+ */
 public enum ImageFormatMapper {
   PPM("ppm", input -> new PPMFormat()),
   PNG("png", input -> new PNGFormat()),
@@ -22,10 +26,21 @@ public enum ImageFormatMapper {
     this.controllerSupplier = controllerSupplier;
   }
 
+  /**
+   * Get the format name associated with the enum value.
+   *
+   * @return The format name.
+   */
   public String getFormatName() {
     return formatName;
   }
 
+  /**
+   * Create an ImageFormatController instance based on the format name.
+   *
+   * @param argument The argument associated with the format.
+   * @return An instance of ImageFormatController.
+   */
   public ImageFormatController createController(String argument) {
     return controllerSupplier.apply(argument);
   }

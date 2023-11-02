@@ -11,22 +11,28 @@ import java.util.function.Function;
 
 import ImageModel.ImageProcessingModel;
 
-
+/**
+ * The ImageProcessingControllerImpl class implements the ImageProcessingController interface and
+ * handles the selection and processing of image operations.
+ */
 public class ImageProcessingControllerImpl implements ImageProcessingController {
   private final InputStream inputImageStream;
   private final ImageProcessingModel imageModel;
   private final Map<String, Function<Scanner, ImageOperationController>> knownCommands = new HashMap<>();
   private List<String> operations;
 
-
-  public ImageProcessingControllerImpl(InputStream input,
-                                       ImageProcessingModel model) {
+  /**
+   * Constructs an ImageProcessingControllerImpl with the specified input stream and image model.
+   *
+   * @param input The input stream for user commands.
+   * @param model The ImageProcessingModel to perform operations on.
+   */
+  public ImageProcessingControllerImpl(InputStream input, ImageProcessingModel model) {
     this.inputImageStream = input;
     this.operations = new ArrayList<>();
     this.imageModel = model;
     loadOperations();
   }
-
 
   private void loadOperations() {
     for (ImageOperationMapper command : ImageOperationMapper.values()) {
@@ -36,8 +42,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
 
   @Override
   public void imageOperationSelector() throws Exception {
-    Scanner userIO = null;
-    userIO = new Scanner(this.inputImageStream);
+    Scanner userIO = new Scanner(this.inputImageStream);
     if (this.operations.size() > 0) {
       for (String ops : this.operations) {
         userIO = new Scanner(ops);
@@ -47,7 +52,6 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     } else {
       operationProcessor(userIO);
     }
-
   }
 
   @Override
@@ -70,5 +74,4 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
       }
     } while (userIO.hasNext());
   }
-
 }

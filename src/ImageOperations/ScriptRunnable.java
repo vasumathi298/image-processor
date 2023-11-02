@@ -13,33 +13,43 @@ import ImageController.ImageProcessingController;
 import ImageController.ImageProcessingControllerImpl;
 import ImageModel.ImageProcessingModel;
 
-
 /**
- * This is run script class which runs the text file.
+ * The `ScriptRunnable` class implements the `ImageOperationController` interface and is used to run
+ * a script file containing a sequence of image processing instructions.
  */
 public class ScriptRunnable implements ImageOperationController {
   private final String[] instruction;
   private final List<String> instructionsToRun;
 
-
+  /**
+   * Constructs a `ScriptRunnable` object and prepares the list of instructions to be executed from
+   * the specified script file.
+   *
+   * @param input The input string containing the script file path.
+   */
   public ScriptRunnable(String input) {
     this.instruction = input.split(" ");
     this.instructionsToRun = new ArrayList<>();
-    runScriptInstrcutions();
+    runScriptInstructions();
   }
 
+  /**
+   * Executes the list of image processing instructions from the script using the provided
+   * `ImageProcessingModel`.
+   *
+   * @param imageProcessingModel The image processing model responsible for applying the instructions.
+   * @throws Exception If an error occurs during script execution.
+   */
   @Override
   public void performOperation(ImageProcessingModel imageProcessingModel) throws Exception {
     for (String runCommand : this.instructionsToRun) {
-      ImageProcessingController controller = new ImageProcessingControllerImpl(null,
-              imageProcessingModel);
+      ImageProcessingController controller = new ImageProcessingControllerImpl(null, imageProcessingModel);
       Scanner sc = new Scanner(runCommand);
       controller.operationProcessor(sc);
     }
-
   }
 
-  private void runScriptInstrcutions() {
+  private void runScriptInstructions() {
     try {
       File file = new File(instruction[1]);
       if (!file.exists()) {
@@ -68,6 +78,4 @@ public class ScriptRunnable implements ImageOperationController {
       System.out.println(e);
     }
   }
-
-
 }

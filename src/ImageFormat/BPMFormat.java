@@ -1,6 +1,5 @@
 package ImageFormat;
 
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,10 +10,18 @@ import ImageController.ImageFormatController;
 import ImageModel.RGB;
 
 /**
- * This is BMP class.
+ * The BPMFormat class implements the ImageFormatController interface
+ * for saving and loading images in BMP format.
  */
 public class BPMFormat implements ImageFormatController {
 
+  /**
+   * Saves the specified image data in BMP format to the given file path.
+   *
+   * @param filePath       The path where the image should be saved.
+   * @param saveThisImage  The RGB pixel data to be saved.
+   * @throws Exception      If an error occurs during saving.
+   */
   @Override
   public void save(String filePath, RGB[][] saveThisImage) throws Exception {
     int w, h;
@@ -38,11 +45,19 @@ public class BPMFormat implements ImageFormatController {
     }
   }
 
+  /**
+   * Loads an image from the given file path in BMP format.
+   *
+   * @param path  The path to the BMP image file.
+   * @param name  A name associated with the image.
+   * @return      A 2D array of RGB pixels representing the loaded image.
+   * @throws Exception  If an error occurs during loading.
+   */
   @Override
   public RGB[][] load(String path, String name) throws Exception {
     File fileToLoad = new File(path);
     if (!path.toLowerCase().endsWith(".bmp")) {
-      throw new IllegalArgumentException("Input Only BPM files.");
+      throw new IllegalArgumentException("Input Only BMP files.");
     }
     if (!fileToLoad.exists()) {
       throw new FileNotFoundException("File is not present in the Directory.");
@@ -71,6 +86,4 @@ public class BPMFormat implements ImageFormatController {
     }
     return loadingBMPImage;
   }
-
-
 }

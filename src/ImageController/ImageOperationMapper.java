@@ -8,12 +8,15 @@ import ImageOperations.VerticalFlip;
 import ImageOperations.HorizontalFlip;
 import ImageOperations.MergeRGB;
 import ImageOperations.ExtractRGB;
-
 import ImageOperations.GreyScale;
 import ImageOperations.ScriptRunnable;
 import ImageOperations.ImageSaver;
 import ImageOperations.TransformColor;
 
+/**
+ * The ImageOperationMapper enum maps command strings to their corresponding ImageOperationController
+ * instances for performing various image operations.
+ */
 public enum ImageOperationMapper {
   LOAD("load", ImageLoader::new),
   BRIGHTEN("brighten", BrightenDarken::new),
@@ -34,12 +37,22 @@ public enum ImageOperationMapper {
     this.controllerSupplier = controllerSupplier;
   }
 
+  /**
+   * Get the command string associated with this mapping.
+   *
+   * @return The command string.
+   */
   public String getCommand() {
     return command;
   }
 
+  /**
+   * Create an ImageOperationController instance based on the command string.
+   *
+   * @param argument The argument for the operation.
+   * @return An ImageOperationController instance.
+   */
   public ImageOperationController createController(String argument) {
     return controllerSupplier.apply(argument);
   }
 }
-
