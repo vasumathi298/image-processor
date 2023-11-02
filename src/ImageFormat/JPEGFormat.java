@@ -17,9 +17,9 @@ public class JPEGFormat implements ImageFormatController {
 
   @Override
   public void save(String path, RGB[][] saveThisImage) throws Exception {
-    int w,h;
+    int w, h;
     File savedImage = new File(path);
-    w= saveThisImage[0].length;
+    w = saveThisImage[0].length;
     h = saveThisImage.length;
     BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
     for (int k = 0; k < h; k++) {
@@ -27,7 +27,7 @@ public class JPEGFormat implements ImageFormatController {
         int r = saveThisImage[k][l].getPixel(0);
         int g = saveThisImage[k][l].getPixel(1);
         int b = saveThisImage[k][l].getPixel(2);
-        int pixels = (r << 16) | b  | (g << 8);
+        int pixels = (r << 16) | b | (g << 8);
         newImage.setRGB(l, k, pixels);
       }
     }
@@ -57,7 +57,7 @@ public class JPEGFormat implements ImageFormatController {
         for (int k = 0; k < h; k++) {
           for (int l = 0; l < w; l++) {
             int pixels = img.getRGB(l, k);
-            int r =  0xFF & (pixels >> 16);
+            int r = 0xFF & (pixels >> 16);
             int b = 0xFF & pixels;
             int g = 0xFF & (pixels >> 8);
 
@@ -73,7 +73,6 @@ public class JPEGFormat implements ImageFormatController {
 
     return loadingJPEGImage;
   }
-
 
 
 }

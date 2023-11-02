@@ -1,7 +1,6 @@
 package ImageController;
 
 
-
 import ImageModel.RGB;
 
 

@@ -25,7 +25,6 @@ public interface ImageProcessingModel {
   void greyScaleValue(String img, String storage);
 
 
-
   void greyScaleIntensity(String img, String storage);
 
 
@@ -44,9 +43,7 @@ public interface ImageProcessingModel {
   void constructSepia(String img, String storage);
 
 
-
   void blurImage(String img, String storage);
-
 
 
   RGB[][] saveFile(String path, String img);
@@ -58,7 +55,6 @@ public interface ImageProcessingModel {
 
 
   RGB[][] retrieveImage(String img);
-
 
 
 }

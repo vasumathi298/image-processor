@@ -7,7 +7,7 @@ import ImageFormat.JPEGFormat;
 import ImageFormat.PNGFormat;
 import ImageFormat.PPMFormat;
 
-public enum ImageFormatMapper{
+public enum ImageFormatMapper {
   PPM("ppm", input -> new PPMFormat()),
   PNG("png", input -> new PNGFormat()),
   BMP("bmp", input -> new BPMFormat()),

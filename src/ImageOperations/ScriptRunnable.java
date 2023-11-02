@@ -32,7 +32,7 @@ public class ScriptRunnable implements ImageOperationController {
   public void performOperation(ImageProcessingModel imageProcessingModel) throws Exception {
     for (String runCommand : this.instructionsToRun) {
       ImageProcessingController controller = new ImageProcessingControllerImpl(null,
-               imageProcessingModel);
+              imageProcessingModel);
       Scanner sc = new Scanner(runCommand);
       controller.operationProcessor(sc);
     }

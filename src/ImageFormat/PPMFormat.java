@@ -13,8 +13,6 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 
-
-
 public class PPMFormat implements ImageFormatController {
 
   @Override
@@ -25,11 +23,11 @@ public class PPMFormat implements ImageFormatController {
       imageWriter.println(saveThisImage[0].length + " " + saveThisImage.length);
       imageWriter.println("255");
 
-      int w,h;
-      w=saveThisImage.length;
-      h= saveThisImage[0].length;
+      int w, h;
+      w = saveThisImage.length;
+      h = saveThisImage[0].length;
       for (int k = 0; k < w; k++) {
-        for (int l = 0;  l < h ; l ++) {
+        for (int l = 0; l < h; l++) {
           imageWriter.println(saveThisImage[k][l].getPixel(0));
           imageWriter.println(saveThisImage[k][l].getPixel(1));
           imageWriter.println(saveThisImage[k][l].getPixel(2));
@@ -42,6 +40,7 @@ public class PPMFormat implements ImageFormatController {
       System.out.println("File is not present in the Directory.");
     }
   }
+
   @Override
   public RGB[][] load(String path, String name) throws FileNotFoundException {
     File file = new File(path);
@@ -53,7 +52,7 @@ public class PPMFormat implements ImageFormatController {
       throw new FileNotFoundException("File is not present in the Directory.");
     }
 
-    loadedImage= readPPM(path);
+    loadedImage = readPPM(path);
     return loadedImage;
   }
 
@@ -105,7 +104,6 @@ public class PPMFormat implements ImageFormatController {
     }
     return pixels;
   }
-
 
 
 }

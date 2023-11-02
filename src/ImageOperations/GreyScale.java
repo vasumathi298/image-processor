@@ -38,8 +38,6 @@ public class GreyScale implements ImageOperationController {
   }
 
 
-
-
   private void redCompGrayOp(String[] ops, ImageProcessingModel imageProcessingModel) {
     try {
       imageProcessingModel.constructRedGreyScale(ops[2], ops[3]);

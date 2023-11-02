@@ -1,0 +1,2 @@
+public class TestOperationsForPNGImage {
+}

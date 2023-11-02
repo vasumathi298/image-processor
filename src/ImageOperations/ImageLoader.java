@@ -16,7 +16,6 @@ public class ImageLoader implements ImageOperationController {
   private final Map<String, Function<String, ImageFormatController>> imageFormatOptions = new HashMap<>();
 
 
-
   public ImageLoader(String input) {
     this.instruction = input.split(" ");
     storeImageOptions();

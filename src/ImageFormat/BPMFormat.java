@@ -17,13 +17,13 @@ public class BPMFormat implements ImageFormatController {
 
   @Override
   public void save(String filePath, RGB[][] saveThisImage) throws Exception {
-    int w,h;
+    int w, h;
     File savedImage = new File(filePath);
-    w= saveThisImage[0].length;
-    h= saveThisImage.length;
+    w = saveThisImage[0].length;
+    h = saveThisImage.length;
     BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
     for (int k = 0; k < w; k++) {
-      for (int l = 0; l< h; l++) {
+      for (int l = 0; l < h; l++) {
         int r = saveThisImage[k][l].getPixel(0);
         int g = saveThisImage[k][l].getPixel(1);
         int b = saveThisImage[k][l].getPixel(2);
@@ -52,8 +52,8 @@ public class BPMFormat implements ImageFormatController {
     int w, h;
     try {
       BufferedImage readImage = ImageIO.read(new File(path));
-      w= readImage.getWidth();
-      h= readImage.getHeight();
+      w = readImage.getWidth();
+      h = readImage.getHeight();
       loadingBMPImage = new RGB[h][w];
       for (int k = 0; k < h; k++) {
         for (int l = 0; l < w; l++) {
@@ -71,7 +71,6 @@ public class BPMFormat implements ImageFormatController {
     }
     return loadingBMPImage;
   }
-
 
 
 }

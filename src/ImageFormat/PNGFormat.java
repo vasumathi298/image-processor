@@ -19,9 +19,9 @@ public class PNGFormat implements ImageFormatController {
 
   @Override
   public void save(String path, RGB[][] saveThisImage) throws Exception {
-    int w,h;
+    int w, h;
     File savedImage = new File(path);
-    w= saveThisImage[0].length;
+    w = saveThisImage[0].length;
     h = saveThisImage.length;
     BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
     for (int k = 0; k < h; k++) {
@@ -52,7 +52,7 @@ public class PNGFormat implements ImageFormatController {
     }
 
     RGB[][] loadingPNGImage;
-    int w,h;
+    int w, h;
     try {
       BufferedImage img = ImageIO.read(new File(path));
       w = img.getWidth();
@@ -61,9 +61,9 @@ public class PNGFormat implements ImageFormatController {
       for (int k = 0; k < h; k++) {
         for (int l = 0; l < w; l++) {
           int pixels = img.getRGB(l, k);
-          int r =  0xFF  & (pixels >> 16);
+          int r = 0xFF & (pixels >> 16);
           int g = 0xFF & (pixels >> 8);
-          int b =  0xFF & pixels ;
+          int b = 0xFF & pixels;
           loadingPNGImage[k][l] = new RGB(r, g, b);
         }
       }
@@ -72,7 +72,6 @@ public class PNGFormat implements ImageFormatController {
     }
     return loadingPNGImage;
   }
-
 
 
 }

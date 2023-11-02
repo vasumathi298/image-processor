@@ -12,7 +12,6 @@ import java.util.function.Function;
 import ImageModel.ImageProcessingModel;
 
 
-
 public class ImageProcessingControllerImpl implements ImageProcessingController {
   private final InputStream inputImageStream;
   private final ImageProcessingModel imageModel;
