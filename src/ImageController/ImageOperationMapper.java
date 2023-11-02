@@ -2,17 +2,17 @@ package ImageController;
 
 import java.util.function.Function;
 
-import operations.ImageLoader;
-import  operations.BrightenDarken;
-import operations.VerticalFlip;
-import operations.HorizontalFlip;
-import  operations.MergeRGB;
-import operations.ExtractRGB;
+import ImageOperations.ImageLoader;
+import  ImageOperations.BrightenDarken;
+import ImageOperations.VerticalFlip;
+import ImageOperations.HorizontalFlip;
+import  ImageOperations.MergeRGB;
+import ImageOperations.ExtractRGB;
 
-import operations.GreyScale;
-import operations.ScriptRunnable;
-import operations.ImageSaver;
-import  operations.TransformColor;
+import ImageOperations.GreyScale;
+import ImageOperations.ScriptRunnable;
+import ImageOperations.ImageSaver;
+import  ImageOperations.TransformColor;
 
 public enum ImageOperationMapper {
   LOAD("load", ImageLoader::new),

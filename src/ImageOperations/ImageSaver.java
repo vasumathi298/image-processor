@@ -1,4 +1,4 @@
-package operations;
+package ImageOperations;
 
 import java.util.HashMap;
 import java.util.Map;

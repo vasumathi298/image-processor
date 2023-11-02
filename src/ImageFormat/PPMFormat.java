@@ -1,10 +1,8 @@
-package format;
+package ImageFormat;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import ImageController.ImageFormatController;

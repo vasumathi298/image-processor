@@ -1,14 +1,13 @@
-package operations;
+package ImageOperations;
 
 import ImageController.ImageOperationController;
 import ImageModel.ImageProcessingModel;
 
-
-public class HorizontalFlip implements ImageOperationController {
+public class VerticalFlip implements ImageOperationController {
   private final String[] instruction;
 
 
-  public HorizontalFlip(String input) {
+  public VerticalFlip(String input) {
     this.instruction = input.split(" ");
   }
 
@@ -18,11 +17,12 @@ public class HorizontalFlip implements ImageOperationController {
       if (instruction.length != 3) {
         throw new IllegalArgumentException("Enter valid command");
       }
-      imageProcessingModel.horizontalImageFlip(instruction[1], instruction[2]);
+      imageProcessingModel.verticalImageFlip(instruction[1], instruction[2]);
+      System.out.println(instruction[1] + " has been flipped vertically!");
+      System.out.println("You can proceed to next commands, save, or quit!");
     } catch (Exception e) {
       System.out.println(e);
     }
-
   }
 
 

@@ -2,10 +2,10 @@ package ImageController;
 
 import java.util.function.Function;
 
-import format.BPMFormat;
-import format.JPEGFormat;
-import format.PNGFormat;
-import format.PPMFormat;
+import ImageFormat.BPMFormat;
+import ImageFormat.JPEGFormat;
+import ImageFormat.PNGFormat;
+import ImageFormat.PPMFormat;
 
 public enum ImageFormatMapper{
   PPM("ppm", input -> new PPMFormat()),

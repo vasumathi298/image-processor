@@ -1,4 +1,4 @@
-package operations;
+package ImageOperations;
 
 
 import ImageController.ImageOperationController;
