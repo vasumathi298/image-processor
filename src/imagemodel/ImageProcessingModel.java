@@ -1,4 +1,4 @@
-package ImageModel;
+package imagemodel;
 
 
 import java.io.FileNotFoundException;
@@ -95,7 +95,7 @@ public interface ImageProcessingModel {
    *
    * @param img        The name of the source image to adjust brightness.
    * @param storage    The name to associate with the adjusted brightness image.
-   * @param incOrDecVal The increment (positive) or decrement (negative) value for brightness adjustment.
+   * @param incOrDecVal The increment or decrement value for brightness adjustment.
    */
   void brightenOrDarkenImage(String img, String storage, int incOrDecVal);
 
@@ -133,7 +133,8 @@ public interface ImageProcessingModel {
   RGB[][] saveFile(String path, String img);
 
   /**
-   * Split an image into three red, green, and blue components and store them with the provided names.
+   * Split an image into three red, green, and blue components
+   * and store them with the provided names.
    *
    * @param img      The name of the source image to split.
    * @param storage  An array containing three names to associate with the split components.

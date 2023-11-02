@@ -1,11 +1,13 @@
-package ImageOperations;
+package imageoperations;
 
-import ImageController.ImageOperationController;
-import ImageModel.ImageProcessingModel;
+import imagecontroller.ImageOperationController;
+import imagemodel.ImageProcessingModel;
 
 /**
- * The `BlurSharpen` class implements the `ImageOperationController` interface and is responsible for
- * performing blur and sharpen operations on images based on the provided instructions.
+ * The `BlurSharpen` class implements the `ImageOperationController`
+ * interface and is responsible for
+ * performing blur and sharpen operations
+ * on images based on the provided instructions.
  */
 public class BlurSharpen implements ImageOperationController {
   private final String[] instruction;
@@ -30,7 +32,8 @@ public class BlurSharpen implements ImageOperationController {
     inputFilterOperations(instruction, imageProcessingModel);
   }
 
-  private void inputFilterOperations(String[] operations, ImageProcessingModel imageProcessingModel) {
+  private void inputFilterOperations(String[] operations
+          , ImageProcessingModel imageProcessingModel) {
     if ("blur".equals(operations[1])) {
       imageBlurrer(instruction, imageProcessingModel);
     } else {

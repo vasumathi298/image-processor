@@ -1,6 +1,6 @@
-package ImageController;
+package imagecontroller;
 
-import ImageModel.RGB;
+import imagemodel.RGB;
 
 /**
  * The ImageFormatController interface defines the contract for handling different image formats.

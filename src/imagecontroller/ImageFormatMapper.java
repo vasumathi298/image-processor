@@ -1,11 +1,11 @@
-package ImageController;
+package imagecontroller;
 
 import java.util.function.Function;
 
-import ImageFormat.BPMFormat;
-import ImageFormat.JPEGFormat;
-import ImageFormat.PNGFormat;
-import ImageFormat.PPMFormat;
+import imageformat.BPMFormat;
+import imageformat.JPEGFormat;
+import imageformat.PNGFormat;
+import imageformat.PPMFormat;
 
 /**
  * The ImageFormatMapper enum maps file extensions to the corresponding ImageFormatController.

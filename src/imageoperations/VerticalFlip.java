@@ -1,10 +1,11 @@
-package ImageOperations;
+package imageoperations;
 
-import ImageController.ImageOperationController;
-import ImageModel.ImageProcessingModel;
+import imagecontroller.ImageOperationController;
+import imagemodel.ImageProcessingModel;
 
 /**
- * The `VerticalFlip` class implements the `ImageOperationController` interface and is used to perform a
+ * The `VerticalFlip` class implements the `ImageOperationController`
+ * interface and is used to perform a
  * vertical flip operation on images.
  */
 public class VerticalFlip implements ImageOperationController {
@@ -22,7 +23,7 @@ public class VerticalFlip implements ImageOperationController {
   /**
    * Performs a vertical flip operation on the image using the provided `ImageProcessingModel`.
    *
-   * @param imageProcessingModel The image processing model responsible for applying the vertical flip.
+   * @param imageProcessingModel model responsible for applying the vertical flip.
    */
   @Override
   public void performOperation(ImageProcessingModel imageProcessingModel) {

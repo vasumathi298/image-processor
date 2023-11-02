@@ -1,11 +1,14 @@
-package ImageOperations;
+package imageoperations;
 
-import ImageController.ImageOperationController;
-import ImageModel.ImageProcessingModel;
+import imagecontroller.ImageOperationController;
+import imagemodel.ImageProcessingModel;
 
 /**
- * The `BrightenDarken` class implements the `ImageOperationController` interface and is responsible for
- * adjusting the brightness of an image, either by brightening or darkening it, based on the provided instructions.
+ * The `BrightenDarken` class implements the `ImageOperationController`
+ * interface and is responsible for
+ * adjusting the brightness of an image,
+ * either by brightening or darkening it,
+ * based on the provided instructions.
  */
 public class BrightenDarken implements ImageOperationController {
   private final String[] instruction;
@@ -20,7 +23,8 @@ public class BrightenDarken implements ImageOperationController {
   }
 
   /**
-   * Performs the specified brighten or darken operation on the image using the provided `ImageProcessingModel`.
+   * Performs the specified brighten or darken operation
+   * on the image using the provided `ImageProcessingModel`.
    * It also prints a message indicating the brightness change.
    *
    * @param imageProcessingModel The image processing model responsible for applying the operation.
@@ -31,7 +35,8 @@ public class BrightenDarken implements ImageOperationController {
       if (instruction.length != 4) {
         throw new IllegalArgumentException("Enter valid command");
       }
-      imageProcessingModel.brightenOrDarkenImage(instruction[2], instruction[3], Integer.parseInt(instruction[1]));
+      imageProcessingModel.brightenOrDarkenImage(instruction[2],
+              instruction[3], Integer.parseInt(instruction[1]));
       String action = Integer.parseInt(instruction[1]) < 0 ? "decreased" : "increased";
       int changeAmount = Math.abs(Integer.parseInt(instruction[1]));
 

@@ -1,6 +1,5 @@
-package ImageController;
+package imagecontroller;
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +8,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Function;
 
-import ImageModel.ImageProcessingModel;
+import imagemodel.ImageProcessingModel;
 
 /**
  * The ImageProcessingControllerImpl class implements the ImageProcessingController interface and
@@ -18,7 +17,8 @@ import ImageModel.ImageProcessingModel;
 public class ImageProcessingControllerImpl implements ImageProcessingController {
   private final InputStream inputImageStream;
   private final ImageProcessingModel imageModel;
-  private final Map<String, Function<Scanner, ImageOperationController>> knownCommands = new HashMap<>();
+  private final Map<String, Function<Scanner,
+          ImageOperationController>> knownCommands = new HashMap<>();
   private List<String> operations;
 
   /**
@@ -72,6 +72,7 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
         operationController = commandLine.apply(userIO);
         operationController.performOperation(this.imageModel);
       }
-    } while (userIO.hasNext());
+    }
+    while (userIO.hasNext());
   }
 }

@@ -1,4 +1,4 @@
-package ImageFormat;
+package imageformat;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 
 import javax.imageio.ImageIO;
 
-import ImageController.ImageFormatController;
-import ImageModel.RGB;
+import imagecontroller.ImageFormatController;
+import imagemodel.RGB;
 
 /**
  * The PNGFormat class implements the ImageFormatController interface
@@ -24,7 +24,8 @@ public class PNGFormat implements ImageFormatController {
    */
   @Override
   public void save(String path, RGB[][] saveThisImage) throws Exception {
-    int w, h;
+    int w;
+    int h;
     File savedImage = new File(path);
     w = saveThisImage[0].length;
     h = saveThisImage.length;
@@ -65,7 +66,8 @@ public class PNGFormat implements ImageFormatController {
     }
 
     RGB[][] loadingPNGImage;
-    int w, h;
+    int w;
+    int h;
     try {
       BufferedImage img = ImageIO.read(new File(path));
       w = img.getWidth();

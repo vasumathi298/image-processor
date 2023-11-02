@@ -1,4 +1,4 @@
-package ImageOperations;
+package imageoperations;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import ImageController.ImageOperationController;
-import ImageController.ImageProcessingController;
-import ImageController.ImageProcessingControllerImpl;
-import ImageModel.ImageProcessingModel;
+import imagecontroller.ImageOperationController;
+import imagecontroller.ImageProcessingController;
+import imagecontroller.ImageProcessingControllerImpl;
+import imagemodel.ImageProcessingModel;
 
 /**
- * The `ScriptRunnable` class implements the `ImageOperationController` interface and is used to run
+ * The `ScriptRunnable` class implements the `ImageOperationController`
+ * interface and is used to run
  * a script file containing a sequence of image processing instructions.
  */
 public class ScriptRunnable implements ImageOperationController {
@@ -34,16 +35,17 @@ public class ScriptRunnable implements ImageOperationController {
   }
 
   /**
-   * Executes the list of image processing instructions from the script using the provided
-   * `ImageProcessingModel`.
+   * Executes the list of image processing instructions
+   * from the script using the provided ImageProcessingModel`.
    *
-   * @param imageProcessingModel The image processing model responsible for applying the instructions.
+   * @param imageProcessingModel  model responsible for applying the instructions.
    * @throws Exception If an error occurs during script execution.
    */
   @Override
   public void performOperation(ImageProcessingModel imageProcessingModel) throws Exception {
     for (String runCommand : this.instructionsToRun) {
-      ImageProcessingController controller = new ImageProcessingControllerImpl(null, imageProcessingModel);
+      ImageProcessingController controller =
+              new ImageProcessingControllerImpl(null, imageProcessingModel);
       Scanner sc = new Scanner(runCommand);
       controller.operationProcessor(sc);
     }

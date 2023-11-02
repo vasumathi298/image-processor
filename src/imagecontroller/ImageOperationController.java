@@ -1,6 +1,6 @@
-package ImageController;
+package imagecontroller;
 
-import ImageModel.ImageProcessingModel;
+import imagemodel.ImageProcessingModel;
 
 /**
  * The ImageOperationController interface defines the contract for performing image operations

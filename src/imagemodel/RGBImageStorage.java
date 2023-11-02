@@ -1,4 +1,4 @@
-package ImageModel;
+package imagemodel;
 
 import java.util.HashMap;
 import java.util.Map;

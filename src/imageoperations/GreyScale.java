@@ -1,11 +1,13 @@
-package ImageOperations;
+package imageoperations;
 
-import ImageController.ImageOperationController;
-import ImageModel.ImageProcessingModel;
+import imagecontroller.ImageOperationController;
+import imagemodel.ImageProcessingModel;
 
 /**
- * The `GreyScale` class implements the `ImageOperationController` interface and provides operations
- * to generate various grayscale components of an image based on the given instructions.
+ * The `GreyScale` class implements the `ImageOperationController`
+ * interface and provides operations
+ * to generate various grayscale components
+ * of an image based on the given instructions.
  */
 
 public class GreyScale implements ImageOperationController {
@@ -55,7 +57,8 @@ public class GreyScale implements ImageOperationController {
   private void redCompGrayOp(String[] ops, ImageProcessingModel imageProcessingModel) {
     try {
       imageProcessingModel.constructRedGreyScale(ops[2], ops[3]);
-      System.out.println("Red grayscale component of " + ops[2] + " has been generated successfully.");
+      System.out.println("Red grayscale component of "
+              + ops[2] + " has been generated successfully.");
     } catch (Exception e) {
       System.out.println(e);
     }
@@ -64,7 +67,8 @@ public class GreyScale implements ImageOperationController {
   private void greenCompGrayOp(String[] ops, ImageProcessingModel imageProcessingModel) {
     try {
       imageProcessingModel.constructGreenGreyScale(ops[2], ops[3]);
-      System.out.println("Green grayscale component of " + ops[2] + " has been generated successfully.");
+      System.out.println("Green grayscale component of "
+              + ops[2] + " has been generated successfully.");
     } catch (Exception e) {
       System.out.println(e);
     }
@@ -73,7 +77,8 @@ public class GreyScale implements ImageOperationController {
   private void blueCompGrayOp(String[] ops, ImageProcessingModel imageProcessingModel) {
     try {
       imageProcessingModel.constructBlueGreyScale(ops[2], ops[3]);
-      System.out.println("Blue grayscale component of " + ops[2] + " has been generated successfully.");
+      System.out.println("Blue grayscale component of "
+              + ops[2] + " has been generated successfully.");
     } catch (Exception e) {
       System.out.println(e);
     }
@@ -82,7 +87,8 @@ public class GreyScale implements ImageOperationController {
   private void valueCompGrayOp(String[] ops, ImageProcessingModel imageProcessingModel) {
     try {
       imageProcessingModel.greyScaleValue(ops[2], ops[3]);
-      System.out.println("Value grayscale component of " + ops[2] + " has been generated successfully.");
+      System.out.println("Value grayscale component of " +
+              ops[2] + " has been generated successfully.");
     } catch (Exception e) {
       System.out.println(e);
     }
@@ -91,7 +97,8 @@ public class GreyScale implements ImageOperationController {
   private void lumaCompGrayOp(String[] ops, ImageProcessingModel imageProcessingModel) {
     try {
       imageProcessingModel.greyScaleLuma(ops[2], ops[3]);
-      System.out.println("Luma grayscale component of " + ops[2] + " has been generated successfully.");
+      System.out.println("Luma grayscale component of "
+              + ops[2] + " has been generated successfully.");
     } catch (Exception e) {
       System.out.println(e);
     }
@@ -101,7 +108,8 @@ public class GreyScale implements ImageOperationController {
   private void intensityCompGrayOp(String[] ops, ImageProcessingModel imageProcessingModel) {
     try {
       imageProcessingModel.greyScaleIntensity(ops[2], ops[3]);
-      System.out.println("Intensity grayscale component of " + ops[2] + " has been generated successfully.");
+      System.out.println("Intensity grayscale component of "
+              + ops[2] + " has been generated successfully.");
     } catch (Exception e) {
       System.out.println(e);
     }

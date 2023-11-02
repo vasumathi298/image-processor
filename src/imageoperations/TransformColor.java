@@ -1,12 +1,13 @@
-package ImageOperations;
+package imageoperations;
 
 import java.util.Objects;
 
-import ImageController.ImageOperationController;
-import ImageModel.ImageProcessingModel;
+import imagecontroller.ImageOperationController;
+import imagemodel.ImageProcessingModel;
 
 /**
- * The `TransformColor` class implements the `ImageOperationController` interface and is used to apply
+ * The `TransformColor` class implements the `ImageOperationController`
+ * interface and is used to apply
  * color transformation operations to images.
  */
 public class TransformColor implements ImageOperationController {
@@ -22,9 +23,10 @@ public class TransformColor implements ImageOperationController {
   }
 
   /**
-   * Performs a color transformation operation on the image using the provided `ImageProcessingModel`.
+   * Performs a color transformation operation on the
+   * image using the provided `ImageProcessingModel`.
    *
-   * @param imageProcessingModel The image processing model responsible for applying the transformation.
+   * @param imageProcessingModel model responsible for applying the transformation.
    */
   @Override
   public void performOperation(ImageProcessingModel imageProcessingModel) {

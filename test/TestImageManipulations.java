@@ -3,14 +3,18 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 
-import ImageController.ImageProcessingController;
-import ImageController.ImageProcessingControllerImpl;
-import ImageModel.ImageProcessingModel;
-import ImageModel.ImageProcessingModelImpl;
-import ImageModel.RGB;
+import imagecontroller.ImageProcessingController;
+import imagecontroller.ImageProcessingControllerImpl;
+import imagemodel.ImageProcessingModel;
+import imagemodel.ImageProcessingModelImpl;
+import imagemodel.RGB;
 
 import static org.junit.Assert.assertTrue;
 
+
+/**
+ * Testing Image Manipulation operations.
+ */
 public class TestImageManipulations {
 
   @Test
@@ -24,6 +28,7 @@ public class TestImageManipulations {
     RGB[][] image = model.retrieveImage("manhattan-small");
     assertTrue(image.length > 0);
   }
+
   @Test(expected = FileNotFoundException.class)
   public void testLoadImageWrongObject() throws Exception {
     String input = "load output/a.ppm a";

@@ -1,21 +1,21 @@
-package ImageController;
+package imagecontroller;
 
 import java.util.function.Function;
 
-import ImageOperations.ImageLoader;
-import ImageOperations.BrightenDarken;
-import ImageOperations.VerticalFlip;
-import ImageOperations.HorizontalFlip;
-import ImageOperations.MergeRGB;
-import ImageOperations.ExtractRGB;
-import ImageOperations.GreyScale;
-import ImageOperations.ScriptRunnable;
-import ImageOperations.ImageSaver;
-import ImageOperations.TransformColor;
+import imageoperations.ImageLoader;
+import imageoperations.BrightenDarken;
+import imageoperations.VerticalFlip;
+import imageoperations.HorizontalFlip;
+import imageoperations.MergeRGB;
+import imageoperations.ExtractRGB;
+import imageoperations.GreyScale;
+import imageoperations.ScriptRunnable;
+import imageoperations.ImageSaver;
+import imageoperations.TransformColor;
 
 /**
- * The ImageOperationMapper enum maps command strings to their corresponding ImageOperationController
- * instances for performing various image operations.
+ * The ImageOperationMapper enum maps command strings to their corresponding
+ * ImageOperationController instances for performing various image operations.
  */
 public enum ImageOperationMapper {
   LOAD("load", ImageLoader::new),
@@ -32,7 +32,8 @@ public enum ImageOperationMapper {
   private final String command;
   private final Function<String, ImageOperationController> controllerSupplier;
 
-  ImageOperationMapper(String command, Function<String, ImageOperationController> controllerSupplier) {
+  ImageOperationMapper(String command,
+                       Function<String, ImageOperationController> controllerSupplier) {
     this.command = command;
     this.controllerSupplier = controllerSupplier;
   }

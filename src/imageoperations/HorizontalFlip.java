@@ -1,10 +1,11 @@
-package ImageOperations;
+package imageoperations;
 
-import ImageController.ImageOperationController;
-import ImageModel.ImageProcessingModel;
+import imagecontroller.ImageOperationController;
+import imagemodel.ImageProcessingModel;
 
 /**
- * The `HorizontalFlip` class implements the `ImageOperationController` interface and provides an operation
+ * The `HorizontalFlip` class implements the `ImageOperationController`
+ * interface and provides an operation
  * to horizontally flip an image based on the given instructions.
  */
 public class HorizontalFlip implements ImageOperationController {

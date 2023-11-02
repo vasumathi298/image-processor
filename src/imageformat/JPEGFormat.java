@@ -1,4 +1,4 @@
-package ImageFormat;
+package imageformat;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 
 import javax.imageio.ImageIO;
 
-import ImageController.ImageFormatController;
-import ImageModel.RGB;
+import imagecontroller.ImageFormatController;
+import imagemodel.RGB;
 
 /**
  * The JPEGFormat class implements the ImageFormatController interface
@@ -24,7 +24,8 @@ public class JPEGFormat implements ImageFormatController {
    */
   @Override
   public void save(String path, RGB[][] saveThisImage) throws Exception {
-    int w, h;
+    int w;
+    int h;
     File savedImage = new File(path);
     w = saveThisImage[0].length;
     h = saveThisImage.length;
@@ -46,7 +47,8 @@ public class JPEGFormat implements ImageFormatController {
   }
 
   /**
-   * Loads an image from the given file path in JPEG format (both .jpg and .jpeg extensions are supported).
+   * Loads an image from the given file path in JPEG format
+   * (both .jpg and .jpeg extensions are supported).
    *
    * @param path  The path to the JPEG image file.
    * @param name  A name associated with the image.
@@ -61,7 +63,8 @@ public class JPEGFormat implements ImageFormatController {
     }
 
     RGB[][] loadingJPEGImage;
-    int w, h;
+    int w;
+    int h;
     if ((path.toLowerCase().endsWith(".jpeg")) || (path.toLowerCase().endsWith(".jpg"))) {
       try {
         BufferedImage img = ImageIO.read(new File(path));

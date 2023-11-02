@@ -1,4 +1,4 @@
-package ImageController;
+package imagecontroller;
 
 import java.util.Scanner;
 

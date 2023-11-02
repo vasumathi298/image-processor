@@ -1,11 +1,13 @@
-package ImageOperations;
+package imageoperations;
 
-import ImageController.ImageOperationController;
-import ImageModel.ImageProcessingModel;
+import imagecontroller.ImageOperationController;
+import imagemodel.ImageProcessingModel;
 
 /**
- * The `ExtractRGB` class implements the `ImageOperationController` interface and is responsible for
- * extracting the individual red, green, and blue grayscale components of an image based on the provided instructions.
+ * The `ExtractRGB` class implements the `ImageOperationController`
+ * interface and is responsible for
+ * extracting the individual red, green, and blue
+ * grayscale components of an image based on the provided instructions.
  */
 public class ExtractRGB implements ImageOperationController {
   private final String[] instruction;
@@ -20,8 +22,10 @@ public class ExtractRGB implements ImageOperationController {
   }
 
   /**
-   * Performs the extraction of individual red, green, and blue grayscale components of the image
-   * using the provided `ImageProcessingModel`. It also prints a message indicating the successful extraction.
+   * Performs the extraction of individual red, green,
+   * and blue grayscale components of the image
+   * using the provided `ImageProcessingModel`.
+   * It also prints a message indicating the successful extraction.
    *
    * @param imageProcessingModel The image processing model responsible for applying the operation.
    */
@@ -33,7 +37,8 @@ public class ExtractRGB implements ImageOperationController {
       }
       imageProcessingModel.imageSplitter(instruction[1], instruction);
       String component = instruction[1];
-      String printResult = "The input " + component + " has been separated into individual red, green, and blue grayscale components.";
+      String printResult = "The input " + component +
+              " has been separated into individual red, green, and blue grayscale components.";
       System.out.println(printResult);
 
     } catch (Exception e) {

@@ -1,4 +1,4 @@
-package ImageFormat;
+package imageformat;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 
 import javax.imageio.ImageIO;
 
-import ImageController.ImageFormatController;
-import ImageModel.RGB;
+import imagecontroller.ImageFormatController;
+import imagemodel.RGB;
 
 /**
  * The BPMFormat class implements the ImageFormatController interface
@@ -24,7 +24,8 @@ public class BPMFormat implements ImageFormatController {
    */
   @Override
   public void save(String filePath, RGB[][] saveThisImage) throws Exception {
-    int w, h;
+    int w;
+    int h;
     File savedImage = new File(filePath);
     w = saveThisImage[0].length;
     h = saveThisImage.length;
@@ -64,7 +65,8 @@ public class BPMFormat implements ImageFormatController {
     }
 
     RGB[][] loadingBMPImage;
-    int w, h;
+    int w;
+    int h;
     try {
       BufferedImage readImage = ImageIO.read(new File(path));
       w = readImage.getWidth();

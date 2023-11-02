@@ -1,10 +1,11 @@
-package ImageOperations;
+package imageoperations;
 
-import ImageController.ImageOperationController;
-import ImageModel.ImageProcessingModel;
+import imagecontroller.ImageOperationController;
+import imagemodel.ImageProcessingModel;
 
 /**
- * The `MergeRGB` class implements the `ImageOperationController` interface and provides functionality
+ * The `MergeRGB` class implements the `ImageOperationController`
+ * interface and provides functionality
  * to merge RGB components of an image based on the provided instructions.
  */
 public class MergeRGB implements ImageOperationController {

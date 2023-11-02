@@ -1,4 +1,4 @@
-package ImageModel;
+package imagemodel;
 
 /**
  * The `RGB` class represents a pixel with red, green, and blue color channels.

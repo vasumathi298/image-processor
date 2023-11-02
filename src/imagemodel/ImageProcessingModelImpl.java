@@ -1,4 +1,4 @@
-package ImageModel;
+package imagemodel;
 
 
 import java.io.FileNotFoundException;
@@ -108,7 +108,8 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     RGB[][] redGrayScaleImage = new RGB[imageHeight][imageWidth];
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
-        redGrayScaleImage[k][l] = new RGB(getRGBPixelValue(redComp[k][l]), getRGBPixelValue(redComp[k][l]),
+        redGrayScaleImage[k][l] = new RGB(getRGBPixelValue(redComp[k][l]),
+                getRGBPixelValue(redComp[k][l]),
                 getRGBPixelValue(redComp[k][l]));
       }
     }
@@ -133,7 +134,8 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     RGB[][] greenGrayScaleImage = new RGB[imageHeight][imageWidth];
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
-        greenGrayScaleImage[k][l] = new RGB(getRGBPixelValue(greenComp[k][l]), getRGBPixelValue(greenComp[k][l]),
+        greenGrayScaleImage[k][l] = new RGB(getRGBPixelValue(greenComp[k][l]),
+                getRGBPixelValue(greenComp[k][l]),
                 getRGBPixelValue(greenComp[k][l]));
       }
     }
@@ -160,7 +162,8 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     blueGrayScaleImage = new RGB[imageHeight][imageWidth];
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
-        blueGrayScaleImage[k][l] = new RGB(getRGBPixelValue(greenComp[k][l]), getRGBPixelValue(greenComp[k][l]),
+        blueGrayScaleImage[k][l] = new RGB(getRGBPixelValue(greenComp[k][l]),
+                getRGBPixelValue(greenComp[k][l]),
                 getRGBPixelValue(greenComp[k][l]));
       }
     }
@@ -178,7 +181,8 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     valueGrayImage = new RGB[imageHeight][imageWidth];
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
-        valueGrayImage[k][l] = new RGB(getRGBPixelValue(retrieveImage[k][l]), getRGBPixelValue(retrieveImage[k][l]),
+        valueGrayImage[k][l] = new RGB(getRGBPixelValue(retrieveImage[k][l]),
+                getRGBPixelValue(retrieveImage[k][l]),
                 getRGBPixelValue(retrieveImage[k][l]));
       }
     }
@@ -186,7 +190,9 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
   }
 
   private int findWeightedPixelSum(RGB rgbPixels) {
-    return (int) (0.2126 * rgbPixels.getPixel(0) + 0.7152 * rgbPixels.getPixel(1) + 0.0722 * rgbPixels.getPixel(2));
+    return (int) (0.2126 * rgbPixels.getPixel(0)
+            + 0.7152 * rgbPixels.getPixel(1)
+            + 0.0722 * rgbPixels.getPixel(2));
   }
 
 
@@ -201,7 +207,8 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
 
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
-        lumaGrayImage[k][l] = new RGB(findWeightedPixelSum(retrieveImage[k][l]), findWeightedPixelSum(retrieveImage[k][l]),
+        lumaGrayImage[k][l] = new RGB(findWeightedPixelSum(retrieveImage[k][l]),
+                findWeightedPixelSum(retrieveImage[k][l]),
                 findWeightedPixelSum(retrieveImage[k][l]));
       }
     }
@@ -225,7 +232,8 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     intensityGrayImage = new RGB[imageHeight][imageWidth];
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
-        intensityGrayImage[k][l] = new RGB(getPixelAverage(intensityGrayImage[k][l]), getPixelAverage(intensityGrayImage[k][l]),
+        intensityGrayImage[k][l] = new RGB(getPixelAverage(intensityGrayImage[k][l]),
+                getPixelAverage(intensityGrayImage[k][l]),
                 getPixelAverage(intensityGrayImage[k][l]));
       }
     }
@@ -243,7 +251,9 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
         bOrDImage[k][l] = retrieveImage[k][l];
-        int redComp, greenComp, blueComp;
+        int redComp;
+        int greenComp;
+        int blueComp;
         if (value < 0) {
           redComp = Math.max((retrieveImage[k][l].getPixel(0) + value), 0);
           greenComp = Math.max((retrieveImage[k][l].getPixel(1) + value), 0);
@@ -296,9 +306,15 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
 
 
   private RGB generateSepiaTone(RGB inputPixel) {
-    int sepiaRed = (int) ((0.393 * inputPixel.getPixel(0)) + (0.769 * inputPixel.getPixel(1)) + (0.189 * inputPixel.getPixel(2)));
-    int sepiaGreen = (int) ((0.349 * inputPixel.getPixel(0)) + (0.686 * inputPixel.getPixel(1)) + (0.168 * inputPixel.getPixel(2)));
-    int sepiaBlue = (int) ((0.272 * inputPixel.getPixel(0)) + (0.534 * inputPixel.getPixel(1)) + (0.131 * inputPixel.getPixel(2)));
+    int sepiaRed = (int) ((0.393 * inputPixel.getPixel(0))
+            + (0.769 * inputPixel.getPixel(1))
+            + (0.189 * inputPixel.getPixel(2)));
+    int sepiaGreen = (int) ((0.349 * inputPixel.getPixel(0))
+            + (0.686 * inputPixel.getPixel(1))
+            + (0.168 * inputPixel.getPixel(2)));
+    int sepiaBlue = (int) ((0.272 * inputPixel.getPixel(0))
+            + (0.534 * inputPixel.getPixel(1))
+            + (0.131 * inputPixel.getPixel(2)));
     sepiaRed = Math.min(sepiaRed, 255);
     sepiaGreen = Math.min(sepiaGreen, 255);
     sepiaBlue = Math.min(sepiaBlue, 255);
@@ -338,6 +354,7 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
             1.0 / 8, 1.0 / 4, 1.0 / 8,
             1.0 / 16, 1.0 / 8, 1.0 / 16
     };
+
 
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
@@ -380,7 +397,9 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
             {-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8}
     };
 
-    int nR, nG, nB;
+    int nR;
+    int nG;
+    int nB;
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
         double redSumComp = 0.0;
@@ -410,7 +429,9 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
   @Override
   public void imageSplitter(String imageFind, String[] storeFind) {
     findImgFromRGBStorage(imageFind);
-    RGB[][] redGrayScaleImage, greenGrayScaleImage, blueGrayScaleImage;
+    RGB[][] redGrayScaleImage;
+    RGB[][] greenGrayScaleImage;
+    RGB[][] blueGrayScaleImage;
     RGB[][] retrieveImage = rgbImageStore.retrieveImage(imageFind);
     redGrayScaleImage = constructRedGreyScaleImage(retrieveImage);
     this.rgbImageStore.storeImage(storeFind[2], redGrayScaleImage);
@@ -436,7 +457,8 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
       mergedImg = new RGB[retrivedRedGrayImg.length][retrivedRedGrayImg[0].length];
       for (int k = 0; k < retrivedRedGrayImg.length; k++) {
         for (int l = 0; l < retrivedRedGrayImg[0].length; l++) {
-          mergedImg[k][l] = new RGB(retrivedRedGrayImg[k][l].getPixel(0), retrivedGreenGrayImg[k][l].getPixel(1),
+          mergedImg[k][l] = new RGB(retrivedRedGrayImg[k][l].getPixel(0),
+                  retrivedGreenGrayImg[k][l].getPixel(1),
                   retrivedBlueGrayImg[k][l].getPixel(2));
         }
       }
@@ -446,7 +468,8 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     }
   }
 
-  private boolean areGrayImagesCompatible(RGB[][] redGrayImg, RGB[][] greenGrayImg, RGB[][] blueGrayImg) {
+  private boolean areGrayImagesCompatible(RGB[][] redGrayImg,
+                                          RGB[][] greenGrayImg, RGB[][] blueGrayImg) {
     return redGrayImg.length == greenGrayImg.length
             && greenGrayImg.length == blueGrayImg.length
             && redGrayImg.length == blueGrayImg.length

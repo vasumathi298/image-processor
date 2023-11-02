@@ -1,12 +1,12 @@
-package ImageFormat;
+package imageformat;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import ImageController.ImageFormatController;
-import ImageModel.RGB;
+import imagecontroller.ImageFormatController;
+import imagemodel.RGB;
 
 
 import java.io.FileOutputStream;
@@ -33,7 +33,8 @@ public class PPMFormat implements ImageFormatController {
       imageWriter.println(saveThisImage[0].length + " " + saveThisImage.length);
       imageWriter.println("255");
 
-      int w, h;
+      int w;
+      int h;
       w = saveThisImage.length;
       h = saveThisImage[0].length;
       for (int k = 0; k < w; k++) {
