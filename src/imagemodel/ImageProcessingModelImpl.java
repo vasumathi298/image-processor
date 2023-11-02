@@ -348,13 +348,11 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     int imageHeight = retrieveImage.length;
     int imageWidth = retrieveImage[0].length;
     RGB[][] blurredImage = new RGB[imageHeight][imageWidth];
-
     double[] gaussianKernel = {
-            1.0 / 16, 1.0 / 8, 1.0 / 16,
-            1.0 / 8, 1.0 / 4, 1.0 / 8,
-            1.0 / 16, 1.0 / 8, 1.0 / 16
-    };
-
+      1.0 / 16, 1.0 / 8,
+      1.0 / 16, 1.0 / 8,
+      1.0 / 4, 1.0 / 8,
+      1.0 / 16, 1.0 / 8, 1.0 / 16};
 
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {

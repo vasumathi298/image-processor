@@ -49,7 +49,8 @@ public class TestOperationsForImage {
    */
   @Test
   public void testFlipHorizontal() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nhorizontal-flip manhattan-small manhattan-small-horizontal";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "horizontal-flip manhattan-small manhattan-small-horizontal";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -62,7 +63,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testFlipVertical() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nvertical-flip manhattan-small manhattan-small-vertical";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "vertical-flip manhattan-small manhattan-small-vertical";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -77,7 +79,8 @@ public class TestOperationsForImage {
    */
   @Test
   public void testBrightenImage() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nbrighten +50 manhattan-small manhattan-small-brighter-by-50";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "brighten +50 manhattan-small manhattan-small-brighter-by-50";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -90,7 +93,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testDarkenImage() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nbrighten -50 manhattan-small manhattan-small-darker-by-50";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "brighten -50 manhattan-small manhattan-small-darker-by-50";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -102,8 +106,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testFlipVerticalHorizontal() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nvertical-flip manhattan-small manhattan-small-vertical" +
-            "\nhorizontal-flip manhattan-small manhattan-small-vertical-horizontal";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "vertical-flip manhattan-small manhattan-small-vertical"
+            + "\nhorizontal-flip manhattan-small manhattan-small-vertical-horizontal";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -116,7 +121,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testRedGreyScale() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\ngreyscale red-component manhattan-small manhattan-small-red-grey";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "greyscale red-component manhattan-small manhattan-small-red-grey";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -128,7 +134,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testGreenGreyScale() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\ngreyscale green-component manhattan-small manhattan-small-green-grey";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "greyscale green-component manhattan-small manhattan-small-green-grey";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -140,7 +147,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testBlueGreyScale() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\ngreyscale blue-component manhattan-small manhattan-small-blue-grey";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "greyscale blue-component manhattan-small manhattan-small-blue-grey";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -153,7 +161,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testLumaGreyScale() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\ngreyscale luma-component manhattan-small manhattan-small-luma-greyscale";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "greyscale luma-component manhattan-small manhattan-small-luma-greyscale";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -165,7 +174,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testIntensityGreyScale() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\ngreyscale intensity-component manhattan-small manhattan-small-intensity-greyscale";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "greyscale intensity-component manhattan-small manhattan-small-intensity-greyscale";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -177,7 +187,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testValueyGreyScale() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\ngreyscale value-component manhattan-small manhattan-small-value-greyscale";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "greyscale value-component manhattan-small manhattan-small-value-greyscale";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -189,8 +200,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testRgbSplit() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nrgb-split manhattan-small " +
-            "manhattan-small-red-grey manhattan-small-green-grey manhattan-small-blue-grey";
+    String input = "load output/manhattan-small.png manhattan-small\nrgb-split manhattan-small "
+            + "manhattan-small-red-grey manhattan-small-green-grey manhattan-small-blue-grey";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -209,7 +220,8 @@ public class TestOperationsForImage {
   public void testRgbCombine() throws Exception {
     String input = "load output/manhattan-small.png manhattan-small\nrgb-split manhattan-small "
             + "manhattan-small-red-grey manhattan-small-green-grey manhattan-small-blue-grey\n"
-            + "rgb-combine manhattan-small-red-grey manhattan-small-green-grey manhattan-small-blue-grey rgb-combine-image";
+            + "rgb-combine manhattan-small-red-grey manhattan-small-green-grey "
+            + "manhattan-small-blue-grey rgb-combine-image";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -221,7 +233,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testSepiaTone() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\ncolor-transform sepia manhattan-small manhattan-small-sepia";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "color-transform sepia manhattan-small manhattan-small-sepia";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -233,7 +246,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testFilterBlur() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nfilter blur manhattan-small manhattan-small-blur";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "filter blur manhattan-small manhattan-small-blur";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -245,7 +259,8 @@ public class TestOperationsForImage {
 
   @Test
   public void testFilterSharpen() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nfilter sharpen manhattan-small manhattan-small-sharpen";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "filter sharpen manhattan-small manhattan-small-sharpen";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -257,9 +272,10 @@ public class TestOperationsForImage {
 
   @Test
   public void testSaveImage() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nbrighten 20 manhattan-small manhattan-small-brighter-test\n"
-            + "save output/manhattan-small.png manhattan-small-brighter-test\n" +
-            "load output/manhattan-small-brighter-test.png manhattan-copy";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "brighten 20 manhattan-small manhattan-small-brighter-test\n"
+            + "save output/manhattan-small.png manhattan-small-brighter-test\n"
+            + "load output/manhattan-small-brighter-test.png manhattan-copy";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -271,8 +287,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadPNGSavePPM() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nsave output/manhattan-small.png manhattan-small-ppm.png\n" +
-            "load output/manhattan-small-ppm.ppm manhattan-small-png-ppm";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "save output/manhattan-small.png manhattan-small-ppm.png\n"
+            + "load output/manhattan-small-ppm.ppm manhattan-small-png-ppm";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -285,8 +302,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadPNGSaveBMP() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nsave output/manhattan-small.bmp manhattan-small\n" +
-            "load output/manhattan-small.bmp manhattan-small-bmp";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "save output/manhattan-small.bmp manhattan-small\n"
+            + "load output/manhattan-small.bmp manhattan-small-bmp";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -298,8 +316,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadPNGSaveJPEG() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\nsave output/manhattan-small.jpeg manhattan-small-jpeg\n" +
-            "load output/manhattan-small-jpeg.jpeg manhattan-small-jpeg-test";
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "save output/manhattan-small.jpeg manhattan-small-jpeg\n"
+            + "load output/manhattan-small-jpeg.jpeg manhattan-small-jpeg-test";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -311,8 +330,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadJPEGSavePNG() throws Exception {
-    String input = "load output/manhattan-small.jpeg manhattan-small\nsave output/manhattan-small.png manhattan-small-png\n" +
-            "load output/manhattan-small-png.png manhattan-small-png-test";
+    String input = "load output/manhattan-small.jpeg manhattan-small\n"
+            + "save output/manhattan-small.png manhattan-small-png\n"
+            + "load output/manhattan-small-png.png manhattan-small-png-test";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -324,8 +344,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadJPEGSaveBPM() throws Exception {
-    String input = "load output/manhattan-small.jpeg manhattan-small\nsave output/manhattan-small.bpm manhattan-small-bpm\n" +
-            "load output/manhattan-small-bpm.bpm manhattan-small-bpm-test";
+    String input = "load output/manhattan-small.jpeg manhattan-small\n"
+            + "save output/manhattan-small.bpm manhattan-small-bpm\n"
+            + "load output/manhattan-small-bpm.bpm manhattan-small-bpm-test";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -337,8 +358,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadJPEGSavePPM() throws Exception {
-    String input = "load output/manhattan-small.jpeg manhattan-small\nsave output/manhattan-small.ppm manhattan-small-ppm\n" +
-            "load output/manhattan-small-ppm.bpm manhattan-small-ppm-test";
+    String input = "load output/manhattan-small.jpeg manhattan-small\n"
+            + "save output/manhattan-small.ppm manhattan-small-ppm\n"
+            + "load output/manhattan-small-ppm.bpm manhattan-small-ppm-test";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -350,8 +372,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadPPMtoJPEG() throws Exception {
-    String input = "load output/manhattan-small.ppm manhattan-small\nsave output/manhattan-small.jpeg manhattan-small-jpeg\n" +
-            "load output/manhattan-small-jpeg.jpeg manhattan-small-jpeg-test";
+    String input = "load output/manhattan-small.ppm manhattan-small\n"
+            + "save output/manhattan-small.jpeg manhattan-small-jpeg\n"
+            + "load output/manhattan-small-jpeg.jpeg manhattan-small-jpeg-test";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -363,8 +386,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadPPMtoPNG() throws Exception {
-    String input = "load output/manhattan-small.ppm manhattan-small\nsave output/manhattan-small.png manhattan-small-png\n" +
-            "load output/manhattan-small-png.png manhattan-small-png-test";
+    String input = "load output/manhattan-small.ppm manhattan-small\n"
+            + "save output/manhattan-small.png manhattan-small-png\n"
+            + "load output/manhattan-small-png.png manhattan-small-png-test";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -376,8 +400,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadPPMtoBPM() throws Exception {
-    String input = "load output/manhattan-small.ppm manhattan-small\nsave output/manhattan-small.bpm manhattan-small-bpm\n" +
-            "load output/manhattan-small-bpm.bpm manhattan-small-bpm-test";
+    String input = "load output/manhattan-small.ppm manhattan-small\n"
+            + "save output/manhattan-small.bpm manhattan-small-bpm\n"
+            + "load output/manhattan-small-bpm.bpm manhattan-small-bpm-test";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -389,8 +414,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadBPMtoJPEG() throws Exception {
-    String input = "load output/manhattan-small.bpm manhattan-small\nsave output/manhattan-small.bpm manhattan-small-bpm\n" +
-            "load output/manhattan-small-bpm.bpm manhattan-small-bpm-test";
+    String input = "load output/manhattan-small.bpm manhattan-small\n"
+            + "save output/manhattan-small.bpm manhattan-small-bpm\n"
+            + "load output/manhattan-small-bpm.bpm manhattan-small-bpm-test";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -402,8 +428,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadBPMtoPNG() throws Exception {
-    String input = "load output/manhattan-small.bpm manhattan-small\nsave output/manhattan-small.png manhattan-small-png\n" +
-            "load output/manhattan-small-png.png manhattan-small-png-test";
+    String input = "load output/manhattan-small.bpm manhattan-small\n"
+            + "save output/manhattan-small.png manhattan-small-png\n"
+            + "load output/manhattan-small-png.png manhattan-small-png-test";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -415,8 +442,9 @@ public class TestOperationsForImage {
 
   @Test
   public void testLoadBPMtoPPM() throws Exception {
-    String input = "load output/manhattan-small.bpm manhattan-small\nsave output/manhattan-small.ppm manhattan-small-ppm\n" +
-            "load output/manhattan-small-ppm.ppm manhattan-small-ppm-test";
+    String input = "load output/manhattan-small.bpm manhattan-small\n"
+            + "save output/manhattan-small.ppm manhattan-small-ppm\n"
+            + "load output/manhattan-small-ppm.ppm manhattan-small-ppm-test";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();

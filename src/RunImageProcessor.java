@@ -5,6 +5,9 @@ import imagemodel.ImageProcessingModelImpl;
 import imageoperations.ScriptRunnable;
 
 
+/**
+ * This is the main function that will initiate and run the application.
+ */
 public class RunImageProcessor {
   /**
    * Returns void.
@@ -26,7 +29,7 @@ public class RunImageProcessor {
       return;
     }
     ImageProcessingController controller = new ImageProcessingControllerImpl(System.in,
-             model);
+            model);
     controller.imageOperationSelector();
   }
 }
