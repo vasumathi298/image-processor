@@ -53,7 +53,9 @@ public class ImageSaver implements ImageOperationController {
       throw new IllegalArgumentException("File format not supported");
     } else {
       imageFormatController = ops.apply(imagePath);
-      RGB[][] image = imageProcessingModel.saveFile(this.instruction[1], this.instruction[2]);
+      imagePath= imagePath.split(
+              "[.]")[0];
+      RGB[][] image = imageProcessingModel.saveFile(this.instruction[2],imagePath);
       imageFormatController.save(instruction[1], image);
       System.out.println("Image has been saved at " + instruction[1]);
     }

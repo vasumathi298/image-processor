@@ -1,7 +1,14 @@
 package imagemodel;
 
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
+
+import javax.imageio.ImageIO;
 
 
 /**
@@ -10,7 +17,7 @@ import java.io.FileNotFoundException;
  * It loads, transforms, and saves images while
  * utilizing an `RGBImageStorage` to manage image data.
  */
-public class ImageProcessingModelImpl implements ImageProcessingModel {
+public class ImageProcessingModelImpl implements ImageProcessingModel, EnhancedImageProcessingModel {
 
   private final RGBImageStorage rgbImageStore;
   private int imageWidth;
@@ -25,7 +32,26 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     this.rgbImageStore = new RGBImageStorage();
   }
 
+  @Override
+  public void redComponent(String fileName, String destImage){
 
+    RGB[][] retrieveImage = rgbImageStore.retrieveImage(fileName);
+    RGB[][] redComp= buildRedPixelImage(retrieveImage);
+    this.rgbImageStore.storeImage(destImage, redComp);
+  }
+
+  @Override
+  public void greenComponent(String fileName, String destImage){
+    RGB[][] retrieveImage = rgbImageStore.retrieveImage(fileName);
+    RGB[][] redComp= buildGreenPixelImage(retrieveImage);
+    this.rgbImageStore.storeImage(destImage, redComp);
+  }
+  @Override
+  public void blueComponent(String fileName, String destImage){
+    RGB[][] retrieveImage = rgbImageStore.retrieveImage(fileName);
+    RGB[][] redComp= buildBluePixelImage(retrieveImage);
+    this.rgbImageStore.storeImage(destImage, redComp);
+  }
   @Override
   public void imageLoader(RGB[][] image, String storeFileName) throws FileNotFoundException {
     this.rgbImageStore.storeImage(storeFileName, image);
@@ -197,23 +223,31 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
 
 
   @Override
-  public void greyScaleLuma(String imageFind, String storeFind) {
+  public void greyScaleLuma(String imageFind, String storeFind, double splitPercentage) {
     findImgFromRGBStorage(imageFind);
     RGB[][] retrieveImage = rgbImageStore.retrieveImage(imageFind);
-    imageHeight = retrieveImage.length;
-    imageWidth = retrieveImage[0].length;
-    RGB[][] lumaGrayImage = null;
-    lumaGrayImage = new RGB[imageHeight][imageWidth];
+    int imageHeight = retrieveImage.length;
+    int imageWidth = retrieveImage[0].length;
+    RGB[][] lumaGrayImage = new RGB[imageHeight][imageWidth];
+
+    int splitPosition = (int) (imageWidth * (splitPercentage / 100.0));
 
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
-        lumaGrayImage[k][l] = new RGB(findWeightedPixelSum(retrieveImage[k][l]),
-                findWeightedPixelSum(retrieveImage[k][l]),
-                findWeightedPixelSum(retrieveImage[k][l]));
+        // Check if the current pixel is on the left side of the image
+        if (l < splitPosition) {
+          int lumaValue = findWeightedPixelSum(retrieveImage[k][l]);
+          lumaGrayImage[k][l] = new RGB(lumaValue, lumaValue, lumaValue);
+        } else {
+          // If the pixel is on the right side, copy the original pixel
+          lumaGrayImage[k][l] = new RGB(retrieveImage[k][l].red, retrieveImage[k][l].green, retrieveImage[k][l].blue);
+        }
       }
     }
+
     this.rgbImageStore.storeImage(storeFind, lumaGrayImage);
   }
+
 
 
   private int getPixelAverage(RGB pixel) {
@@ -232,9 +266,9 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     intensityGrayImage = new RGB[imageHeight][imageWidth];
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
-        intensityGrayImage[k][l] = new RGB(getPixelAverage(intensityGrayImage[k][l]),
-                getPixelAverage(intensityGrayImage[k][l]),
-                getPixelAverage(intensityGrayImage[k][l]));
+        intensityGrayImage[k][l] = new RGB(getPixelAverage(retrieveImage[k][l]),
+                getPixelAverage(retrieveImage[k][l]),
+                getPixelAverage(retrieveImage[k][l]));
       }
     }
     this.rgbImageStore.storeImage(storeFind, intensityGrayImage);
@@ -324,35 +358,44 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
 
 
   @Override
-  public void constructSepia(String imageFind, String storeFind) {
+  public void constructSepia(String imageFind, String storeFind, double splitPercentage) {
     findImgFromRGBStorage(imageFind);
-    RGB[][] retrieveImage = null;
-    retrieveImage = rgbImageStore.retrieveImage(imageFind);
+    RGB[][] retrieveImage = rgbImageStore.retrieveImage(imageFind);
     int imageHeight = retrieveImage.length;
     int imageWidth = retrieveImage[0].length;
-    RGB[][] sepiaTonedImage = null;
-    sepiaTonedImage = new RGB[imageHeight][imageWidth];
+    RGB[][] sepiaTonedImage = new RGB[imageHeight][imageWidth];
+
+    int splitPosition = (int) (imageWidth * (splitPercentage / 100.0));
+
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
-        sepiaTonedImage[k][l] = generateSepiaTone(retrieveImage[k][l]);
+        // Apply sepia only to the left half of the image
+        if (l < splitPosition) {
+          sepiaTonedImage[k][l] = generateSepiaTone(retrieveImage[k][l]);
+        } else {
+          // If the pixel is on the right half, copy the original pixel
+          sepiaTonedImage[k][l] = new RGB(retrieveImage[k][l].red, retrieveImage[k][l].green, retrieveImage[k][l].blue);
+        }
       }
     }
+
     this.rgbImageStore.storeImage(storeFind, sepiaTonedImage);
   }
 
-
   @Override
-  public void blurImage(String imageFind, String storeFind) {
+  public void blurImage(String imageFind, String storeFind, double splitPercentage) {
     findImgFromRGBStorage(imageFind);
     RGB[][] retrieveImage = rgbImageStore.retrieveImage(imageFind);
     int imageHeight = retrieveImage.length;
     int imageWidth = retrieveImage[0].length;
     RGB[][] blurredImage = new RGB[imageHeight][imageWidth];
     double[] gaussianKernel = {
-      1.0 / 16, 1.0 / 8,
-      1.0 / 16, 1.0 / 8,
-      1.0 / 4, 1.0 / 8,
-      1.0 / 16, 1.0 / 8, 1.0 / 16};
+            1.0 / 16, 1.0 / 8,
+            1.0 / 16, 1.0 / 8,
+            1.0 / 4, 1.0 / 8,
+            1.0 / 16, 1.0 / 8, 1.0 / 16};
+
+    int splitPosition = (int) (imageWidth * (splitPercentage / 100.0));
 
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
@@ -363,11 +406,20 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
           for (int y = -1; y <= 1; y++) {
             int newY = l + y;
             int newX = k + x;
-            if (newY >= 0 && newY < imageWidth && newX >= 0 && newX < imageHeight) {
-              double weight = gaussianKernel[(x + 1) * 3 + (y + 1)];
-              redSumComp += weight * retrieveImage[newX][newY].getPixel(0);
-              greenSumComp += weight * retrieveImage[newX][newY].getPixel(1);
-              blueSumComp += weight * retrieveImage[newX][newY].getPixel(2);
+
+            // Check if splitPercentage is provided and the pixel is on the side of the split position
+            if (splitPercentage == 0 || (l < splitPosition && newX >= 0 && newX < imageHeight)) {
+              if (newY >= 0 && newY < imageWidth && newX >= 0 && newX < imageHeight) {
+                double weight = gaussianKernel[(x + 1) * 3 + (y + 1)];
+                redSumComp += weight * retrieveImage[newX][newY].getPixel(0);
+                greenSumComp += weight * retrieveImage[newX][newY].getPixel(1);
+                blueSumComp += weight * retrieveImage[newX][newY].getPixel(2);
+              }
+            } else {
+              // If splitPercentage is not provided or the pixel is on the other side of the split, copy the original pixel
+              redSumComp = retrieveImage[k][l].getPixel(0);
+              greenSumComp = retrieveImage[k][l].getPixel(1);
+              blueSumComp = retrieveImage[k][l].getPixel(2);
             }
           }
         }
@@ -375,12 +427,97 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
       }
     }
 
-
     this.rgbImageStore.storeImage(storeFind, blurredImage);
   }
 
   @Override
-  public void sharpenImage(String imageFind, String storeFind) {
+  public void imageColorCorrection(String imageName, String destImage, double splitPercentage) throws IOException {
+    RGB[][] imagePixel = rgbImageStore.retrieveImage(imageName);
+    int imageHeight = imagePixel.length;
+    int imageWidth = imagePixel[0].length;
+
+    // Fetch the histogram
+    int[][] imgHistogram = fetchHistogram(imageName, destImage);
+
+    // Find meaningful peaks for each channel
+    int[] redPeaks = findMeaningfulPeaks(imgHistogram[0]);
+    int[] greenPeaks = findMeaningfulPeaks(imgHistogram[1]);
+    int[] bluePeaks = findMeaningfulPeaks(imgHistogram[2]);
+
+    // Compute the average peak value
+    int averageRedPeak = redPeaks[1];
+    int averageGreenPeak = greenPeaks[1];
+    int averageBluePeak = bluePeaks[1];
+
+    int avg = (averageRedPeak + averageBluePeak + averageGreenPeak) / 3;
+
+    int splitPosition = (int) (imageWidth * (splitPercentage / 100.0));
+
+    // Offset each channel's values to align with the average peak only for the left half
+    for (int k = 0; k < imageHeight; k++) {
+      for (int l = 0; l < imageWidth; l++) {
+        if (l < splitPosition) {
+          imagePixel[k][l] = offsetValues(imagePixel[k][l], 0, redPeaks[1], avg);
+          imagePixel[k][l] = offsetValues(imagePixel[k][l], 1, greenPeaks[1], avg);
+          imagePixel[k][l] = offsetValues(imagePixel[k][l], 2, bluePeaks[1], avg);
+        }
+      }
+    }
+
+    // Update the RGB image store with the corrected image
+    this.rgbImageStore.storeImage(destImage, imagePixel);
+  }
+
+  // Helper method to offset values for a specific channel
+  private RGB offsetValues(RGB pixel, int channel, int peak, int avg) {
+    int offset = avg - peak;
+    int newValue = pixel.getPixel(channel) + offset;
+    newValue = Math.min(Math.max(newValue, 0), 255); // Ensure the value stays within [0, 255]
+    pixel.setPixel(channel, newValue);
+    return pixel;
+  }
+
+
+  private int[] findMeaningfulPeaks(int[] channelHistogram) {
+    int peakValue = 0;
+    int peakPosition = 0;
+
+    // Find the peak within the meaningful range (10 to 245)
+    for (int i = 10; i < 245; i++) {
+      if (channelHistogram[i] > peakValue) {
+        peakValue = channelHistogram[i];
+        peakPosition = i;
+      }
+    }
+
+    return new int[]{peakValue, peakPosition};
+  }
+
+  private RGB[][] offsetValues(RGB[][] imagePixel, int channel, int originalPeak, int targetPeak) {
+    int imgHeight = imagePixel.length;
+    int imgWidth = imagePixel[0].length;
+
+    // Calculate the scaling factor
+    int offset =targetPeak - originalPeak;
+
+    for (int k = 0; k < imgHeight; k++) {
+      for (int l = 0; l < imgWidth; l++) {
+        RGB rgb = imagePixel[k][l];
+        int oldValue = rgb.getPixel(channel);
+
+        int newValue = oldValue + offset;
+        newValue = Math.max(0, Math.min(255, newValue));  // Ensure within valid range
+
+        rgb.setPixel(channel, newValue);
+        imagePixel[k][l]= rgb;
+      }
+    }
+    return imagePixel;
+  }
+
+
+  @Override
+  public void sharpenImage(String imageFind, String storeFind, double splitPercentage) {
     findImgFromRGBStorage(imageFind);
     RGB[][] retrieveImage = rgbImageStore.retrieveImage(imageFind);
     int imageHeight = retrieveImage.length;
@@ -395,9 +532,8 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
             {-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8}
     };
 
-    int nR;
-    int nG;
-    int nB;
+    int splitPosition = (int) (imageWidth * (splitPercentage / 100.0));
+
     for (int k = 0; k < imageHeight; k++) {
       for (int l = 0; l < imageWidth; l++) {
         double redSumComp = 0.0;
@@ -407,21 +543,31 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
           for (int y = -2; y <= 2; y++) {
             int row = k + x;
             int col = l + y;
-            if (row >= 0 && row < imageHeight && col >= 0 && col < imageWidth) {
-              redSumComp += retrieveImage[row][col].getPixel(0) * kernel[x + 2][y + 2];
-              greenSumComp += retrieveImage[row][col].getPixel(1) * kernel[x + 2][y + 2];
-              blueSumComp += retrieveImage[row][col].getPixel(2) * kernel[x + 2][y + 2];
+
+            // Apply sharpening only to the left half of the image
+            if (l < splitPosition) {
+              if (row >= 0 && row < imageHeight && col >= 0 && col < imageWidth) {
+                redSumComp += retrieveImage[row][col].getPixel(0) * kernel[x + 2][y + 2];
+                greenSumComp += retrieveImage[row][col].getPixel(1) * kernel[x + 2][y + 2];
+                blueSumComp += retrieveImage[row][col].getPixel(2) * kernel[x + 2][y + 2];
+              }
+            } else {
+              // If the pixel is on the right half of the image, copy the original pixel
+              redSumComp = retrieveImage[k][l].getPixel(0);
+              greenSumComp = retrieveImage[k][l].getPixel(1);
+              blueSumComp = retrieveImage[k][l].getPixel(2);
             }
           }
         }
-        nR = Math.min(Math.max((int) redSumComp, 0), 255);
-        nG = Math.min(Math.max((int) greenSumComp, 0), 255);
-        nB = Math.min(Math.max((int) blueSumComp, 0), 255);
+        int nR = Math.min(Math.max((int) redSumComp, 0), 255);
+        int nG = Math.min(Math.max((int) greenSumComp, 0), 255);
+        int nB = Math.min(Math.max((int) blueSumComp, 0), 255);
         sharpenedImage[k][l] = new RGB(nR, nG, nB);
       }
     }
     this.rgbImageStore.storeImage(storeFind, sharpenedImage);
   }
+
 
 
   @Override
@@ -489,6 +635,324 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     RGB[][] image = rgbImageStore.retrieveImage(searchImageKey);
     return image;
   }
+
+  public int[][] fetchHistogram(String imageName, String destImageName) throws IOException {
+    int[][] imgHistogram = new int[4][256];
+    RGB[][] imagePixel = rgbImageStore.retrieveImage(imageName);
+    int imgHeight = imagePixel.length;
+    int imgWidth = imagePixel[0].length;
+
+    for (int k = 0; k < imgHeight; k++) {
+      for (int l = 0; l < imgWidth; l++) {
+        RGB rgb = imagePixel[k][l];
+        int rComponent = rgb.getPixel(0);
+        int gComponent = rgb.getPixel(1);
+        int bComponent = rgb.getPixel(2);
+        int iComponent = (rComponent + gComponent + bComponent) / 3;
+        imgHistogram[0][rComponent]++;
+        imgHistogram[1][gComponent]++;
+        imgHistogram[2][bComponent]++;
+        imgHistogram[3][iComponent]++;
+      }
+    }
+
+    // Create a BufferedImage with a white background
+    int width = 256;
+    int height = 256;
+    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g2d = image.createGraphics();
+    g2d.setColor(Color.WHITE);
+    g2d.fillRect(0, 0, width, height);
+
+    // Draw grid lines
+    g2d.setColor(Color.GRAY);
+    for (int i = 0; i < width; i += 32) {
+      g2d.drawLine(i, 0, i, height);
+      g2d.drawLine(0, i, width, i);
+    }
+
+    // Draw histograms for each channel
+    drawHistogram(g2d, imgHistogram[0], Color.RED, height);
+    drawHistogram(g2d, imgHistogram[1], Color.GREEN, height);
+    drawHistogram(g2d, imgHistogram[2], Color.BLUE, height);
+
+    // Save the image
+    ImageIO.write(image, "png", new File(destImageName+".png"));
+
+    return imgHistogram;
+  }
+
+  private void drawHistogram(Graphics2D g2d, int[] channelHistogram, Color color, int height) {
+    // Normalize the histogram values
+    int maxCount = getMaxValue(channelHistogram);
+    double scale = (double) height / maxCount;
+
+    // Draw the histogram line graph
+    g2d.setColor(color);
+    for (int i = 0; i < 255; i++) {
+      int x1 = i;
+      int y1 = height - (int) (channelHistogram[i] * scale);
+      int x2 = i + 1;
+      int y2 = height - (int) (channelHistogram[i + 1] * scale);
+
+      // Draw only if the histogram values are not zero
+      if (channelHistogram[i] != 0 && channelHistogram[i + 1] != 0) {
+        g2d.drawLine(x1, y1, x2, y2);
+      }
+    }
+  }
+
+  private int getMaxValue(int[] array) {
+    int max = array[0];
+    for (int value : array) {
+      if (value > max) {
+        max = value;
+      }
+    }
+    return max;
+  }
+  @Override
+  public void compressImage(String fileName, String destName, double threshold) {
+
+    RGB[][] imagePixels = rgbImageStore.retrieveImage(fileName);
+
+    RGB[][] transformedImags= transformImage(imagePixels);
+
+    RGB[][] thresholdedImage= thresholdImage(transformedImags, threshold);
+
+    RGB[][] invertedImage= thresholdImage(thresholdedImage, threshold);
+
+    this.rgbImageStore.storeImage(destName, invertedImage);
+
+
+  }
+
+
+  private static double[] getAllValues(RGB[][] channels) {
+    int height = channels.length;
+    int width = channels[0].length;
+
+    double[] values = new double[3 * height * width];
+    int index = 0;
+
+    for (int c = 0; c < 3; c++) {
+      for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+          values[index++] = channels[i][j].getPixel(c);
+        }
+      }
+    }
+
+    return values;
+  }
+
+
+  private static RGB[][] thresholdImage(RGB[][] image, double thresholdPercentage) {
+    double[] allValues = getAllValues(image);
+
+    Arrays.sort(allValues);
+
+    System.out.println(thresholdPercentage);
+
+    int thresholdIndex = (int) (allValues.length * thresholdPercentage);
+
+    thresholdIndex = Math.min(thresholdIndex, allValues.length - 1);
+
+    double thresholdValue = allValues[thresholdIndex];
+    for (int c = 0; c < 3; c++) {
+      for (int i = 0; i < image.length; i++) {
+        for (int j = 0; j < image[0].length; j++) {
+          if(Math.abs(image[i][j].getPixel(c)) >= thresholdValue) {
+            image[i][j].setPixel(c, image[i][j].getPixel(c));
+          }
+          else{
+            image[i][j].setPixel(c, 0);
+          }
+        }
+      }
+    }
+
+    return image;
+  }
+  static void padZerosIfNeeded(RGB[] s, int c) {
+    int originalSize = s.length;
+    int newSize = Integer.highestOneBit(originalSize - 1) << 1;
+
+    for (int i = originalSize; i < newSize; i++) {
+      s[i]= new RGB();
+      s[i].setPixel(c, (int) 0.0);
+    }
+  }
+
+
+  private static RGB[][] transformImage(RGB[][] image) {
+    int width = image.length;
+    int height = image[0].length;
+
+    for (int c = 0; c < 3; c++) {
+      for (int size = Math.max(width, height); size > 1; size /= 2) {
+        for (int i = 0; i < size; i++) {
+          padZerosIfNeeded(image[i], c);
+          image[i] = transform(image[i], size, c);
+        }
+
+        for (int j = 0; j < size; j++) {
+          RGB[] column = new RGB[size];
+          for (int i = 0; i < size; i++) {
+            column[i] = new RGB();
+            column[i].setPixel(c,image[i][j].getPixel(c));
+          }
+          padZerosIfNeeded(column, c);
+          column = transform(column, size,c);
+          for (int i = 0; i < size; i++) {
+            image[i][j].setPixel(c, (int) Math.round(column[i].getPixel(c)));
+          }
+        }
+      }
+    }
+
+    return image;
+  }
+  private static RGB[] invert(RGB[] sequence, int size, int c) {
+    double[] avg = new double[size / 2];
+    double[] diff = new double[size / 2];
+
+    for (int i = 0, j = size / 2; j < size; i++, j++) {
+      if (i < sequence.length && j < sequence.length) {
+        double av = sequence[i].getPixel(c);
+        double di = sequence[j].getPixel(c);
+        double a = (av + di) / Math.sqrt(2);
+        double b = (av - di) / Math.sqrt(2);
+        avg[i] = Math.max(0, Math.min(255, a));
+        diff[i] = Math.max(0, Math.min(255, b));
+      }
+    }
+
+    RGB[] result = new RGB[size];
+    for (int i = 0, j = 0; i < size - 1; i += 2, j++) {
+      if (j < avg.length) {
+        result[i].setPixel(c, (int) Math.round(avg[j]));
+        result[i + 1].setPixel(c, (int) Math.round(diff[j]));
+      }
+    }
+
+    return result;
+  }
+
+  private static RGB[][]  invertImage(RGB[][]  image) {
+    int width = image.length;
+    int height = image[0].length;
+
+    for (int c = 0; c < 3; c++) {
+      for (int size = 2; size <= Math.max(width, height); size *= 2) {
+        for (int j = 0; j < size; j++) {
+          image[j] = invert(image[j], size,c);
+        }
+
+        for (int i = 0; i < size; i++) {
+          RGB[] column = new RGB[size];
+          for (int j = 0; j < size; j++) {
+            column[j] = image[j][i];
+          }
+          column = invert(column, size,c);
+          for (int j = 0; j < size; j++) {
+            image[j][i].setPixel(c, column[j].getPixel(c));
+          }
+        }
+      }
+    }
+
+    return image;
+  }
+
+  private static RGB[] transform(RGB[] sequence, int size, int c) {
+    double[] avg = new double[size / 2];
+    double[] diff = new double[size / 2];
+
+    for (int i = 0, j = 0; i < size - 1; i += 2, j++) {
+      double a = sequence[i].getPixel(c);
+      double b = sequence[i + 1].getPixel(c);
+      double av = (a + b) / Math.sqrt(2);
+      double di = (a - b) / Math.sqrt(2);
+      avg[j] = av;
+      diff[j] = di;
+    }
+
+    RGB[] result = new RGB[size];
+    for (int i = 0; i < size / 2; i++) {
+      result[i].setPixel(c, (int) Math.round(avg[i]));
+      result[i + size / 2].setPixel(c, (int) Math.round(diff[i]));
+    }
+
+    return result;
+  }
+
+
+
+
+
+  @Override
+  public void levelAdjust(String imageName, String destImageName, int b, int m, int w, double splitPercentage) {
+    RGB[][] imagePixel = rgbImageStore.retrieveImage(imageName);
+    int imageHeight = imagePixel.length;
+    int imageWidth = imagePixel[0].length;
+
+    int splitPosition = (int) (imageWidth * (splitPercentage / 100.0));
+
+    // Apply levels adjustment for each channel only for the left half
+    for (int channel = 0; channel < 3; channel++) {
+      double a = computeA(b, m, w);
+      double A_a = computeA_a(b, m, w);
+      double A_b = computeA_b(b, m, w);
+      double A_c = computeA_c(b, m, w);
+
+      for (int i = 0; i < imageHeight; i++) {
+        for (int j = 0; j < imageWidth; j++) {
+          // Check if the current pixel is on the left side of the image
+          if (j < splitPosition) {
+            RGB rgb = imagePixel[i][j];
+            int oldValue = rgb.getPixel(channel);
+            int newValue = applyQuadraticCurve(a, A_a, A_b, A_c, oldValue);
+            rgb.setPixel(channel, newValue);
+          }
+        }
+      }
+    }
+
+    this.rgbImageStore.storeImage(destImageName, imagePixel);
+  }
+
+  private static double computeA(int b, int m, int w) {
+    return (b * b * (m - w)) - b * ((m * m) - (w * w)) + (w * m * m) - (m * w * w);
+  }
+
+  private static double computeA_a(int b, int m, int w) {
+    return (-b * (128 - 255)) + (128 * w) - (255 * m);
+  }
+
+  private static double computeA_b(int b, int m, int w) {
+    return (b * b * (128 - 255)) + (255 * m * m) - (128 * w * w);
+  }
+
+  private static double computeA_c(int b, int m, int w) {
+    return (b * b * ((255 * m) - (128 * w))) - (b * ((255 * m * m )- (128 * w * w)));
+  }
+
+  private static int applyQuadraticCurve(double a, double A_a, double A_b, double A_c, int x) {
+    double A = computeA(0, 128, 255);  // A for the default black, mid, white values
+    double numerator = A_a * x * x + A_b * x + A_c;
+    double result = numerator / A;
+
+    // Ensure the result is within the valid range (0-255)
+    result = Math.max(0, Math.min(255, result));
+
+    // Round the result to the nearest integer
+    int newValue = (int) Math.round(result);
+
+    return newValue;
+  }
+
+
 
 
   private void findImgFromRGBStorage(String findOp) {

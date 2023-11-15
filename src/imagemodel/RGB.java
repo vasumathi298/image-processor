@@ -22,6 +22,11 @@ public class RGB {
     this.blue = blue;
   }
 
+  public RGB() {
+    this.red = 0;
+    this.green = 0;
+    this.blue = 0;
+  }
   /**
    * Gets the value of the specified color channel (0 for red, 1 for green, 2 for blue).
    *
