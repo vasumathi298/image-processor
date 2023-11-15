@@ -1,4 +1,8 @@
 load output/manhattan-small.png manhattan-small
+histogram manhattan-small manhattan-small-histogram
+levels-adjust 20 100 255 manhattan-small manhattan-small-level-adjust
+save manhattan-small-level-adjust.png output-image-l
+histogram manhattan-small-level-adjust manhattan-small-level-adjust-histogram
 brighten 100 manhattan-small manhattan-small-brighten-script
 save manhattan-small-brighten-script.png manhattan-brighten-img
 sepia manhattan-small-brighten-script manhattan-small-sepia-script
@@ -20,3 +24,9 @@ blur manhattan-combined-output manhattan-combined-output-blur
 save manhattan-combined-output-blur.jpeg manhattan-combined-output-blur-img
 sharpen manhattan-combined-output-blur manhattan-combined-output-blur-img
 save manhattan-combined-output-blur-img.jpeg manhattan-combined-output-blur-out
+greyscale red-component manhattan-combined-output-blur-img manhattan-greyscale-red-comp
+save manhattan-greyscale-red-comp.png manhattan-greyscale-red-comp-img
+greyscale green-component manhattan-greyscale-red-comp manhattan-greyscale-green-comp
+save manhattan-greyscale-green-comp.png manhattan-greyscale-green-comp-img
+color-correct manhattan-greyscale-green-comp manhattan-greyscale-green-comp-color split 0
+save manhattan-greyscale-green-comp-color.jpg manhattan-greyscale-green-comp-color
