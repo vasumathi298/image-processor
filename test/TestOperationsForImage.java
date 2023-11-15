@@ -458,5 +458,4 @@ public class TestOperationsForImage {
     assertTrue(image.length > 0);
   }
 
-
 }

@@ -74,6 +74,30 @@ public class TestEnhancedImageManipulations {
     ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
     controller.imageOperationSelector();
   }
+  @Test(expected=Exception.class)
+  public void testLevelAdjustInvalidBlackValue() throws Exception {
+    String input="load output/manhattan-small.png manhattan-small\n" +
+            "levels-adjust 100 20 255 manhattan-small manhattan-small-level-adjust\n" +
+            "save manhattan-small-level-adjust.png manhattan-small-level-adjust-img";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+  }
+
+  @Test(expected= Exception.class)
+  public void testLevelAdjustInvalidWhiteValue() throws Exception {
+    String input="load output/manhattan-small.png manhattan-small\n" +
+            "levels-adjust 20 255 255 manhattan-small manhattan-small-level-adjust\n" +
+            "save manhattan-small-level-adjust.png manhattan-small-level-adjust-img";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+  }
+
 
   @Test
   public void testLevelAdjustmentSplit() throws Exception {
