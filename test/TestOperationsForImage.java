@@ -467,7 +467,7 @@ public class TestOperationsForImage {
     ImageProcessingModel model = new ImageProcessingModelImpl();
     ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
     controller.imageOperationSelector();
-    RGB[][] image = model.retrieveImage("output-image");
+    RGB[][] image = model.retrieveImage("manhattan-small-sepia-level-adjust-bright");
     assertTrue(image.length > 0);
   }
 

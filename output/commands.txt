@@ -1,0 +1,18 @@
+load output/manhattan-small.png manhattan-small
+brighten 100 manhattan-small manhattan-small-brighten-script
+save manhattan-small-brighten-script.png manhattan-brighten-img
+sepia manhattan-small-brighten-script manhattan-small-sepia-script
+save manhattan-small-sepia-script.png manhattan-small-sepia
+levels-adjust 20 100 255 manhattan-small-sepia-script manhattan-small-sepia-level-adjust
+save manhattan-small-sepia-level-adjust.png output-image
+color-correct manhattan-small-sepia-level-adjust manhattan-small-sepia-level-adjust-script split 48
+save manhattan-small-sepia-level-adjust-script.png final-img
+brighten -80 manhattan-small-sepia-level-adjust-script manhattan-small-sepia-level-adjust-bright
+save manhattan-small-sepia-level-adjust-bright.png manhattan-small-sepia-level-adjust-bright-script
+greyscale luma-component manhattan-small-sepia-level-adjust-bright manhattan-small-sepia-level-adjust-bright-luma-split split 45
+save manhattan-small-sepia-level-adjust-bright-luma-split.jpg finaloutput
+load manhattan-small-sepia-level-adjust.png img1
+load manhattan-small-sepia-level-adjust-bright.png img2
+load manhattan-small-sepia-level-adjust-bright-luma-split.png img3
+rgb-combine img1 img2 img3 manhattan-combined-output
+save manhattan-combined-output.jpeg output-image-final
