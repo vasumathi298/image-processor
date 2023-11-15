@@ -173,6 +173,7 @@ public class TestOperationsForImage {
     assertTrue(image.length > 0);
   }
 
+
   @Test
   public void testIntensityGreyScale() throws Exception {
     String input = "load output/manhattan-small.png manhattan-small\n"
@@ -875,6 +876,20 @@ public class TestOperationsForImage {
     ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
     controller.imageOperationSelector();
     RGB[][] image = model.retrieveImage("manhattan-small-luma-component");
+    assertTrue(image.length > 0);
+  }
+
+  @Test
+  public void testLumaComponentSplit() throws Exception {
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "greyscale luma-component manhattan-small manhattan-small-luma-split-component split 35\n"
+            +"save manhattan-small-luma-split-component.png manhattan-small-luma-component-img\n";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+    RGB[][] image = model.retrieveImage("manhattan-small-luma-split-component");
     assertTrue(image.length > 0);
   }
 
