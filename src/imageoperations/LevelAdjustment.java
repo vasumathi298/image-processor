@@ -24,7 +24,7 @@ public class LevelAdjustment  implements ImageOperationController {
       int m= Integer.valueOf(instruction[2]);
       int w= Integer.valueOf(instruction[3]);
 
-      if (!(b<m && m<w && b< w)) {
+      if (!(b<m && m<w && b< w) || (b<0 || b>255 || m <0 || m>255 || w <0 || w>255)) {
         throw new IllegalArgumentException("Enter a valid b,m/w value");
       }
       EnhancedImageProcessingModel enhancedImageProcessingModel= (EnhancedImageProcessingModel) imageProcessingModel;

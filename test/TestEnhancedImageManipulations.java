@@ -64,10 +64,22 @@ public class TestEnhancedImageManipulations {
   }
 
   @Test
-  public void testLevelAdjustment() throws Exception {
+  public void testLevelAdjustment1() throws Exception {
     String input="load output/manhattan-small.png manhattan-small\n" +
             "levels-adjust 20 100 255 manhattan-small manhattan-small-level-adjust\n" +
             "save manhattan-small-level-adjust.png manhattan-small-level-adjust-img";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+  }
+
+  @Test
+  public void testLevelAdjustment2() throws Exception {
+    String input="load output/manhattan-small.png manhattan-small\n" +
+            "levels-adjust 56 117 199 manhattan-small manhattan-small-level-adjust-threshold\n" +
+            "save manhattan-small-level-adjust-threshold.png manhattan-small-level-adjust-img";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -86,6 +98,17 @@ public class TestEnhancedImageManipulations {
     controller.imageOperationSelector();
   }
 
+  @Test(expected=Exception.class)
+  public void testLevelAdjustInvalidBlackValue1() throws Exception {
+    String input="load output/manhattan-small.png manhattan-small\n" +
+            "levels-adjust -20 100 255 manhattan-small manhattan-small-level-adjust\n" +
+            "save manhattan-small-level-adjust.png manhattan-small-level-adjust-img";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+  }
   @Test(expected= Exception.class)
   public void testLevelAdjustInvalidWhiteValue() throws Exception {
     String input="load output/manhattan-small.png manhattan-small\n" +
@@ -98,7 +121,30 @@ public class TestEnhancedImageManipulations {
     controller.imageOperationSelector();
   }
 
+  @Test(expected= Exception.class)
+  public void testLevelAdjustInvalidWhiteValue1() throws Exception {
+    String input="load output/manhattan-small.png manhattan-small\n" +
+            "levels-adjust 20 -100 255 manhattan-small manhattan-small-level-adjust\n" +
+            "save manhattan-small-level-adjust.png manhattan-small-level-adjust-img";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+  }
 
+
+  @Test(expected= Exception.class)
+  public void testLevelAdjustInvalidMidValue1() throws Exception {
+    String input="load output/manhattan-small.png manhattan-small\n" +
+            "levels-adjust 20 100 256 manhattan-small manhattan-small-level-adjust\n" +
+            "save manhattan-small-level-adjust.png manhattan-small-level-adjust-img";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+  }
   @Test
   public void testLevelAdjustmentSplit() throws Exception {
     String input="load output/manhattan-small.png manhattan-small\n" +
@@ -183,7 +229,7 @@ public class TestEnhancedImageManipulations {
   }
 
   @Test
-  public void testHistogram() throws Exception {
+  public void testHistogramForOriginalImage() throws Exception {
     String input="load output/manhattan-small.png manhattan-small\nhistogram manhattan-small manhattan-small-histogram";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
@@ -192,6 +238,37 @@ public class TestEnhancedImageManipulations {
     controller.imageOperationSelector();
   }
 
+  @Test
+  public void testHistogramForColorCorrectedImage() throws Exception{
+    String input="load output/manhattan-small-color-correct.png manhattan-small-color-correct\nhistogram manhattan-small-color-correct manhattan-small-color-correct-histogram";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+  }
+
+  @Test
+  public void testHistogramForLevelAdjustedImage() throws Exception{
+    String input="load output/manhattan-small-level-adjust.png manhattan-small-level-adjust\n" +
+            "histogram manhattan-small-level-adjust manhattan-small-level-adjust-histogram";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+  }
+
+  @Test
+  public void testHistogramForLevelAdjustedImage1() throws Exception{
+    String input="load output/manhattan-small-level-adjust-threshold.png manhattan-small-level-adjust\n" +
+            "histogram manhattan-small-level-adjust manhattan-small-level-adjust-threshold-histogram";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+  }
   @Test
   public void testBrighten() throws Exception {
     String input = "load output/manhattan-small.png manhattan-small\n"
