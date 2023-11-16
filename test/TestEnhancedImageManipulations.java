@@ -28,7 +28,7 @@ public class TestEnhancedImageManipulations {
   public void testImageColorCorrection() throws Exception {
     String input="load output/manhattan-small.png manhattan-small\n" +
             "color-correct manhattan-small manhattan-small-color-corrected\ns" +
-            "ave manhattan-small-color-corrected.png manhattan-small-color-corrected-img";
+            "save manhattan-small-color-corrected.png manhattan-small-color-corrected-img";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();
@@ -54,7 +54,8 @@ public class TestEnhancedImageManipulations {
 
   @Test
   public void testImageHistogram() throws Exception {
-    String input="load output/manhattan-small-color-corrected.png manhattan-small\nhistogram manhattan-small manhattan-small-histogram";
+    String input="load output/manhattan-small-color-corrected.png manhattan-small\n" +
+            "histogram manhattan-small manhattan-small-histogram";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();

@@ -48,7 +48,7 @@ public enum ImageOperationMapper {
   LEVEL_ADJUST("levels-adjust", LevelAdjustment::new)
   ;
 
-
+  
 
   private final String command;
   private final Function<String, ImageOperationController> controllerSupplier;

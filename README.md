@@ -409,3 +409,48 @@ Our application offers a versatile set of image processing operations, including
 8. **Sepia Toning:** Apply a sepia tone effect to your images.
 9. **Blur Effect:** Add a blurring filter to the images.
 10. **Sharpening:** Enhance image sharpness with a sharpening filter.
+
+Image that was used for Manipulation was from (https://static01.nyt.com/images/2021/02/27/arts/tomjerry1/tomjerry1-jumbo.jpg?quality=75&auto=webp).
+The image from this link was saved as manhattan-small.png.
+All the output images are placed in output/ folder
+
+
+### *Simple Image Manipulation Features:*
+
+
+| Operations                    | Command                                                                                                           | Output Image Name                                                                                                         |
+|:------------------------------|:------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------|
+| load                          | load  manhattan-small manhattan-small                                                                             |                                                                                                                           |
+| Brighten                      | brighten 100 manhattan-small manhattan-small-brighten                                                             | output/manhattan-small-brighten.png                                                                                       | 
+| Darken                        | brighten -100 manhattan-small manhattan-small-darken                                                              | output/manhattan-small-darken.png                                                                                         | 
+| Red Component                 | red-component manhattan-small manhattan-small-red-comp                                                            | output/manhattan-small-red-comp.png                                                                                       | 
+| Blue Component                | blue-component manhattan-small manhattan-small-blue-comp                                                          | output/manhattan-small-blue-comp.png                                                                                      | 
+| Green Component               | green-component manhattan-small manhattan-small-green-comp                                                        | output/manhattan-small-green-comp.png                                                                                     | 
+| Sepia                         | sepia manhattan-small manhattan-small-sepia                                                                       | output/manhattan-small-sepia.png                                                                                          | 
+| Blur                          | blur manhattan-small manhattan-small-blur                                                                         | output/manhattan-small-blur.png                                                                                           | 
+| Sharpen                       | sharpen manhattan-small manhattan-small-sharpen                                                                   | output/manhattan-small-sharpen.png                                                                                        | 
+| RGB Split                     | rgb-split manhattan-small manhattan-small-red-grey manhattan-small-green-grey manhattan-small-blue-grey           | output/manhattan-small-red-grey.png,<br/> output/manhattan-small-green-grey.png,<br/>output/manhattan-small-blue-grey.png |
+| RGB Combine                   | rgb-combine manhattan-small-red comp manhattan-small-blue-comp manhattan-small-green-comp manhattan-small-combine | output/manhattan-small-combine.png                                                                                        |
+| Greyscale Red Component       | greyscale red-component manhattan-small manhattan-small-red-component                                             | output/manhattan-small-red-component.png                                                                                  |
+| Greyscale Green Component     | greyscale green-component manhattan-small manhattan-small-green-component                                         | output/manhattan-small-green-component.png                                                                                |
+| Greyscale Blue Component      | greyscale blue-component manhattan-small manhattan-small-blue-component                                           | output/manhattan-small-blue-component.png                                                                                 |
+| Greyscale Value Component     | greyscale value-component manhattan-small manhattan-small-value-component                                         | output/manhattan-small-value-component.png                                                                                |
+| Greyscale Luma Component      | greyscale luma-component manhattan-small manhattan-small-luma-component                                           | output/manhattan-small-luma-component.png                                                                                 |
+| Greyscale Intensity Component | greyscale intensity-component manhattan-small manhattan-small-intensity-component                                 | output/manhattan-small-intensity-component.png                                                                            |
+
+
+
+
+### *Enhanced Image Manipulation Features:*
+
+| Operations                       | Command                                                                                | Output Image Name                                |
+|:---------------------------------|:---------------------------------------------------------------------------------------|:-------------------------------------------------|
+| Color Correction                 | color-correct  manhattan-small manhattan-small-color-corrected                         | output/manhattan-small-color-corrected.png       |
+| Color Correction + Split         | color-correct manhattan-small manhattan-small-color-corrected-split split 40           | output/manhattan-small-color-corrected-split.png | 
+| Histogram                        | histogram manhattan-small manhattan-small-histogram                                    | output/manhattan-small-histogram.png             |
+| Level Adjustment                 | levels-adjust 20 100 255 manhattan-small manhattan-small-level-adjust                  | output/manhattan-small-level-adjust.png          | 
+| Level Adjustment + Split         | levels-adjust 20 100 255 manhattan-small manhattan-small-level-adjust-split split 60   | output/manhattan-small-level-adjust-split.png    | 
+| Blur + Split                     | blur manhattan-small manhattan-small-blur-split split 50                               | output/manhattan-small-blur-split.png            | 
+| Sharpen + Split                  | sharpen manhattan-small manhattan-small-sharpen-split split 50                         | output/manhattan-small-sharpen-split.png         | 
+| Sepia + Split                    | sepia manhattan-small manhattan-small-sepia-split split 70                             | output/manhattan-small-sepia-split.png           | 
+| Greyscale Luma Component + Split | greyscale luma-component manhattan-small manhattan-small-luma-split-component split 35 | output/manhattan-small-luma-split-component.png  | 
