@@ -1,5 +1,6 @@
 load output/manhattan-small.png manhattan-small
 histogram manhattan-small manhattan-small-histogram
+rgb-split manhattan-small manhattan-small-red-grey manhattan-small-green-grey manhattan-small-blue-grey
 levels-adjust 20 100 255 manhattan-small manhattan-small-level-adjust
 save manhattan-small-level-adjust.png output-image-l
 histogram manhattan-small-level-adjust manhattan-small-level-adjust-histogram
@@ -17,7 +18,7 @@ greyscale luma-component manhattan-small-sepia-level-adjust-bright manhattan-sma
 save manhattan-small-sepia-level-adjust-bright-luma-split.jpg finaloutput
 load manhattan-small-sepia-level-adjust.png img1
 load manhattan-small-sepia-level-adjust-bright.png img2
-load manhattan-small-sepia-level-adjust-bright-luma-split.png img3
+load manhattan-small-sepia-level-adjust-bright-luma-split.jpg img3
 rgb-combine img1 img2 img3 manhattan-combined-output
 save manhattan-combined-output.jpeg output-image-final
 blur manhattan-combined-output manhattan-combined-output-blur
@@ -30,3 +31,25 @@ greyscale green-component manhattan-greyscale-red-comp manhattan-greyscale-green
 save manhattan-greyscale-green-comp.png manhattan-greyscale-green-comp-img
 color-correct manhattan-greyscale-green-comp manhattan-greyscale-green-comp-color split 0
 save manhattan-greyscale-green-comp-color.jpg manhattan-greyscale-green-comp-color
+levels-adjust 30 90 250 manhattan-small-sepia-script manhattan-small-sepia-split-level split 70
+save manhattan-small-sepia-split-level.png manhattan-small-sepia-split-level-img
+sharpen manhattan-small-sepia-split-level manhattan-small-sepia-split-level-sharpen split 40
+save manhattan-small-sepia-split-level-sharpen.png manhattan-small-sepia-split-level-sharpen-img
+blur manhattan-small-sepia-split-level manhattan-small-sepia-split-level-blur split 40
+save manhattan-small-sepia-split-level-blur.png manhattan-small-sepia-split-level-blur-img
+sepia manhattan-small-level-adjust manhattan-small-level-adjust-sepia-split split 60
+save manhattan-small-level-adjust-sepia-split.jpg manhattan-small-level-adjust-sepia-split-img
+red-component manhattan-small-brighten-script manhattan-small-brighten-red
+save manhattan-small-brighten-red.png manhattan-small-brighten-red-img
+green-component manhattan-small-brighten-script manhattan-small-brighten-green
+save manhattan-small-brighten-green.png manhattan-small-brighten-green-img
+blue-component manhattan-small-brighten-script manhattan-small-brighten-blue
+save manhattan-small-brighten-blue.png manhattan-small-brighten-blue-img
+greyscale luma-component manhattan-small-sepia-level-adjust manhattan-small-sepia-level-adjust-luma
+save manhattan-small-sepia-level-adjust-luma.png manhattan-small-sepia-level-adjust-luma-img
+greyscale value-component manhattan-small-sepia-level-adjust manhattan-small-sepia-level-adjust-value
+save manhattan-small-sepia-level-adjust-value.png manhattan-small-sepia-level-adjust-value-img
+greyscale intensity-component manhattan-small-sepia-level-adjust manhattan-small-sepia-level-adjust-intensity
+save manhattan-small-sepia-level-adjust-intensity.png manhattan-small-sepia-level-adjust-intensity-img
+greyscale blue-component manhattan-small-sepia-level-adjust manhattan-small-sepia-level-adjust-blue
+save manhattan-small-sepia-level-adjust-blue.png manhattan-small-sepia-level-adjust-blue-img

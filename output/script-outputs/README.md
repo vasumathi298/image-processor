@@ -472,6 +472,10 @@ which is the part of the controller. In the `ImageOperationMapper` enum, all fou
 - `COLOR_CORRECTION("color-correct", ImageColorCorrection::new)`
 - `LEVEL_ADJUST("levels-adjust", LevelAdjustment::new)`
 
+For split view, the classes `Blur`, `Sharpen`, `GreScale`in `imageperation` packages in Controller Classes were dealt with changes, 
+to accept split percentage as an optional input parameter in the functions implemented by the models.
+If user does not input any parameter, this project will consider it to be 0 and does the operation for the entire image,
+else if split percentage is provided, the manipulations are done only to the left of the image from the percentage provided by the user.
 
 ### *Enhanced Image Manipulation Features:*
 
