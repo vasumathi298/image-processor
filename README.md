@@ -490,3 +490,8 @@ else if split percentage is provided, the manipulations are done only to the lef
 | Sharpen + Split                  | sharpen manhattan-small manhattan-small-sharpen-split split 50                         | output/manhattan-small-sharpen-split.png         | 
 | Sepia + Split                    | sepia manhattan-small manhattan-small-sepia-split split 70                             | output/manhattan-small-sepia-split.png           | 
 | Greyscale Luma Component + Split | greyscale luma-component manhattan-small manhattan-small-luma-split-component split 35 | output/manhattan-small-luma-split-component.png  | 
+
+
+All the commands in the script file - output/command.txt are executed via command line argument and also in a test case `testRunScript()` in `TestEnhancedImageManipulations` Class file. 
+The output images of the commands are placed in output/script-output/.
+All the commands were tested in the script, with many operations being manipulated above the previous results.
