@@ -466,7 +466,7 @@ public class ImageProcessingModelImpl implements ImageProcessingModel, EnhancedI
 
     // Update the RGB image store with the corrected image
     this.rgbImageStore.storeImage(destImage, imagePixel);
-  }
+   }
 
   // Helper method to offset values for a specific channel
   private RGB offsetValues(RGB pixel, int channel, int peak, int avg) {
