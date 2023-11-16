@@ -1,4 +1,4 @@
-# *Assigment 4*
+# *Assigment 5*
 
 ### *Description*
 
@@ -439,6 +439,38 @@ All the output images are placed in output/ folder
 | Greyscale Intensity Component | greyscale intensity-component manhattan-small manhattan-small-intensity-component                                 | output/manhattan-small-intensity-component.png                                                                            |
 
 
+### *Design Changes*
+The `EnhancedImageProcessingModel` interface extends the `ImageProcessingModel` interface and defines additional methods for enhanced image processing. Here's a summary of the methods in this interface:
+
+1. **`fetchHistogram(String imageName, String destImageName)`**:
+    - **Input Parameters**: `imageName` (source image name), `destImageName` (destination image name)
+    - **Return Type**: `int[][]`
+    - **Description**: Retrieves the histogram of the image specified by `imageName` and saves it to the destination image specified by `destImageName`. The histogram is represented as a two-dimensional array of integers.
+
+2. **`compressImage(String fileName, String destName, double threshold)`**:
+    - **Input Parameters**: `fileName` (name of the image file to compress), `destName` (name of the destination image file), `threshold` (compression threshold)
+    - **Return Type**: `void`
+    - **Description**: Compresses the image specified by `fileName` and saves the compressed version to the destination image specified by `destName`. The compression is controlled by the `threshold` parameter.
+
+3. **`imageColorCorrection(String imageName, String destImageName, double splitPercentage)`**:
+    - **Input Parameters**: `imageName` (source image name), `destImageName` (destination image name), `splitPercentage` (percentage for color correction)
+    - **Return Type**: `void`
+    - **Description**: Performs color correction on the image specified by `imageName` and saves the corrected image to the destination specified by `destImageName`. The `splitPercentage` parameter determines the extent of color correction.
+
+4. **`levelAdjust(String imageName, String destImageName, int b, int m, int w, double splitPercentage)`**:
+    - **Input Parameters**: `imageName` (source image name), `destImageName` (destination image name), `b` (brightness adjustment), `m` (midpoint adjustment), `w` (width adjustment), `splitPercentage` (percentage for level adjustment)
+    - **Return Type**: `void`
+    - **Description**: Adjusts the levels of the image specified by `imageName` and saves the adjusted image to the destination specified by `destImageName`. The adjustments are controlled by the parameters `b` (brightness), `m` (midpoint), `w` (width), and `splitPercentage` (extent of adjustment).
+
+This interface serves as a contract for classes that implement enhanced image processing functionality, building upon the basic image processing capabilities provided by the `ImageProcessingModel` interface. 
+This class extends the Interface `ImageProcessingModel` and these functions are implemented in`ImageProcessingModelImpl`
+
+Separate Classes called `ImageCompression`, `ImageColorCorrection`, `LevelAdjustment` ,`Histogram` were created in `imageoperations` package
+which is the part of the controller. In the `ImageOperationMapper` enum, all four operations were matched to its controller object like below.
+- `HISTOGRAM("histogram", Histogram::new)`
+- `IMAGE_COMPRESSION("compress", ImageCompression::new)`
+- `COLOR_CORRECTION("color-correct", ImageColorCorrection::new)`
+- `LEVEL_ADJUST("levels-adjust", LevelAdjustment::new)`
 
 
 ### *Enhanced Image Manipulation Features:*
