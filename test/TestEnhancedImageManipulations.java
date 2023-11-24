@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class TestEnhancedImageManipulations {
 
-/**
+
   @Test
   public void testRunScript() throws Exception {
     String input = "run output/commands.txt";
@@ -25,7 +25,7 @@ public class TestEnhancedImageManipulations {
     assertTrue(image.length > 0);
   }
 
-**/
+
   @Test
   public void testImageColorCorrection() throws Exception {
     String input="load output/manhattan-small.png manhattan-small\n" +
@@ -202,6 +202,50 @@ public class TestEnhancedImageManipulations {
     assertTrue(image.length > 0);
   }
 
+
+  @Test
+  public void testCompression20() throws Exception{
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "compress 20 manhattan-small manhattan-small-compress-20\n"
+            +"save manhattan-small-compress-20.png manhattan-compress-20-img";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+    RGB[][] image = model.retrieveImage("manhattan-small-compress-20");
+    assertTrue(image.length > 0);
+
+  }
+
+  @Test
+  public void testCompression60() throws Exception{
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "compress 60 manhattan-small manhattan-small-compress-60\n"
+            +"save manhattan-small-compress-60.png manhattan-compress-60-img";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+    RGB[][] image = model.retrieveImage("manhattan-small-compress-60");
+    assertTrue(image.length > 0);
+  }
+
+  @Test
+  public void testCompression90() throws Exception{
+    String input = "load output/manhattan-small.png manhattan-small\n"
+            + "compress 90 manhattan-small manhattan-small-compress-90\n"
+            +"save manhattan-small-compress-90.png manhattan-compress-90-img";
+    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
+    controller.imageOperationSelector();
+    RGB[][] image = model.retrieveImage("manhattan-small-compress-90");
+    assertTrue(image.length > 0);
+
+  }
   @Test
   public void testColorCorrect() throws Exception {
     String input = "load output/manhattan-small.png manhattan-small\n"
@@ -400,9 +444,9 @@ public class TestEnhancedImageManipulations {
 
   @Test
   public void testSharpen() throws Exception {
-    String input = "load output/manhattan-small.png manhattan-small\n"
+    String input = "load output/download.jpg manhattan-small\n"
             + "sharpen manhattan-small manhattan-small-sharpen\n"
-            +"save manhattan-small-sharpen.png manhattan-sharpen-img";
+            +"save manhattan-small-sharpen.jpg manhattan-sharpen-img";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
     System.setIn(in);
     ImageProcessingModel model = new ImageProcessingModelImpl();

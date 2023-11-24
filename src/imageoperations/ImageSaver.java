@@ -1,5 +1,8 @@
 package imageoperations;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -53,9 +56,18 @@ public class ImageSaver implements ImageOperationController {
       throw new IllegalArgumentException("File format not supported");
     } else {
       imageFormatController = ops.apply(imagePath);
+      File file = new File(instruction[2]);
+
+      if(file.isAbsolute()){
+        Path path = Paths.get(instruction[2]);
+        this.instruction[2]= path.getFileName().toString();
+      }
       imagePath= imagePath.split(
               "[.]")[0];
       RGB[][] image = imageProcessingModel.saveFile(this.instruction[2],imagePath);
+      if(file.isAbsolute()){
+        instruction[1]= instruction[2].split("[.]")[0];
+      }
       imageFormatController.save(instruction[1], image);
       System.out.println("Image has been saved at " + instruction[1]);
     }

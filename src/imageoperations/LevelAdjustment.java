@@ -30,7 +30,7 @@ public class LevelAdjustment  implements ImageOperationController {
       EnhancedImageProcessingModel enhancedImageProcessingModel= (EnhancedImageProcessingModel) imageProcessingModel;
 
       if(instruction.length == 6){
-        enhancedImageProcessingModel.levelAdjust(instruction[4], instruction[5],b,m,w,0);
+        enhancedImageProcessingModel.levelAdjust(instruction[4], instruction[5],b,m,w,100);
       }
       else{
         enhancedImageProcessingModel.levelAdjust(instruction[4], instruction[5],b,m,w,Double.valueOf(instruction[7]));

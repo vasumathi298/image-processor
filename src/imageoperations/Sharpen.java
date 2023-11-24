@@ -46,11 +46,12 @@ public class Sharpen implements ImageOperationController {
         throw new IllegalArgumentException("Enter valid command");
       }
       if(operations.length == 3){
-        imageProcessingModel.sharpenImage(operations[1], operations[2],0);
+        imageProcessingModel.sharpenImage(operations[1], operations[2],100);
       }
       else{
         imageProcessingModel.sharpenImage(operations[1], operations[2],Double.valueOf(operations[4]));
       }
+      System.out.println("Sharpen has been done");
     } catch (Exception e) {
       System.out.println(e);
     }

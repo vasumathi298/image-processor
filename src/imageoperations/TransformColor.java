@@ -34,8 +34,11 @@ public class TransformColor implements ImageOperationController {
       if (instructions.length > 5) {
         throw new IllegalArgumentException("Enter valid command");
       }
+      System.out.println(instructions[1]);
+      System.out.println(instructions[2]);
+
       if(instructions.length == 3){
-        imageProcessingModel.constructSepia(instructions[1], instructions[2],0);
+        imageProcessingModel.constructSepia(instructions[1], instructions[2],100);
       }
       else{
         imageProcessingModel.constructSepia(instructions[1], instructions[2],Double.valueOf(instructions[4]));

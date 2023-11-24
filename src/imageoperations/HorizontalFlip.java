@@ -31,6 +31,8 @@ public class HorizontalFlip implements ImageOperationController {
       if (instruction.length != 3) {
         throw new IllegalArgumentException("Enter a valid command");
       }
+      System.out.println(instruction[1]);
+      System.out.println(instruction[2]);
       imageProcessingModel.horizontalImageFlip(instruction[1], instruction[2]);
     } catch (Exception e) {
       System.out.println(e);

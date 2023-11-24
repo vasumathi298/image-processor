@@ -97,7 +97,7 @@ public class GreyScale implements ImageOperationController {
   private void lumaCompGrayOp(String[] ops, ImageProcessingModel imageProcessingModel) {
     try {
       if(instruction.length == 4) {
-        imageProcessingModel.greyScaleLuma(ops[2], ops[3], 0);
+        imageProcessingModel.greyScaleLuma(ops[2], ops[3], 100);
       }
       else{
         imageProcessingModel.greyScaleLuma(ops[2], ops[3], Double.valueOf(ops[5]));

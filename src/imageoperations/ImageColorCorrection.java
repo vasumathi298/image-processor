@@ -21,11 +21,12 @@ public class ImageColorCorrection implements ImageOperationController {
       }
       EnhancedImageProcessingModel enhancedImageProcessingModel= (EnhancedImageProcessingModel) imageProcessingModel;
       if(instruction.length == 3){
-        enhancedImageProcessingModel.imageColorCorrection(instruction[1], instruction[2],0);
+        enhancedImageProcessingModel.imageColorCorrection(instruction[1], instruction[2],100);
       }
       else{
         enhancedImageProcessingModel.imageColorCorrection(instruction[1], instruction[2],Double.valueOf(instruction[4]));
       }
+      System.out.println("Color correction done successfully");
     } catch (Exception e) {
       System.out.println(e);
     }
