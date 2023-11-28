@@ -240,7 +240,7 @@ public class ImageProcessingModelImpl implements ImageProcessingModel, EnhancedI
           lumaGrayImage[k][l] = new RGB(lumaValue, lumaValue, lumaValue);
         } else {
           // If the pixel is on the right side, copy the original pixel
-          lumaGrayImage[k][l] = new RGB(retrieveImage[k][l].red, retrieveImage[k][l].green, retrieveImage[k][l].blue);
+          lumaGrayImage[k][l] = new RGB(retrieveImage[k][l].getPixel(0), retrieveImage[k][l].getPixel(1), retrieveImage[k][l].getPixel(2));
         }
       }
     }
@@ -374,7 +374,7 @@ public class ImageProcessingModelImpl implements ImageProcessingModel, EnhancedI
           sepiaTonedImage[k][l] = generateSepiaTone(retrieveImage[k][l]);
         } else {
           // If the pixel is on the right half, copy the original pixel
-          sepiaTonedImage[k][l] = new RGB(retrieveImage[k][l].red, retrieveImage[k][l].green, retrieveImage[k][l].blue);
+          sepiaTonedImage[k][l] = new RGB(retrieveImage[k][l].getPixel(0), retrieveImage[k][l].getPixel(1), retrieveImage[k][l].getPixel(2));
         }
       }
     }

@@ -5,9 +5,9 @@ package imagemodel;
  */
 public class RGB {
 
-  public int red;
-  public int green;
-  public int blue;
+  private int red;
+  private int green;
+  private int blue;
 
   /**
    * Constructs an `RGB` object with the specified red, green, and blue values.

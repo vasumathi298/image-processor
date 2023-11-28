@@ -1,8 +1,5 @@
 package imageoperations;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -48,6 +45,11 @@ public class ImageSaver implements ImageOperationController {
   @Override
   public void performOperation(ImageProcessingModel imageProcessingModel) throws Exception {
     ImageFormatController imageFormatController;
+    System.out.println("Instruction 1");
+    System.out.println(instruction[1]);
+
+    System.out.println("Instruction 2");
+    System.out.println(instruction[2]);
     String imagePath = new String(this.instruction[1]);
     Function<String, ImageFormatController> ops =
             imageFormatOptions.getOrDefault(imagePath.split(
@@ -56,19 +58,15 @@ public class ImageSaver implements ImageOperationController {
       throw new IllegalArgumentException("File format not supported");
     } else {
       imageFormatController = ops.apply(imagePath);
-      File file = new File(instruction[2]);
-
-      if(file.isAbsolute()){
-        Path path = Paths.get(instruction[2]);
-        this.instruction[2]= path.getFileName().toString();
-      }
       imagePath= imagePath.split(
               "[.]")[0];
       RGB[][] image = imageProcessingModel.saveFile(this.instruction[2],imagePath);
-      if(file.isAbsolute()){
-        instruction[1]= instruction[2].split("[.]")[0];
+      if(instruction[1].equals("image.png")) {
+        imageFormatController.save(instruction[2], image);
       }
-      imageFormatController.save(instruction[1], image);
+      else {
+        imageFormatController.save(instruction[1], image);
+      }
       System.out.println("Image has been saved at " + instruction[1]);
     }
   }
