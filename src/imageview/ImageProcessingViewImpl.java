@@ -229,7 +229,13 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
     this.loadButton.addActionListener(evt -> {
       features.loadImage(objectName);
     });
-    this.saveButton.addActionListener(evt -> features.saveImage());
+    this.saveButton.addActionListener(evt -> {
+      features.saveImage();
+      JFrame savePopUp = new JFrame("Pop-Up Window");
+      JOptionPane.showMessageDialog(savePopUp,
+              "Image has been saved!");
+
+    });
     this.verticalFlipButton.addActionListener(evt -> features.verticalFlip());
     this.horizontalFlip.addActionListener(evt -> features.horizontalFlip());
     this.greyScaleButton.addActionListener(evt -> {
