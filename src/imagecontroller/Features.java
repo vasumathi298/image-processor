@@ -83,6 +83,10 @@ public interface Features extends ImageProcessingController {
    */
   void sepiaTone();
 
+
+  void sepiaTone(double splitPercentage);
+
+
   /**
    * A method to perform sharpen operation on the image from the GUI.
    */

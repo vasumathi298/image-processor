@@ -23,6 +23,8 @@ import imagemodel.RGB;
  */
 public class ImageProcessingViewImpl extends JFrame implements ImageProcessingView {
 
+  private String lastActionPerformed;
+
   private final String objectName = "image";
   private final JPanel imagePanel;
   private final JPanel histogramPanel;
@@ -32,6 +34,7 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
   private final JButton greyScaleButton;
   private final JButton blur;
 
+  private JButton split;
   private final JButton compression;
 
   private final JButton redComp;
@@ -109,6 +112,8 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
     fileSavePanel.setLayout(new FlowLayout());
     fileSavePanel.setBackground(Color.LIGHT_GRAY);
     dialogBoxesPanel.add(fileSavePanel);
+    this.split = new JButton("Split");
+    this.split.setEnabled(false);
     this.saveButton = new JButton("Save a file");
     saveButton.setBackground(Color.WHITE);
     this.saveButton.setActionCommand("Save file");
@@ -117,6 +122,7 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
     this.loadButton.setActionCommand("open file");
     loadButton.setBackground(Color.WHITE);
     fileSavePanel.add(this.loadButton);
+    fileSavePanel.add(this.split);
 
     //commands panel
     JPanel commandsPanel = new JPanel();
@@ -286,7 +292,26 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
       }
     });
     this.sharpen.addActionListener(evt -> features.sharpen());
-    this.sepia.addActionListener(evt -> features.sepiaTone());
+    this.sepia.addActionListener(evt -> {
+      features.sepiaTone();
+      this.split.setEnabled(true);
+      lastActionPerformed = "sepia";
+    });
+
+    this.split.addActionListener( evt ->{
+      JFrame splitPopUp = new JFrame("Pop-Up Window");
+      String input = JOptionPane.showInputDialog(splitPopUp,
+              "Enter split percentage (Do not use %):");
+      double splitPecentage = input.isEmpty() ? 0 : Double.parseDouble(input);
+      switch (lastActionPerformed) {
+        case "sepia" : features.sepiaTone(splitPecentage);
+        break;
+      }
+
+
+
+
+      });
     this.brightness.addActionListener(evt -> {
       JFrame brightnessPopUp = new JFrame("Pop-Up Window");
       String input = JOptionPane.showInputDialog(brightnessPopUp,

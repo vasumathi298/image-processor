@@ -340,6 +340,24 @@ public class ImageProcessingControllerCommandImpl implements Features {
   }
 
   @Override
+  public void sepiaTone(double splitPercentage) {
+    try {
+      ImageOperationController cc;
+      Function<Scanner, ImageOperationController> cmd =
+              knownCommands.getOrDefault("sepia", null);
+      cc = cmd.apply(new Scanner("sepia" + " "
+              + objectName + " " + currentImage.peek()+" "+"split"+" "+ splitPercentage));
+      cc.performOperation(this.model);
+      this.currentImage.push(objectName);
+    } catch (Exception e) {
+      view.displayError("Error performing sepia operation!");
+    }
+    System.out.println("current image is "+currentImage.peek());
+    view.displayImage(currentImage.peek());
+  }
+
+
+  @Override
   public void brightness(int value) {
     try {
       ImageOperationController cc;
