@@ -129,6 +129,12 @@ public class ImageProcessingModelImpl implements ImageProcessingModel, EnhancedI
   }
 
 
+  @Override
+  public void revertImage(String imageFind, String revertImageName){
+    RGB[][] retrivedImage = null;
+    retrivedImage = rgbImageStore.retrieveImage(imageFind);
+    this.rgbImageStore.storeImage(revertImageName, retrivedImage);
+  }
   private RGB[][] constructRedGreyScaleImage(RGB[][] orgImage) {
     imageWidth = orgImage[0].length;
     imageHeight = orgImage.length;

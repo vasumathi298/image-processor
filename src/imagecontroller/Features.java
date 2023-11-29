@@ -76,12 +76,9 @@ public interface Features extends ImageProcessingController {
   /**
    * A method to perform blur operation on the image from the GUI.
    */
-  void blur();
+  void blur(double splitPercentage);
 
-  /**
-   * A method to generate a sepia tone of the image from the GUI.
-   */
-  void sepiaTone();
+
 
 
   void sepiaTone(double splitPercentage);
@@ -90,7 +87,7 @@ public interface Features extends ImageProcessingController {
   /**
    * A method to perform sharpen operation on the image from the GUI.
    */
-  void sharpen();
+  void sharpen(double splitPercentage);
 
   /**
    * A method to increase or decrease the brightness of the image.
@@ -115,6 +112,8 @@ public interface Features extends ImageProcessingController {
 
 
   void compression( double threshold);
+
+  void revert();
 
 }
 

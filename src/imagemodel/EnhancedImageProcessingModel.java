@@ -13,4 +13,6 @@ public interface EnhancedImageProcessingModel extends ImageProcessingModel{
 
   public void levelAdjust( String imageName, String destImageName, int b, int m, int w, double splitPercentage);
 
+  public void revertImage(String imageFind, String revertImageName);
+
   }

@@ -23,7 +23,6 @@ import imagemodel.RGB;
  */
 public class ImageProcessingViewImpl extends JFrame implements ImageProcessingView {
 
-  private String lastActionPerformed;
 
   private final String objectName = "image";
   private final JPanel imagePanel;
@@ -112,7 +111,7 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
     fileSavePanel.setLayout(new FlowLayout());
     fileSavePanel.setBackground(Color.LIGHT_GRAY);
     dialogBoxesPanel.add(fileSavePanel);
-    this.split = new JButton("Split");
+    this.split = new JButton("Revert");
     this.split.setEnabled(false);
     this.saveButton = new JButton("Save a file");
     saveButton.setBackground(Color.WHITE);
@@ -257,7 +256,21 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
         throw new RuntimeException(e);
       }
     });
-    this.blur.addActionListener(evt -> features.blur());
+
+    this.blur.addActionListener(evt -> {
+      this.split.setEnabled(true);
+      JFrame splitPopUp = new JFrame("Pop-Up Window");
+      String input = JOptionPane.showInputDialog(splitPopUp,
+                            "Enter Split value for preview (Optional):");
+     double splitPercentage = input.isEmpty() ? 0 : Double.parseDouble(input);
+     features.blur(splitPercentage);
+     if(splitPercentage== 0){
+       this.saveButton.setEnabled(true);
+     }
+     else{
+        this.saveButton.setEnabled(false);
+     }
+    });
     this.redComp.addActionListener(evt -> {
       try {
         features.getRedComponent();
@@ -291,27 +304,59 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
         throw new RuntimeException(e);
       }
     });
-    this.sharpen.addActionListener(evt -> features.sharpen());
-    this.sepia.addActionListener(evt -> {
-      features.sepiaTone();
+
+    /**
+     *  this.blur.addActionListener(evt -> {
+     *       this.split.setEnabled(true);
+     *       JFrame splitPopUp = new JFrame("Pop-Up Window");
+     *       String input = JOptionPane.showInputDialog(splitPopUp,
+     *                             "Enter Split value for preview (Optional):");
+     *      double splitPercentage = input.isEmpty() ? 0 : Double.parseDouble(input);
+     *      features.blur(splitPercentage);
+     *      if(splitPercentage== 0){
+     *        this.saveButton.setEnabled(true);
+     *      }
+     *      else{
+     *         this.saveButton.setEnabled(false);
+     *      }
+     *     });
+     */
+    this.sharpen.addActionListener(evt ->{
       this.split.setEnabled(true);
-      lastActionPerformed = "sepia";
+      JFrame splitPopUp = new JFrame("Pop-Up Window");
+      String input = JOptionPane.showInputDialog(splitPopUp,
+                                         "Enter Split value for preview (Optional):");
+      double splitPercentage = input.isEmpty() ? 100 : Double.parseDouble(input);
+      features.sharpen(splitPercentage);
+      if(splitPercentage== 100){
+        this.saveButton.setEnabled(true);
+     }
+     else{
+       this.saveButton.setEnabled(false);
+     }
+    });
+    this.sepia.addActionListener(evt -> {
+      this.split.setEnabled(true);
+      JFrame splitPopUp = new JFrame("Pop-Up Window");
+      String input = JOptionPane.showInputDialog(splitPopUp,
+              "Enter Split value for preview (Optional):");
+      double splitPercentage = input.isEmpty() ? 100 : Double.parseDouble(input);
+      features.sepiaTone(splitPercentage);
+      if(splitPercentage== 100){
+        this.saveButton.setEnabled(true);
+      }
+      else{
+        this.saveButton.setEnabled(false);
+      }
     });
 
     this.split.addActionListener( evt ->{
-      JFrame splitPopUp = new JFrame("Pop-Up Window");
-      String input = JOptionPane.showInputDialog(splitPopUp,
-              "Enter split percentage (Do not use %):");
-      double splitPecentage = input.isEmpty() ? 0 : Double.parseDouble(input);
-      switch (lastActionPerformed) {
-        case "sepia" : features.sepiaTone(splitPecentage);
-        break;
-      }
+        features.revert();
+      this.saveButton.setEnabled(true);
+      this.split.setEnabled(false);
+    });
 
 
-
-
-      });
     this.brightness.addActionListener(evt -> {
       JFrame brightnessPopUp = new JFrame("Pop-Up Window");
       String input = JOptionPane.showInputDialog(brightnessPopUp,

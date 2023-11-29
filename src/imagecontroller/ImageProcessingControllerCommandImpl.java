@@ -27,6 +27,9 @@ public class ImageProcessingControllerCommandImpl implements Features {
   private List<String> runCommands;
   private Stack<String> currentImage;
 
+  private String revertImage;
+
+  private boolean performed;
   public  ImageProcessingControllerCommandImpl(InputStream input, ImageProcessingView view,
                                             ImageProcessingModel model) {
     this.input = input;
@@ -35,6 +38,7 @@ public class ImageProcessingControllerCommandImpl implements Features {
     this.runCommands = new ArrayList<>();
     loadOperations();
     this.currentImage = new Stack<>();
+    performed=false;
   }
 
   private void loadOperations() {
@@ -292,14 +296,20 @@ public class ImageProcessingControllerCommandImpl implements Features {
   }
 
 
+
   @Override
-  public void blur() {
+  public void blur(double splitPercentage) {
     try {
       ImageOperationController cc;
       Function<Scanner, ImageOperationController> cmd =
               knownCommands.getOrDefault("blur", null);
       cc = cmd.apply(new Scanner("blur" + " "
-              + objectName + " " + currentImage.peek()));
+              + objectName + " " + currentImage.peek()+" "+ "split" +" "+ splitPercentage));
+      if(!performed) {
+        EnhancedImageProcessingModel enhancedModel = (EnhancedImageProcessingModel) this.model;
+        enhancedModel.revertImage(objectName, objectName + "-non-split");
+        performed = true;
+      }
       cc.performOperation(this.model);
     } catch (Exception e) {
       view.displayError("Error performing blur operation!");
@@ -308,13 +318,18 @@ public class ImageProcessingControllerCommandImpl implements Features {
   }
 
   @Override
-  public void sharpen() {
+  public void sharpen(double splitPercentage) {
     try {
       ImageOperationController cc;
       Function<Scanner, ImageOperationController> cmd =
               knownCommands.getOrDefault("sharpen", null);
       cc = cmd.apply(new Scanner("sharpen" + " "
-              + objectName + " " + currentImage.peek()));
+              + objectName + " " + currentImage.peek()+" "+ "split" + " "+ splitPercentage));
+      if(!performed) {
+        EnhancedImageProcessingModel enhancedModel = (EnhancedImageProcessingModel) this.model;
+        enhancedModel.revertImage(objectName, objectName + "-non-split");
+        performed = true;
+      }
       cc.performOperation(this.model);
     } catch (Exception e) {
       view.displayError("Error performing sharpen operation!");
@@ -323,13 +338,22 @@ public class ImageProcessingControllerCommandImpl implements Features {
   }
 
   @Override
-  public void sepiaTone() {
+  public  void revert(){
+    view.displayImage(objectName+"-non-split");
+  }
+  @Override
+  public void sepiaTone(double splitPercentage) {
     try {
       ImageOperationController cc;
       Function<Scanner, ImageOperationController> cmd =
               knownCommands.getOrDefault("sepia", null);
       cc = cmd.apply(new Scanner("sepia" + " "
-              + objectName + " " + currentImage.peek()));
+              + objectName + " " + currentImage.peek()+" "+"split"+" "+ splitPercentage));
+      if(!performed) {
+        EnhancedImageProcessingModel enhancedModel = (EnhancedImageProcessingModel) this.model;
+        enhancedModel.revertImage(objectName, objectName + "-non-split");
+        performed = true;
+      }
       cc.performOperation(this.model);
       this.currentImage.push(objectName);
     } catch (Exception e) {
@@ -339,22 +363,7 @@ public class ImageProcessingControllerCommandImpl implements Features {
     view.displayImage(currentImage.peek());
   }
 
-  @Override
-  public void sepiaTone(double splitPercentage) {
-    try {
-      ImageOperationController cc;
-      Function<Scanner, ImageOperationController> cmd =
-              knownCommands.getOrDefault("sepia", null);
-      cc = cmd.apply(new Scanner("sepia" + " "
-              + objectName + " " + currentImage.peek()+" "+"split"+" "+ splitPercentage));
-      cc.performOperation(this.model);
-      this.currentImage.push(objectName);
-    } catch (Exception e) {
-      view.displayError("Error performing sepia operation!");
-    }
-    System.out.println("current image is "+currentImage.peek());
-    view.displayImage(currentImage.peek());
-  }
+
 
 
   @Override
