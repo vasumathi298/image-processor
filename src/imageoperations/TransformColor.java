@@ -1,6 +1,5 @@
 package imageoperations;
 
-import java.util.Objects;
 
 import imagecontroller.ImageOperationController;
 import imagemodel.ImageProcessingModel;
@@ -37,11 +36,11 @@ public class TransformColor implements ImageOperationController {
       System.out.println(instructions[1]);
       System.out.println(instructions[2]);
 
-      if(instructions.length == 3){
-        imageProcessingModel.constructSepia(instructions[1], instructions[2],100);
-      }
-      else{
-        imageProcessingModel.constructSepia(instructions[1], instructions[2],Double.valueOf(instructions[4]));
+      if (instructions.length == 3) {
+        imageProcessingModel.constructSepia(instructions[1], instructions[2], 100);
+      } else {
+        imageProcessingModel.constructSepia(instructions[1], instructions[2],
+                Double.valueOf(instructions[4]));
       }
     } catch (Exception e) {
       System.out.println(e);

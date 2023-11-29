@@ -3,7 +3,6 @@ package imagecontroller;
 import java.io.FileNotFoundException;
 
 import imageview.ImageProcessingView;
-import imageview.ImageProcessingViewImpl;
 
 /**
  * This interface represents the operations that can be done using the GUI that will be handled by
@@ -43,7 +42,7 @@ public interface Features extends ImageProcessingController {
   /**
    * A method to generate a grayscale of the image based on luma component from the GUI.
    */
-  void lumaGrayscale();
+  void lumaGrayscale(double splitPercentage);
 
   /**
    * A method to generate a grayscale of the image based on intensity component from the GUI.
@@ -71,7 +70,7 @@ public interface Features extends ImageProcessingController {
 
   void getBlueComponent() throws FileNotFoundException;
 
-  void getColorCorrectedImage() throws FileNotFoundException;
+  void getColorCorrectedImage(double splitPercentage) throws FileNotFoundException;
 
   /**
    * A method to perform blur operation on the image from the GUI.
@@ -96,7 +95,15 @@ public interface Features extends ImageProcessingController {
    */
   void brightness(int value);
 
-  void levelsAdjust(int b, int m, int w);
+  /**
+   * Level adjust the image.
+   * @param b b value.
+   * @param m m value.
+   * @param w w value.
+   * @param splitPercentage split percentage.
+   */
+  void levelsAdjust(int b, int m, int w, double splitPercentage);
+
   /**
    * This method will combine image and display the combined image in GUI.
    */
@@ -110,9 +117,15 @@ public interface Features extends ImageProcessingController {
    */
   void setView(ImageProcessingView view);
 
-
+  /**
+   * Compress the image.
+   * @param threshold threshold as percentage.
+   */
   void compression( double threshold);
 
+  /**
+   * Revert the image to view only split.
+   */
   void revert();
 
 }

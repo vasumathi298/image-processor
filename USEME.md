@@ -37,3 +37,33 @@
 | Greyscale Luma Component + Split | greyscale luma-component source-image dest-image split x                            | Should be written in same order.<br/> All words in command to be seperated by a single space.<br/> A percentage to be given between 0 to 100 followed by split word to apply greyscale luma operation only to that % of portion in left of image. Do not include % sign in command.                                                                                                                                                                                                                                                                                                                                                                                      | 
 | Compression                      | compress manhattan-sm manhattan-small-compress-20                                   | output/manhattan-small-compress-20.png           |
 
+
+
+### How to Use UI
+
+1. **Load:** On clicking load, a dialogue box opens. Select an image to load by browsing through the directories in your computer and work on the image operations. The corresponding histogram also gets displayed in the panel below.
+2. **Save:** On Saving, a box opens to navigate to the directory where we should save the image. Enter the image name followed by a dot and file format (PNG, JPEG, JPG, BPM, PPM).
+3. **Vertical Flip** : Clicking on this button, will flip the image vertically.
+4. **Horizontal Flip** : Clicking on this button, will flip the image horizontally.
+5. **Red Comp**: This button will display the red component of the image.
+6. **Green Comp**: This button will display the green component of the image.
+7. **Blue Comp**: This button will display the blue component of the image.
+8. **Color Correction:** This button will display a prompt to enter the split which is optional and will display the color corrected image with its respective histogram in the panel below.
+9. **Levels Adjust:**  This button will prompt the user to enter b, m and w values along with split percentage which is optional. It will display the level adjusted image with its respective histogram in the panel below.
+10. **Blur:**  Clicking on this button, the user will see a blurred image in the panel with its respective histogram below.
+11. **Sharpen:** Clicking on this button, the user will see a sharpened image in the panel with its respective histogram below.
+12. **Sepia:** Clicking on this button, user can view the sepia operation applied. There is also an option to preview the image in split view but its optional.
+13. **Brigtness:**  This will ideally brighten or darken the image by accepting a positive or negative values. The image will be displayed along with the histogram.
+14. **Compression:**  Compression will prompt the user to entre the threshold, the higher the threshold, lower the size of the image being saved. The compressed image is also displayed.
+15. **Load and Combine:** This will load the individual images separately as a red, green and blue component and merge them together and display the same along with histogram.
+16. **GreyScale:** This will open a dialog box for the users to view six greyscale components - red, blue, green, luma, intensity and value. The images are displayed and can be saved in any formats.
+17. **Revert:** Revert the split preview and go back to the original image that was used earlier.
+
+### Run the jar
+
+Go to the folder where the jar is C:\Users\User\IdeaProjects\assignment4\output
+Run this command below:
+
+### Run the script file
+
+java -jar assignment4.jar -file commands.txt

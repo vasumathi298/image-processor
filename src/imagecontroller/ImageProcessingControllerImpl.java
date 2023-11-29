@@ -10,7 +10,6 @@ import java.util.function.Function;
 
 import imagemodel.ImageProcessingModel;
 import imageview.ImageProcessingView;
-import imageview.ImageProcessingViewImpl;
 
 /**
  * The ImageProcessingControllerImpl class implements the ImageProcessingController interface and
@@ -23,7 +22,6 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
           ImageOperationController>> knownCommands = new HashMap<>();
   private List<String> operations;
 
-  private ImageProcessingView feature;
   /**
    * Constructs an ImageProcessingControllerImpl with the specified input stream and image model.
    *
@@ -37,13 +35,22 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     loadOperations();
   }
 
-  public ImageProcessingControllerImpl(InputStream input, ImageProcessingView view, ImageProcessingModel model) {
+  /**
+   * Initialize the variables in the constructor.
+   * @param input input commands.
+   * @param view Image processing view.
+   * @param model Image processing model.
+   */
+  public ImageProcessingControllerImpl(InputStream input, ImageProcessingView view,
+                                       ImageProcessingModel model) {
+    ImageProcessingView feature;
     this.inputImageStream = input;
     this.operations = new ArrayList<>();
     this.imageModel = model;
-    this.feature = view;
+    feature = view;
     loadOperations();
   }
+
   private void loadOperations() {
     for (ImageOperationMapper command : ImageOperationMapper.values()) {
       knownCommands.put(command.getCommand(), s -> command.createController(s.nextLine()));

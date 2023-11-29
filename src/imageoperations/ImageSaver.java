@@ -17,8 +17,8 @@ import imagemodel.RGB;
  */
 public class ImageSaver implements ImageOperationController {
   private final String[] instruction;
-  private final Map<String, Function<String
-          , ImageFormatController>> imageFormatOptions = new HashMap<>();
+  private final Map<String, Function<String,
+          ImageFormatController>> imageFormatOptions = new HashMap<>();
 
   /**
    * Constructs an `ImageSaver` object and parses the input instructions.
@@ -58,13 +58,12 @@ public class ImageSaver implements ImageOperationController {
       throw new IllegalArgumentException("File format not supported");
     } else {
       imageFormatController = ops.apply(imagePath);
-      imagePath= imagePath.split(
+      imagePath = imagePath.split(
               "[.]")[0];
-      RGB[][] image = imageProcessingModel.saveFile(this.instruction[2],imagePath);
-      if(instruction[1].equals("image.png")) {
+      RGB[][] image = imageProcessingModel.saveFile(this.instruction[2], imagePath);
+      if (instruction[1].equals("image.png")) {
         imageFormatController.save(instruction[2], image);
-      }
-      else {
+      } else {
         imageFormatController.save(instruction[1], image);
       }
       System.out.println("Image has been saved at " + instruction[1]);

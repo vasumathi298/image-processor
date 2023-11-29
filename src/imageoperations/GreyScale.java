@@ -87,8 +87,8 @@ public class GreyScale implements ImageOperationController {
   private void valueCompGrayOp(String[] ops, ImageProcessingModel imageProcessingModel) {
     try {
       imageProcessingModel.greyScaleValue(ops[2], ops[3]);
-      System.out.println("Value grayscale component of " +
-              ops[2] + " has been generated successfully.");
+      System.out.println("Value grayscale component of "
+              + ops[2] + " has been generated successfully.");
     } catch (Exception e) {
       System.out.println(e);
     }
@@ -96,10 +96,9 @@ public class GreyScale implements ImageOperationController {
 
   private void lumaCompGrayOp(String[] ops, ImageProcessingModel imageProcessingModel) {
     try {
-      if(instruction.length == 4) {
+      if (instruction.length == 4) {
         imageProcessingModel.greyScaleLuma(ops[2], ops[3], 100);
-      }
-      else{
+      } else {
         imageProcessingModel.greyScaleLuma(ops[2], ops[3], Double.valueOf(ops[5]));
       }
       System.out.println("Luma grayscale component of "

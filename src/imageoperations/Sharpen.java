@@ -1,7 +1,6 @@
 package imageoperations;
 
 
-
 import imagecontroller.ImageOperationController;
 import imagemodel.ImageProcessingModel;
 
@@ -34,8 +33,8 @@ public class Sharpen implements ImageOperationController {
     inputFilterOperations(instruction, imageProcessingModel);
   }
 
-  private void inputFilterOperations(String[] operations
-          , ImageProcessingModel imageProcessingModel) {
+  private void inputFilterOperations(String[] operations,
+                                     ImageProcessingModel imageProcessingModel) {
 
     imageSharpener(instruction, imageProcessingModel);
   }
@@ -45,11 +44,11 @@ public class Sharpen implements ImageOperationController {
       if (operations.length > 5) {
         throw new IllegalArgumentException("Enter valid command");
       }
-      if(operations.length == 3){
-        imageProcessingModel.sharpenImage(operations[1], operations[2],100);
-      }
-      else{
-        imageProcessingModel.sharpenImage(operations[1], operations[2],Double.valueOf(operations[4]));
+      if (operations.length == 3) {
+        imageProcessingModel.sharpenImage(operations[1], operations[2], 100);
+      } else {
+        imageProcessingModel.sharpenImage(operations[1], operations[2],
+                Double.valueOf(operations[4]));
       }
       System.out.println("Sharpen has been done");
     } catch (Exception e) {

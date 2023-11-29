@@ -4,6 +4,9 @@ import imagecontroller.ImageOperationController;
 import imagemodel.EnhancedImageProcessingModel;
 import imagemodel.ImageProcessingModel;
 
+/**
+ * Generate Histogram of the image.
+ */
 public class Histogram implements ImageOperationController {
 
 
@@ -20,8 +23,9 @@ public class Histogram implements ImageOperationController {
       if (instruction.length != 3) {
         throw new IllegalArgumentException("Enter a valid command");
       }
-      EnhancedImageProcessingModel enhancedImageProcessingModel= (EnhancedImageProcessingModel) imageProcessingModel;
-      enhancedImageProcessingModel.fetchHistogram(instruction[1],instruction[2]);
+      EnhancedImageProcessingModel enhancedImageProcessingModel =
+              (EnhancedImageProcessingModel) imageProcessingModel;
+      enhancedImageProcessingModel.fetchHistogram(instruction[1], instruction[2]);
     } catch (Exception e) {
       System.out.println(e);
     }

@@ -410,6 +410,8 @@ Our application offers a versatile set of image processing operations, including
 9. **Blur Effect:** Add a blurring filter to the images.
 10. **Sharpening:** Enhance image sharpness with a sharpening filter.
 
+
+### Image Citation from New York time
 Image that was used for Manipulation was from (https://static01.nyt.com/images/2021/02/27/arts/tomjerry1/tomjerry1-jumbo.jpg?quality=75&auto=webp).
 The image from this link was saved as manhattan-small.png.
 All the output images are placed in output/ folder

@@ -1,4 +1,4 @@
-load output/manhattan-small.png manhattan-small
+load manhattan-small.png manhattan-small
 histogram manhattan-small manhattan-small-histogram
 rgb-split manhattan-small manhattan-small-red-grey manhattan-small-green-grey manhattan-small-blue-grey
 levels-adjust 20 100 255 manhattan-small manhattan-small-level-adjust
@@ -51,5 +51,3 @@ greyscale value-component manhattan-small-sepia-level-adjust manhattan-small-sep
 save manhattan-small-sepia-level-adjust-value.png manhattan-small-sepia-level-adjust-value-img
 greyscale intensity-component manhattan-small-sepia-level-adjust manhattan-small-sepia-level-adjust-intensity
 save manhattan-small-sepia-level-adjust-intensity.png manhattan-small-sepia-level-adjust-intensity-img
-greyscale blue-component manhattan-small-sepia-level-adjust manhattan-small-sepia-level-adjust-blue
-save manhattan-small-sepia-level-adjust-blue.png manhattan-small-sepia-level-adjust-blue-img

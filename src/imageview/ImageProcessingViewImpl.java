@@ -9,7 +9,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JFileChooser;
+import javax.swing.JScrollPane;
+import javax.swing.BorderFactory;
+import javax.swing.JToggleButton;
+import javax.swing.JOptionPane;
+import javax.swing.BoxLayout;
+
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
@@ -205,10 +217,6 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
     commandsPanel.add(this.loadAndCombine);
 
 
-   /* this.splitToggle = new JToggleButton("Split Percentage");
-    this.
-    mainPanel.add(commandsPanel);
-*/
 
     //show an image histogram with a scrollbar
     this.histogramPanel = new JPanel();
@@ -247,9 +255,9 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
       JFrame greyScaleOptions = new JFrame();
       String[] options = {"Intensity", "Value", "Luma", "Red", "Green", "Blue"};
       int input = JOptionPane.showOptionDialog(greyScaleOptions,
-          "Choose a greyscale option:", "Greyscale options",
-          JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-          null, options, options[0]);
+              "Choose a greyscale option:", "Greyscale options",
+              JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+              null, options, options[0]);
       try {
         selectGreyScale(options[input], features);
       } catch (FileNotFoundException e) {
@@ -261,15 +269,14 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
       this.split.setEnabled(true);
       JFrame splitPopUp = new JFrame("Pop-Up Window");
       String input = JOptionPane.showInputDialog(splitPopUp,
-                            "Enter Split value for preview (Optional):");
-     double splitPercentage = input.isEmpty() ? 0 : Double.parseDouble(input);
-     features.blur(splitPercentage);
-     if(splitPercentage== 0){
-       this.saveButton.setEnabled(true);
-     }
-     else{
+              "Enter Split value for preview (Optional):");
+      double splitPercentage = input.isEmpty() ? 0 : Double.parseDouble(input);
+      features.blur(splitPercentage);
+      if (splitPercentage == 0) {
+        this.saveButton.setEnabled(true);
+      } else {
         this.saveButton.setEnabled(false);
-     }
+      }
     });
     this.redComp.addActionListener(evt -> {
       try {
@@ -278,7 +285,6 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
         throw new RuntimeException(e);
       }
     });
-
 
 
     this.greenComp.addActionListener(evt -> {
@@ -299,41 +305,34 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
 
     this.colorCorrection.addActionListener(evt -> {
       try {
-        features.getColorCorrectedImage();
+        this.split.setEnabled(true);
+        JFrame splitPopUp = new JFrame("Pop-Up Window");
+        String input = JOptionPane.showInputDialog(splitPopUp,
+                "Enter Split value for preview (Optional):");
+        double splitPercentage = input.isEmpty() ? 100 : Double.parseDouble(input);
+        features.getColorCorrectedImage(splitPercentage);
+        if (splitPercentage == 100) {
+          this.saveButton.setEnabled(true);
+        } else {
+          this.saveButton.setEnabled(false);
+        }
       } catch (FileNotFoundException e) {
         throw new RuntimeException(e);
       }
     });
 
-    /**
-     *  this.blur.addActionListener(evt -> {
-     *       this.split.setEnabled(true);
-     *       JFrame splitPopUp = new JFrame("Pop-Up Window");
-     *       String input = JOptionPane.showInputDialog(splitPopUp,
-     *                             "Enter Split value for preview (Optional):");
-     *      double splitPercentage = input.isEmpty() ? 0 : Double.parseDouble(input);
-     *      features.blur(splitPercentage);
-     *      if(splitPercentage== 0){
-     *        this.saveButton.setEnabled(true);
-     *      }
-     *      else{
-     *         this.saveButton.setEnabled(false);
-     *      }
-     *     });
-     */
-    this.sharpen.addActionListener(evt ->{
+    this.sharpen.addActionListener(evt -> {
       this.split.setEnabled(true);
       JFrame splitPopUp = new JFrame("Pop-Up Window");
       String input = JOptionPane.showInputDialog(splitPopUp,
-                                         "Enter Split value for preview (Optional):");
+              "Enter Split value for preview (Optional):");
       double splitPercentage = input.isEmpty() ? 100 : Double.parseDouble(input);
       features.sharpen(splitPercentage);
-      if(splitPercentage== 100){
+      if (splitPercentage == 100) {
         this.saveButton.setEnabled(true);
-     }
-     else{
-       this.saveButton.setEnabled(false);
-     }
+      } else {
+        this.saveButton.setEnabled(false);
+      }
     });
     this.sepia.addActionListener(evt -> {
       this.split.setEnabled(true);
@@ -342,16 +341,15 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
               "Enter Split value for preview (Optional):");
       double splitPercentage = input.isEmpty() ? 100 : Double.parseDouble(input);
       features.sepiaTone(splitPercentage);
-      if(splitPercentage== 100){
+      if (splitPercentage == 100) {
         this.saveButton.setEnabled(true);
-      }
-      else{
+      } else {
         this.saveButton.setEnabled(false);
       }
     });
 
-    this.split.addActionListener( evt ->{
-        features.revert();
+    this.split.addActionListener(evt -> {
+      features.revert();
       this.saveButton.setEnabled(true);
       this.split.setEnabled(false);
     });
@@ -360,21 +358,22 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
     this.brightness.addActionListener(evt -> {
       JFrame brightnessPopUp = new JFrame("Pop-Up Window");
       String input = JOptionPane.showInputDialog(brightnessPopUp,
-          "Enter brightness value:");
+              "Enter brightness value:");
       int brightnessValue = input.isEmpty() ? 0 : Integer.parseInt(input);
       features.brightness(brightnessValue);
     });
 
-    this.compression.addActionListener(evt ->{
-        JFrame brightnessPopUp = new JFrame("Pop-Up Window");
-        String input = JOptionPane.showInputDialog(brightnessPopUp,
-                "Enter the threshold value:");
-        double threshold = input.isEmpty() ? 0 : Double.parseDouble(input);
-        features.compression(threshold);
+    this.compression.addActionListener(evt -> {
+      JFrame brightnessPopUp = new JFrame("Pop-Up Window");
+      String input = JOptionPane.showInputDialog(brightnessPopUp,
+              "Enter the threshold value:");
+      double threshold = input.isEmpty() ? 0 : Double.parseDouble(input);
+      features.compression(threshold);
 
     });
 
-    this.levelAdjust.addActionListener(evt ->{
+    this.levelAdjust.addActionListener(evt -> {
+      this.split.setEnabled(true);
       JFrame levelAdjustPopUp = new JFrame("Pop-Up window B/M/W");
       String inputB = JOptionPane.showInputDialog(levelAdjustPopUp,
               "Enter the B");
@@ -382,14 +381,20 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
               "Enter the M");
       String inputW = JOptionPane.showInputDialog(levelAdjustPopUp,
               "Enter the W");
+      String splitPercentage = JOptionPane.showInputDialog(levelAdjustPopUp,
+              "Enter the split value (is optional)");
+
       int bValue = inputB.isEmpty() ? 0 : Integer.parseInt(inputB);
       int mValue = inputM.isEmpty() ? 0 : Integer.parseInt(inputM);
       int wValue = inputW.isEmpty() ? 0 : Integer.parseInt(inputW);
-      features.levelsAdjust(bValue, mValue, wValue);
+      double split = splitPercentage.isEmpty() ? 100 : Double.parseDouble(splitPercentage);
+      features.levelsAdjust(bValue, mValue, wValue, split);
 
-
-
-
+      if (split == 100) {
+        this.saveButton.setEnabled(true);
+      } else {
+        this.saveButton.setEnabled(false);
+      }
     });
 
     this.loadAndCombine.addActionListener(evt -> {
@@ -397,9 +402,9 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
       String[] options = {"Red greyscale", "Green greyscale", "Blue greyscale"};
       for (int i = 0; i < options.length; i++) {
         int input = JOptionPane.showOptionDialog(greyScaleOptions,
-            "Choose a greyscale option to save:", "Greyscale options",
-            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-            null, options, options[i]);
+                "Choose a greyscale option to save:", "Greyscale options",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                null, options, options[i]);
         try {
           loadAndCombineImages(options[input], features);
         } catch (FileNotFoundException e) {
@@ -411,7 +416,8 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
 
   }
 
-  private void selectGreyScale(String greyScaleOption, Features features) throws FileNotFoundException {
+  private void selectGreyScale(String greyScaleOption,
+                               Features features) throws FileNotFoundException {
     switch (greyScaleOption) {
       case "Intensity":
         features.intensityGrayscale();
@@ -420,7 +426,17 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
         features.valueGrayscale();
         break;
       case "Luma":
-        features.lumaGrayscale();
+        this.split.setEnabled(true);
+        JFrame splitPopUp = new JFrame("Pop-Up Window");
+        String input = JOptionPane.showInputDialog(splitPopUp,
+                "Enter Split value for preview (Optional):");
+        double splitPercentage = input.isEmpty() ? 100 : Double.parseDouble(input);
+        features.lumaGrayscale(splitPercentage);
+        if (splitPercentage == 100) {
+          this.saveButton.setEnabled(true);
+        } else {
+          this.saveButton.setEnabled(false);
+        }
         break;
       case "Red":
         features.redGrayscale();
@@ -479,7 +495,7 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
   public String load() {
     final JFileChooser fchooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "PNG,JPEG,BMP & PPM Images", "jpeg", "png", "ppm", "bmp", "jpg");
+            "PNG,JPEG,BMP & PPM Images", "jpeg", "png", "ppm", "bmp", "jpg");
     fchooser.setFileFilter(filter);
     int retValue = fchooser.showOpenDialog(ImageProcessingViewImpl.this);
     if (retValue == JFileChooser.APPROVE_OPTION) {
@@ -493,7 +509,7 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
   public String save() {
     final JFileChooser fchooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "PNG,JPEG,BMP & PPM Images", "jpeg", "png", "ppm", "bmp", "jpg");
+            "PNG,JPEG,BMP & PPM Images", "jpeg", "png", "ppm", "bmp", "jpg");
     fchooser.setFileFilter(filter);
     int retValue = fchooser.showSaveDialog(ImageProcessingViewImpl.this);
     if (retValue == JFileChooser.APPROVE_OPTION) {
@@ -506,7 +522,7 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
   @Override
   public String executeCommand() {
     return this.command + " " + this.commandInput.getText()
-        + " " + this.input.getText();
+            + " " + this.input.getText();
   }
 
   @Override
@@ -515,7 +531,7 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
       this.imagePanel.removeAll(); // to remove any previous displaying image
       RGB[][] image = model.retrieveImage(imageName);
       BufferedImage newImage = new BufferedImage(image[0].length, image.length,
-          BufferedImage.TYPE_INT_RGB);
+              BufferedImage.TYPE_INT_RGB);
       for (int i = 0; i < image.length; i++) {
         for (int j = 0; j < image[0].length; j++) {
           int red = image[i][j].getPixel(0);
@@ -537,8 +553,8 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
 
   private void displayHistogram(String imageName) {
     try {
-      EnhancedImageProcessingModel model= (EnhancedImageProcessingModel) this.model;
-      int[][] histogram = model.fetchHistogram(imageName,"histogram");
+      EnhancedImageProcessingModel model = (EnhancedImageProcessingModel) this.model;
+      int[][] histogram = model.fetchHistogram(imageName, "histogram");
       this.histogramPanel.removeAll();
       HistogramPanel histPanel = new HistogramPanel(histogram);
       this.histogramPanel.add(histPanel);
@@ -550,6 +566,6 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
   @Override
   public void displayError(String error) {
     JOptionPane.showMessageDialog(ImageProcessingViewImpl.this, error, "Error",
-        JOptionPane.ERROR_MESSAGE);
+            JOptionPane.ERROR_MESSAGE);
   }
 }

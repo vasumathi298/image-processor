@@ -1,7 +1,6 @@
 package imageoperations;
 
 
-
 import imagecontroller.ImageOperationController;
 import imagemodel.ImageProcessingModel;
 
@@ -34,10 +33,10 @@ public class Blur implements ImageOperationController {
     inputFilterOperations(instruction, imageProcessingModel);
   }
 
-  private void inputFilterOperations(String[] operations
-          , ImageProcessingModel imageProcessingModel) {
+  private void inputFilterOperations(String[] operations,
+                                     ImageProcessingModel imageProcessingModel) {
 
-      imageBlurrer(instruction, imageProcessingModel);
+    imageBlurrer(instruction, imageProcessingModel);
   }
 
   private void imageBlurrer(String[] operations, ImageProcessingModel imageProcessingModel) {
@@ -45,11 +44,10 @@ public class Blur implements ImageOperationController {
       if (operations.length > 5) {
         throw new IllegalArgumentException("Enter valid command");
       }
-      if(operations.length == 3){
-        imageProcessingModel.blurImage(operations[1], operations[2],0);
-      }
-      else{
-        imageProcessingModel.blurImage(operations[1], operations[2],Double.valueOf(operations[4]));
+      if (operations.length == 3) {
+        imageProcessingModel.blurImage(operations[1], operations[2], 100);
+      } else {
+        imageProcessingModel.blurImage(operations[1], operations[2], Double.valueOf(operations[4]));
       }
     } catch (Exception e) {
       System.out.println(e);

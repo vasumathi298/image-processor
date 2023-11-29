@@ -2,7 +2,6 @@ package imagemodel;
 
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * The ImageProcessingModel interface defines the contract for performing various image
@@ -159,10 +158,25 @@ public interface ImageProcessingModel {
   RGB[][] retrieveImage(String img);
 
 
-
+  /**
+   * Return red component of image.
+   * @param fileName source name
+   * @param destImage destination name.
+   */
   void redComponent(String fileName, String destImage);
 
+  /**
+   * Return green component of image.
+   * @param fileName source name
+   * @param destImage destination name.
+   */
   void greenComponent(String fileName, String destImage);
+
+  /**
+   * Return blue component of image.
+   * @param fileName source name
+   * @param destImage destination name.
+   */
   void blueComponent(String fileName, String destImage);
 }
 

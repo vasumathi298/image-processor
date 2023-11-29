@@ -16,29 +16,43 @@ import imagemodel.ImageProcessingModel;
 import imagemodel.RGB;
 import imageview.ImageProcessingView;
 
+/**
+ * This controller will call the model from GUI.
+ */
 public class ImageProcessingControllerCommandImpl implements Features {
-  private final InputStream input;
   private final ImageProcessingModel model;
-  private final Map<String, Function<Scanner, ImageOperationController>> knownCommands = new HashMap<>();
+  private final Map<String, Function<Scanner, ImageOperationController>> knownCommands =
+          new HashMap<>();
   private final Map<String, RGB[][]> combineGreyScaleImages = new HashMap<>();
   int i = 1;
   private String objectName = "image";
   private ImageProcessingView view;
-  private List<String> runCommands;
   private Stack<String> currentImage;
 
-  private String revertImage;
 
   private boolean performed;
-  public  ImageProcessingControllerCommandImpl(InputStream input, ImageProcessingView view,
-                                            ImageProcessingModel model) {
-    this.input = input;
+
+  private boolean performedEnhanced;
+
+  /**
+   * Constructor to initialize values.
+   *
+   * @param input input img.
+   * @param view  view view.
+   * @param model model.
+   */
+  public ImageProcessingControllerCommandImpl(InputStream input, ImageProcessingView view,
+                                              ImageProcessingModel model) {
+    InputStream input1;
+    input1 = input;
     this.view = view;
     this.model = model;
-    this.runCommands = new ArrayList<>();
+    List<String> runCommands;
+
+    runCommands = new ArrayList<>();
     loadOperations();
     this.currentImage = new Stack<>();
-    performed=false;
+    performed = false;
   }
 
   private void loadOperations() {
@@ -46,7 +60,6 @@ public class ImageProcessingControllerCommandImpl implements Features {
       knownCommands.put(command.getCommand(), s -> command.createController(s.nextLine()));
     }
   }
-
 
   @Override
   public void loadImage(String imageName) {
@@ -76,7 +89,7 @@ public class ImageProcessingControllerCommandImpl implements Features {
       Function<Scanner, ImageOperationController> cmd =
               knownCommands.getOrDefault("save", null);
       cc = cmd.apply(new Scanner("save" + " "
-              + currentImage.peek()+".png" + " " + imagePath));
+              + currentImage.peek() + ".png" + " " + imagePath));
       cc.performOperation(this.model);
     } catch (IOException e) {
       view.displayError("Error while saving image!");
@@ -100,7 +113,7 @@ public class ImageProcessingControllerCommandImpl implements Features {
     } catch (Exception e) {
       view.displayError("Error performing vertical flip operation!");
     }
-    System.out.println("current image is "+currentImage.peek());
+    System.out.println("current image is " + currentImage.peek());
     view.displayImage(currentImage.peek());
   }
 
@@ -135,13 +148,18 @@ public class ImageProcessingControllerCommandImpl implements Features {
   }
 
   @Override
-  public void lumaGrayscale() {
+  public void lumaGrayscale(double splitPercentage) {
     try {
       ImageOperationController cc;
       Function<Scanner, ImageOperationController> cmd =
               knownCommands.getOrDefault("greyscale", null);
       cc = cmd.apply(new Scanner("greyscale" + " " + "luma-component" + " "
-              + objectName + " " + currentImage.peek()));
+              + objectName + " " + currentImage.peek() + " " + "split" + " " + splitPercentage));
+      if (!performed) {
+        EnhancedImageProcessingModel enhancedModel = (EnhancedImageProcessingModel) this.model;
+        enhancedModel.revertImage(objectName, objectName + "-non-split");
+        performed = true;
+      }
       cc.performOperation(this.model);
     } catch (Exception e) {
       view.displayError("Error performing luma greyscale operation!");
@@ -179,7 +197,7 @@ public class ImageProcessingControllerCommandImpl implements Features {
       view.displayError("Error performing red greyscale operation!");
     }
     RGB[][] image = model.retrieveImage(currentImage.peek());
-    model.imageLoader( image , "red");
+    model.imageLoader(image, "red");
     combineGreyScaleImages.put("red", image);
     view.displayImage(currentImage.peek());
   }
@@ -199,7 +217,7 @@ public class ImageProcessingControllerCommandImpl implements Features {
       throw new RuntimeException(e);
     }
     RGB[][] image = model.retrieveImage(currentImage.peek());
-    model.imageLoader(image,"blue");
+    model.imageLoader(image, "blue");
     combineGreyScaleImages.put("blue", image);
     view.displayImage(currentImage.peek());
   }
@@ -217,7 +235,7 @@ public class ImageProcessingControllerCommandImpl implements Features {
       view.displayError("Error performing green greyscale operation!");
     }
     RGB[][] image = model.retrieveImage(currentImage.peek());
-    model.imageLoader( image ,"green");
+    model.imageLoader(image, "green");
     combineGreyScaleImages.put("green", image);
     view.displayImage(currentImage.peek());
   }
@@ -235,7 +253,7 @@ public class ImageProcessingControllerCommandImpl implements Features {
       view.displayError("Error performing red-component operation!");
     }
     RGB[][] image = model.retrieveImage(currentImage.peek());
-    model.imageLoader( image ,"redComp");
+    model.imageLoader(image, "redComp");
     combineGreyScaleImages.put("redComp", image);
     view.displayImage(currentImage.peek());
   }
@@ -253,7 +271,7 @@ public class ImageProcessingControllerCommandImpl implements Features {
       view.displayError("Error performing green-component operation!");
     }
     RGB[][] image = model.retrieveImage(currentImage.peek());
-    model.imageLoader( image ,"greenComp");
+    model.imageLoader(image, "greenComp");
     combineGreyScaleImages.put("greenComp", image);
     view.displayImage(currentImage.peek());
   }
@@ -271,42 +289,43 @@ public class ImageProcessingControllerCommandImpl implements Features {
       view.displayError("Error performing blue-component operation!");
     }
     RGB[][] image = model.retrieveImage(currentImage.peek());
-    model.imageLoader( image ,"blueComp");
+    model.imageLoader(image, "blueComp");
     combineGreyScaleImages.put("blueComp", image);
     view.displayImage(currentImage.peek());
   }
 
   @Override
-  public void getColorCorrectedImage() throws FileNotFoundException {
+  public void getColorCorrectedImage(double splitPercentage) {
     try {
       ImageOperationController cc;
-      EnhancedImageProcessingModel enhancedImageProcessingModel= (EnhancedImageProcessingModel) this.model;
+      EnhancedImageProcessingModel enhancedModel = (EnhancedImageProcessingModel) this.model;
       Function<Scanner, ImageOperationController> cmd =
               knownCommands.getOrDefault("color-correct", null);
       cc = cmd.apply(new Scanner("color-correct" + " "
-              + objectName + " " + currentImage.peek()));
-      cc.performOperation(enhancedImageProcessingModel);
+              + objectName + " " + currentImage.peek() + " " + "split" + " " + splitPercentage));
+      System.out.println("is performed? " + performed);
+      if (!performed) {
+        enhancedModel.revertImage(objectName, objectName + "-non-split");
+        performed = true;
+      }
+      cc.performOperation(enhancedModel);
     } catch (Exception e) {
       view.displayError("Error performing color-correct operation!");
     }
-    RGB[][] image = model.retrieveImage(currentImage.peek());
-    model.imageLoader( image ,"colorCorrect");
-    combineGreyScaleImages.put("colorCorrect", image);
     view.displayImage(currentImage.peek());
   }
-
 
 
   @Override
   public void blur(double splitPercentage) {
     try {
       ImageOperationController cc;
+      EnhancedImageProcessingModel enhancedModel = (EnhancedImageProcessingModel) this.model;
       Function<Scanner, ImageOperationController> cmd =
               knownCommands.getOrDefault("blur", null);
       cc = cmd.apply(new Scanner("blur" + " "
-              + objectName + " " + currentImage.peek()+" "+ "split" +" "+ splitPercentage));
-      if(!performed) {
-        EnhancedImageProcessingModel enhancedModel = (EnhancedImageProcessingModel) this.model;
+              + objectName + " " + currentImage.peek() + " " + "split" + " " + splitPercentage));
+      if (!performed) {
         enhancedModel.revertImage(objectName, objectName + "-non-split");
         performed = true;
       }
@@ -324,8 +343,8 @@ public class ImageProcessingControllerCommandImpl implements Features {
       Function<Scanner, ImageOperationController> cmd =
               knownCommands.getOrDefault("sharpen", null);
       cc = cmd.apply(new Scanner("sharpen" + " "
-              + objectName + " " + currentImage.peek()+" "+ "split" + " "+ splitPercentage));
-      if(!performed) {
+              + objectName + " " + currentImage.peek() + " " + "split" + " " + splitPercentage));
+      if (!performed) {
         EnhancedImageProcessingModel enhancedModel = (EnhancedImageProcessingModel) this.model;
         enhancedModel.revertImage(objectName, objectName + "-non-split");
         performed = true;
@@ -338,9 +357,10 @@ public class ImageProcessingControllerCommandImpl implements Features {
   }
 
   @Override
-  public  void revert(){
-    view.displayImage(objectName+"-non-split");
+  public void revert() {
+    view.displayImage(objectName + "-non-split");
   }
+
   @Override
   public void sepiaTone(double splitPercentage) {
     try {
@@ -348,8 +368,8 @@ public class ImageProcessingControllerCommandImpl implements Features {
       Function<Scanner, ImageOperationController> cmd =
               knownCommands.getOrDefault("sepia", null);
       cc = cmd.apply(new Scanner("sepia" + " "
-              + objectName + " " + currentImage.peek()+" "+"split"+" "+ splitPercentage));
-      if(!performed) {
+              + objectName + " " + currentImage.peek() + " " + "split" + " " + splitPercentage));
+      if (!performed) {
         EnhancedImageProcessingModel enhancedModel = (EnhancedImageProcessingModel) this.model;
         enhancedModel.revertImage(objectName, objectName + "-non-split");
         performed = true;
@@ -359,11 +379,8 @@ public class ImageProcessingControllerCommandImpl implements Features {
     } catch (Exception e) {
       view.displayError("Error performing sepia operation!");
     }
-    System.out.println("current image is "+currentImage.peek());
     view.displayImage(currentImage.peek());
   }
-
-
 
 
   @Override
@@ -383,19 +400,25 @@ public class ImageProcessingControllerCommandImpl implements Features {
 
 
   @Override
-  public void levelsAdjust(int b, int m, int w) {
+  public void levelsAdjust(int b, int m, int w, double splitPercentage) {
     try {
       ImageOperationController cc;
       Function<Scanner, ImageOperationController> cmd =
               knownCommands.getOrDefault("levels-adjust", null);
-      cc = cmd.apply(new Scanner("levels-adjust" + " " + b + " "+ m + " "+w + " "
-              + objectName + " " + currentImage.peek()));
+      cc = cmd.apply(new Scanner("levels-adjust" + " " + b + " " + m + " " + w + " "
+              + objectName + " " + currentImage.peek() + " " + "split" + " " + splitPercentage));
+      if (!performed) {
+        EnhancedImageProcessingModel enhancedModel = (EnhancedImageProcessingModel) this.model;
+        enhancedModel.revertImage(objectName, objectName + "-non-split");
+        performed = true;
+      }
       cc.performOperation(this.model);
     } catch (Exception e) {
       view.displayError("Error performing levels-adjust operation!");
     }
     view.displayImage(currentImage.peek());
   }
+
   @Override
   public void combineImage() {
     if (model.retrieveImage("red").length > 0 && model.retrieveImage("green").length > 0
@@ -456,9 +479,15 @@ public class ImageProcessingControllerCommandImpl implements Features {
     }
   }
 
+  /**
+   * Handing inputs from users.
+   *
+   * @throws Exception Exception for error.
+   */
   @Override
   public void imageOperationSelector() throws Exception {
 
+    // this is empty function.
   }
 
 

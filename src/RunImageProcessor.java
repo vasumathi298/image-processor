@@ -1,4 +1,5 @@
-import javax.swing.*;
+
+import javax.swing.UIManager;
 
 import imagecontroller.Features;
 import imagecontroller.ImageProcessingController;
@@ -33,20 +34,21 @@ public class RunImageProcessor {
       scriptFile.performOperation(model);
       return;
     }
-    if (args.length > 0 && args[0].equals("-text")) {
+    else if (args.length > 0 && args[0].equals("-text")) {
       if (args.length != 2) {
         System.out.println("Usage: java Main -file name-of-script.txt");
         return;
       }
-
       ImageProcessingController controller = new ImageProcessingControllerImpl(System.in,
               model);
       controller.imageOperationSelector();
       return;
     }
-    ImageProcessingView view = new ImageProcessingViewImpl("Image", model);
-    Features controller1 = new ImageProcessingControllerCommandImpl(System.in, view, model);
-    controller1.setView(view);
-    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+    else {
+      ImageProcessingView view = new ImageProcessingViewImpl("Image", model);
+      Features controller1 = new ImageProcessingControllerCommandImpl(System.in, view, model);
+      controller1.setView(view);
+      UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+    }
   }
 }
