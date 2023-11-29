@@ -32,6 +32,8 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
   private final JButton greyScaleButton;
   private final JButton blur;
 
+  private final JButton compression;
+
   private final JButton redComp;
 
   private final JButton colorCorrection;
@@ -46,7 +48,6 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
   private final JButton sharpen;
   private final JButton sepia;
   private final JButton brightness;
-  private final JButton splitAndSave;
   private final JButton loadAndCombine;
   private final JButton saveButton;
   private final ImageProcessingModel model;
@@ -77,6 +78,11 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
     JPanel mainPanel = new JPanel();
     //for elements to be arranged vertically within this panel
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+
+    // Set the background color of the main panel
+    mainPanel.setBackground(Color.LIGHT_GRAY);
+
+    // Set the background color of the histogram panel
     //scroll bars around this main panel
     JScrollPane mainScrollPane = new JScrollPane(mainPanel);
     add(mainScrollPane);
@@ -87,24 +93,29 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
     this.imagePanel.setBorder(BorderFactory.createTitledBorder("Showing an image"));
     this.imagePanel.setPreferredSize(new Dimension(400, 300));
     this.imagePanel.setVisible(true);
+    imagePanel.setBackground(Color.LIGHT_GRAY);
     mainPanel.add(imagePanel);
 
     //dialog boxes
     JPanel dialogBoxesPanel = new JPanel();
     dialogBoxesPanel.setBorder(BorderFactory.createTitledBorder("Dialog boxes"));
     dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
+    dialogBoxesPanel.setBackground(Color.LIGHT_GRAY);
     mainPanel.add(dialogBoxesPanel);
 
 
     //file save
     JPanel fileSavePanel = new JPanel();
     fileSavePanel.setLayout(new FlowLayout());
+    fileSavePanel.setBackground(Color.LIGHT_GRAY);
     dialogBoxesPanel.add(fileSavePanel);
     this.saveButton = new JButton("Save a file");
+    saveButton.setBackground(Color.WHITE);
     this.saveButton.setActionCommand("Save file");
     fileSavePanel.add(this.saveButton);
     this.loadButton = new JButton("Open a file");
     this.loadButton.setActionCommand("open file");
+    loadButton.setBackground(Color.WHITE);
     fileSavePanel.add(this.loadButton);
 
     //commands panel
@@ -114,62 +125,78 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
     //a border around the panel with a caption
     commandsPanel.setBorder(BorderFactory.createTitledBorder("Commands Panel"));
     commandsPanel.setLayout(new GridLayout(2, 0, 10, 10));
+    commandsPanel.setBackground(Color.LIGHT_GRAY);
     mainPanel.add(commandsPanel);
 
     this.verticalFlipButton = new JButton("Vertical Flip");
     this.verticalFlipButton.setActionCommand("vertical flip");
+    verticalFlipButton.setBackground(Color.WHITE);
     commandsPanel.add(this.verticalFlipButton);
 
     this.horizontalFlip = new JButton("Horizontal flip");
     this.horizontalFlip.setActionCommand("horizontal flip");
+    this.horizontalFlip.setBackground(Color.WHITE);
     commandsPanel.add(this.horizontalFlip);
 
     this.redComp = new JButton("Red Comp");
     this.redComp.setActionCommand("red comp");
+    this.redComp.setBackground(Color.WHITE);
     commandsPanel.add(this.redComp);
 
     this.greenComp = new JButton("Green Comp");
     this.greenComp.setActionCommand("green comp");
+    this.greenComp.setBackground(Color.WHITE);
     commandsPanel.add(this.greenComp);
 
     this.blueComp = new JButton("Blue Comp");
     this.blueComp.setActionCommand("Blue comp");
+    this.blueComp.setBackground(Color.WHITE);
     commandsPanel.add(this.blueComp);
 
     this.colorCorrection = new JButton("Color Correction");
     this.colorCorrection.setActionCommand("color-correct");
+    this.colorCorrection.setBackground(Color.WHITE);
     commandsPanel.add(this.colorCorrection);
 
     this.levelAdjust = new JButton("Levels Adjust");
     this.levelAdjust.setActionCommand("levels-adjust");
+    this.levelAdjust.setBackground(Color.WHITE);
     commandsPanel.add(this.levelAdjust);
 
     this.greyScaleButton = new JButton("Greyscale options");
     this.greyScaleButton.setActionCommand("grayscale option");
+    this.greyScaleButton.setBackground(Color.WHITE);
     commandsPanel.add(this.greyScaleButton);
 
     this.blur = new JButton("Blur");
     this.blur.setActionCommand("blur");
+    this.blur.setBackground(Color.WHITE);
     commandsPanel.add(this.blur);
+
+    this.compression = new JButton("Compression");
+    this.compression.setActionCommand("compression");
+    this.compression.setBackground(Color.WHITE);
+    commandsPanel.add(this.compression);
 
     this.sharpen = new JButton("Sharpen");
     this.sharpen.setActionCommand("sharpen");
+    this.sharpen.setBackground(Color.WHITE);
     commandsPanel.add(this.sharpen);
 
     this.sepia = new JButton("Sepia Tone");
     this.sepia.setActionCommand("sepia");
+    this.sepia.setBackground(Color.WHITE);
     commandsPanel.add(this.sepia);
 
     this.brightness = new JButton("Brightness");
     this.brightness.setActionCommand("brightness");
+    this.brightness.setBackground(Color.WHITE);
     commandsPanel.add(this.brightness);
 
-    this.splitAndSave = new JButton("Split and save");
-    this.splitAndSave.setActionCommand("split save");
-    commandsPanel.add(this.splitAndSave);
 
     this.loadAndCombine = new JButton("Load and combine");
     this.loadAndCombine.setActionCommand("load combine");
+    this.loadAndCombine.setBackground(Color.WHITE);
     commandsPanel.add(this.loadAndCombine);
 
 
@@ -180,7 +207,7 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
 
     //show an image histogram with a scrollbar
     this.histogramPanel = new JPanel();
-    setBackground(Color.WHITE);
+    histogramPanel.setBackground(Color.LIGHT_GRAY);
     setPreferredSize(new Dimension(600, 400));
     setLocation(400, 400);
     //a border around the panel with a caption
@@ -227,6 +254,8 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
       }
     });
 
+
+
     this.greenComp.addActionListener(evt -> {
       try {
         features.getGreenComponent();
@@ -260,6 +289,15 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
       features.brightness(brightnessValue);
     });
 
+    this.compression.addActionListener(evt ->{
+        JFrame brightnessPopUp = new JFrame("Pop-Up Window");
+        String input = JOptionPane.showInputDialog(brightnessPopUp,
+                "Enter the threshold value:");
+        double threshold = input.isEmpty() ? 0 : Double.parseDouble(input);
+        features.compression(threshold);
+
+    });
+
     this.levelAdjust.addActionListener(evt ->{
       JFrame levelAdjustPopUp = new JFrame("Pop-Up window B/M/W");
       String inputB = JOptionPane.showInputDialog(levelAdjustPopUp,
@@ -276,19 +314,6 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
 
 
 
-    });
-    this.splitAndSave.addActionListener(evt -> {
-      JFrame greyScaleOptions = new JFrame();
-      String[] options = {"Red greyscale", "Green greyscale", "Blue greyscale"};
-      int input = JOptionPane.showOptionDialog(greyScaleOptions,
-          "Choose a greyscale option to save:", "Greyscale options",
-          JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-          null, options, options[0]);
-      try {
-        splitAndSaveImages(options[input], features);
-      } catch (FileNotFoundException e) {
-        throw new RuntimeException(e);
-      }
     });
 
     this.loadAndCombine.addActionListener(evt -> {
@@ -430,7 +455,7 @@ public class ImageProcessingViewImpl extends JFrame implements ImageProcessingVi
       this.imagePanel.repaint();
       displayHistogram(imageName);
     } catch (Exception e) {
-      System.out.println(e);
+      //System.out.println(e);
     }
   }
 

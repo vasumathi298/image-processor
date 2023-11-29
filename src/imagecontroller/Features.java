@@ -3,6 +3,7 @@ package imagecontroller;
 import java.io.FileNotFoundException;
 
 import imageview.ImageProcessingView;
+import imageview.ImageProcessingViewImpl;
 
 /**
  * This interface represents the operations that can be done using the GUI that will be handled by
@@ -108,6 +109,8 @@ public interface Features extends ImageProcessingController {
    */
   void setView(ImageProcessingView view);
 
+
+  void compression( double threshold);
 
 }
 

@@ -394,6 +394,21 @@ public class ImageProcessingControllerCommandImpl implements Features {
   }
 
   @Override
+  public void compression(double threshold) {
+    try {
+      ImageOperationController cc;
+      Function<Scanner, ImageOperationController> cmd =
+              knownCommands.getOrDefault("compress", null);
+      cc = cmd.apply(new Scanner("compress" + " " + threshold + " "
+              + objectName + " " + currentImage.peek()));
+      cc.performOperation(this.model);
+    } catch (Exception e) {
+      view.displayError("Error performing compression operation!");
+    }
+    view.displayImage(currentImage.peek());
+  }
+
+  @Override
   public void operationProcessor(Scanner input) throws Exception {
     while (input.hasNext()) {
       ImageOperationController control;

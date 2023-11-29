@@ -6,7 +6,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.Function;
 
 import javax.imageio.ImageIO;
 
@@ -714,18 +716,71 @@ public class ImageProcessingModelImpl implements ImageProcessingModel, EnhancedI
   @Override
   public void compressImage(String fileName, String destName, double threshold) {
 
-    RGB[][] imagePixels = rgbImageStore.retrieveImage(fileName);
-
-    RGB[][] transformedImags= transformImage(imagePixels);
-
-    RGB[][] thresholdedImage= thresholdImage(transformedImags, threshold);
-
-    RGB[][] invertedImage= thresholdImage(thresholdedImage, threshold);
-
-    this.rgbImageStore.storeImage(destName, invertedImage);
-
+    ArrayList<RGB[][]> splittedImages = getAllComponentImages(fileName);
+    RGB[][] originalImage = rgbImageStore.retrieveImage(fileName);
+    CompressionUtil imageCompression = new CompressionUtil(originalImage.length, originalImage[0].length);
+    imageCompression.compressionBeforeThreshold(splittedImages.get(0));
+    imageCompression.compressionBeforeThreshold(splittedImages.get(1));
+    imageCompression.compressionBeforeThreshold(splittedImages.get(2));
+    imageCompression.findThresholdValue(threshold);
+    imageCompression.afterThresholdingValues();
+    ArrayList<RGB[][]> results = imageCompression.afterUnpadInverse();
+    RGB[][] result = combineAllComponents(results.get(0), results.get(1), results.get(2));
+    this.rgbImageStore.storeImage(destName, result);
 
   }
+
+  RGB[][] combineAllComponents(RGB[][] image1, RGB[][] image2, RGB[][] image3) {
+
+    int referenceWidth = image1.length;
+    int referenceHeight = image1[0].length;
+    RGB[][] resultImagePixels = new RGB[referenceWidth][referenceHeight];
+    int red;
+    int blue;
+    int green;
+    for (int x = 0; x < referenceWidth; x++) {
+      for (int y = 0; y < referenceHeight; y++) {
+        red = image1[x][y].getPixel(0) + image2[x][y].getPixel(0)
+                + image3[x][y].getPixel(0);
+        green = image1[x][y].getPixel(1) + image2[x][y].getPixel(1)
+                + image3[x][y].getPixel(1);
+        blue =  image1[x][y].getPixel(2) + image2[x][y].getPixel(2)
+                + image3[x][y].getPixel(2);
+        resultImagePixels[x][y] = new RGB(red, green, blue);
+      }
+    }
+    return resultImagePixels;
+  }
+
+  private ArrayList<RGB[][]> getAllComponentImages(String imageName) {
+    ArrayList<RGB[][]> images = new ArrayList<>();
+    RGB[][] image1 = applyOperationToAllPixels(pixel -> new RGB(pixel.getPixel(0), 0,
+            0), imageName);
+    RGB[][] image2 = applyOperationToAllPixels(pixel -> new RGB(0, pixel.getPixel(1),
+            0), imageName);
+    RGB[][] image3 = applyOperationToAllPixels(pixel -> new RGB(0, 0,
+            pixel.getPixel(2)), imageName);
+    images.add(image1);
+    images.add(image2);
+    images.add(image3);
+    return images;
+  }
+
+
+  private RGB[][] applyOperationToAllPixels(Function<RGB, RGB> operation, String imageName) {
+    RGB[][] image = rgbImageStore.retrieveImage(imageName);
+    if (image == null) {
+      throw new IllegalStateException("Image Not found or name entered in wrong syntax");
+    }
+    RGB[][] resultImagePixels = new RGB[image.length][image[0].length];
+    for (int x = 0; x < image.length; x++) {
+      for (int y = 0; y < image[0].length; y++) {
+        resultImagePixels[x][y] = operation.apply(image[x][y]);
+      }
+    }
+    return resultImagePixels;
+  }
+
 
 
   private static double[] getAllValues(RGB[][] channels) {
