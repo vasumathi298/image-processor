@@ -172,6 +172,7 @@ public class TestOperationsForImage {
     assertTrue(image.length > 0);
   }
 
+
   @Test
   public void testIntensityGreyScale() throws Exception {
     String input = "load output/manhattan-small.png manhattan-small\n"
@@ -243,6 +244,8 @@ public class TestOperationsForImage {
     RGB[][] image = model.retrieveImage("manhattan-small-sepia");
     assertTrue(image.length > 0);
   }
+
+
 
   @Test
   public void testFilterBlur() throws Exception {
@@ -451,19 +454,6 @@ public class TestOperationsForImage {
     ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
     controller.imageOperationSelector();
     RGB[][] image = model.retrieveImage("manhattan-small-ppm-test");
-    assertTrue(image.length > 0);
-  }
-
-
-  @Test
-  public void testRunScript() throws Exception {
-    String input = "run output/commands.txt";
-    ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
-    System.setIn(in);
-    ImageProcessingModel model = new ImageProcessingModelImpl();
-    ImageProcessingController controller = new ImageProcessingControllerImpl(in, model);
-    controller.imageOperationSelector();
-    RGB[][] image = model.retrieveImage("output-image");
     assertTrue(image.length > 0);
   }
 

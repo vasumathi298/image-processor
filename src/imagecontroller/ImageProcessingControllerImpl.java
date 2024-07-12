@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.function.Function;
 
 import imagemodel.ImageProcessingModel;
+import imageview.ImageProcessingView;
 
 /**
  * The ImageProcessingControllerImpl class implements the ImageProcessingController interface and
@@ -31,6 +32,22 @@ public class ImageProcessingControllerImpl implements ImageProcessingController 
     this.inputImageStream = input;
     this.operations = new ArrayList<>();
     this.imageModel = model;
+    loadOperations();
+  }
+
+  /**
+   * Initialize the variables in the constructor.
+   * @param input input commands.
+   * @param view Image processing view.
+   * @param model Image processing model.
+   */
+  public ImageProcessingControllerImpl(InputStream input, ImageProcessingView view,
+                                       ImageProcessingModel model) {
+    ImageProcessingView feature;
+    this.inputImageStream = input;
+    this.operations = new ArrayList<>();
+    this.imageModel = model;
+    feature = view;
     loadOperations();
   }
 

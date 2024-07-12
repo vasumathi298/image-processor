@@ -54,7 +54,7 @@ public interface ImageProcessingModel {
    * @param img     The name of the source image.
    * @param storage The name to associate with the generated luma grayscale image.
    */
-  void greyScaleLuma(String img, String storage);
+  void greyScaleLuma(String img, String storage,double splitPercentage);
 
   /**
    * Convert the image to grayscale using value component and store it with the provided name.
@@ -105,7 +105,7 @@ public interface ImageProcessingModel {
    * @param img     The name of the source image to sharpen.
    * @param storage The name to associate with the sharpened image.
    */
-  void sharpenImage(String img, String storage);
+  void sharpenImage(String img, String storage,double splitPercentage);
 
   /**
    * Convert the image to sepia tone and store it with the provided name.
@@ -113,7 +113,7 @@ public interface ImageProcessingModel {
    * @param img     The name of the source image to convert to sepia.
    * @param storage The name to associate with the sepia-toned image.
    */
-  void constructSepia(String img, String storage);
+  void constructSepia(String img, String storage, double splitPercentage);
 
   /**
    * Apply a blur effect to the image and store the result with the provided name.
@@ -121,7 +121,7 @@ public interface ImageProcessingModel {
    * @param img     The name of the source image to apply the blur effect.
    * @param storage The name to associate with the blurred image.
    */
-  void blurImage(String img, String storage);
+  void blurImage(String img, String storage, double splitPercentage);
 
   /**
    * Save an image to a specified path with the provided name.
@@ -156,5 +156,27 @@ public interface ImageProcessingModel {
    * @return A 2D array of RGB pixels representing the retrieved image.
    */
   RGB[][] retrieveImage(String img);
+
+
+  /**
+   * Return red component of image.
+   * @param fileName source name
+   * @param destImage destination name.
+   */
+  void redComponent(String fileName, String destImage);
+
+  /**
+   * Return green component of image.
+   * @param fileName source name
+   * @param destImage destination name.
+   */
+  void greenComponent(String fileName, String destImage);
+
+  /**
+   * Return blue component of image.
+   * @param fileName source name
+   * @param destImage destination name.
+   */
+  void blueComponent(String fileName, String destImage);
 }
 

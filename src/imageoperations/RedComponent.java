@@ -8,7 +8,7 @@ import imagemodel.ImageProcessingModel;
  * interface and provides an operation
  * to horizontally flip an image based on the given instructions.
  */
-public class HorizontalFlip implements ImageOperationController {
+public class RedComponent implements ImageOperationController {
   private final String[] instruction;
 
   /**
@@ -16,7 +16,7 @@ public class HorizontalFlip implements ImageOperationController {
    *
    * @param input The input string containing operation instructions.
    */
-  public HorizontalFlip(String input) {
+  public RedComponent(String input) {
     this.instruction = input.split(" ");
   }
 
@@ -31,9 +31,7 @@ public class HorizontalFlip implements ImageOperationController {
       if (instruction.length != 3) {
         throw new IllegalArgumentException("Enter a valid command");
       }
-      System.out.println(instruction[1]);
-      System.out.println(instruction[2]);
-      imageProcessingModel.horizontalImageFlip(instruction[1], instruction[2]);
+      imageProcessingModel.redComponent(instruction[1], instruction[2]);
     } catch (Exception e) {
       System.out.println(e);
     }

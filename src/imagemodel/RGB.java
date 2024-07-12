@@ -5,9 +5,9 @@ package imagemodel;
  */
 public class RGB {
 
-  public int red;
-  public int green;
-  public int blue;
+  private int red;
+  private int green;
+  private int blue;
 
   /**
    * Constructs an `RGB` object with the specified red, green, and blue values.
@@ -20,6 +20,15 @@ public class RGB {
     this.red = red;
     this.green = green;
     this.blue = blue;
+  }
+
+  /**
+   * Set values to 0.
+   */
+  public RGB() {
+    this.red = 0;
+    this.green = 0;
+    this.blue = 0;
   }
 
   /**
